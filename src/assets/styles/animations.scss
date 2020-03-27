@@ -1,0 +1,48 @@
+/* Fade */
+.fade-enter-active {
+    @apply transition ease-out duration-100;
+}
+.fade-enter,
+.fade-leave-to {
+    @apply transform opacity-0 scale-95;
+}
+.fade-enter-to,
+.fade-leave {
+    @apply transform opacity-100 scale-100;
+}
+.fade-leave-active {
+    @apply transition ease-in duration-75;
+}
+
+/* Modal */
+.modal-enter-active {
+    @apply transition ease-out duration-300;
+}
+.modal-enter,
+.modal-leave-to {
+    @apply transform opacity-0 scale-95;
+}
+.modal-enter-to,
+.modal-leave {
+    @apply transform opacity-100 scale-100;
+}
+.modal-leave-active {
+    @apply transition ease-in duration-200;
+}
+
+
+/* Modal Backdrop */
+.modal-bg-enter-active {
+    @apply transition ease-out duration-300;
+}
+.modal-bg-enter,
+.modal-bg-leave-to {
+    @apply transform opacity-0;
+}
+.modal-bg-enter-to,
+.modal-bg-leave {
+    @apply transform opacity-100;
+}
+.modal-bg-leave-active {
+    @apply transition ease-in duration-200;
+}

@@ -1,32 +1,44 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div v-if="!$route.meta.plainLayout">
+      <transition name="fade">
+        <Notification v-if="alert.message" :type="alert.type">{{alert.message}}</Notification>
+      </transition>
+      <Header />
+        <router-view/>
+      <Footer />
     </div>
-    <router-view/>
+
+    <div v-if="$route.meta.plainLayout">
+      <transition name="fade">
+        <Notification v-if="alert.message" :type="alert.type">{{alert.message}}</Notification>
+      </transition>
+      <router-view/>
+    </div>
+
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Header from '@/components/layout/Header.vue'
+import Footer from '@/components/layout/Footer.vue'
+import Notification from '@/components/Notification.vue'
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+    name: 'app',
+    components: {
+      Header, Footer, Notification
+    },
+    computed: {
+        alert () {
+            return this.$store.state.alert
+        }
+    },
+    watch:{
+        $route (to, from){
+            // clear alert on location change
+            this.$store.dispatch('alert/clear');
+        }
     }
-  }
-}
-</style>
+};
+</script>

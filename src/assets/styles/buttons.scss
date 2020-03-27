@@ -1,0 +1,85 @@
+/* Button */
+.button {
+  @apply font-medium text-sm py-2 px-4 rounded-md shadow-sm border border-transparent transition duration-150 ease-in-out;
+}
+
+/* Primary Button */
+.button-primary {
+  @apply bg-primary text-white;
+}
+.button-primary:hover {
+  @apply bg-secondary;
+}
+.button-primary:focus {
+  @apply outline-none shadow-outline-teal;
+}
+.button-primary:active {
+  @apply bg-primary;
+}
+
+/* Gray Button */
+.button-gray {
+  @apply bg-gray-200;
+}
+.button-gray:hover {
+  @apply bg-gray-100 border border-gray-200;
+}
+.button-gray:focus {
+  @apply outline-none shadow-outline-blue;
+}
+.button-gray:active {
+  @apply bg-gray-200;
+}
+
+/* Warning Button */
+.button-warning {
+  @apply bg-warning;
+}
+.button-warning:hover {
+  @apply bg-warning-secondary;
+}
+.button-warning:focus {
+  @apply outline-none shadow-outline-blue;
+}
+.button-warning:active {
+  @apply bg-warning;
+}
+
+/* Danger Button */
+.button-danger {
+  @apply  bg-danger text-white;
+}
+.button-danger:hover {
+  @apply bg-danger-secondary;
+}
+.button-danger:focus {
+  @apply outline-none shadow-outline-red;
+}
+.button-danger:active {
+  @apply bg-danger;
+}
+
+/* Danger Alt Button */
+.button-danger-alt {
+  @apply bg-white text-gray-700 border border-gray-300;
+}
+.button-danger-alt:hover {
+  @apply bg-red-600 border border-red-600 text-white;
+}
+.button-danger-alt:focus {
+  @apply outline-none shadow-outline-red;
+}
+.button-danger-alt:active {
+  @apply bg-red-600;
+}
+
+/* White Button */
+.button-white {
+  @apply bg-white text-gray-700 border-gray-300 ;
+}
+.button-white:hover {
+  @apply text-gray-500;
+}
+.button-white:focus {
+  @apply outline-none border-blue-300 shadow-outline;
+}

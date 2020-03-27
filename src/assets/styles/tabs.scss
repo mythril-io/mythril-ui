@@ -1,0 +1,43 @@
+/* Regular Tab */
+.is-tab {
+  @apply w-1/4 py-4 px-1 text-center border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500;
+}
+.is-tab:hover {
+  @apply text-gray-700 border-gray-300;
+}
+.is-tab:focus {
+  @apply outline-none text-gray-700 border-gray-300;
+}
+
+/* Active Regular Tab */
+.is-tab.is-active {
+  @apply border-primary text-primary;
+}
+.is-tab.is-active:focus {
+  @apply text-secondary border-secondary;
+}
+
+/* Pill Tab Container */
+.pill-tabs:first {
+  @apply ml-0 #{!important};
+}
+
+/* Pill Tab */
+.is-pill-tab {
+  @apply ml-4 px-3 py-2 font-medium text-sm leading-5 rounded-md text-gray-500;
+}
+
+.is-pill-tab:hover {
+  @apply text-gray-700;
+}
+.is-pill-tab:focus {
+  @apply outline-none;
+}
+
+/* Active Pill Tab */
+.is-pill-tab.is-active {
+  @apply text-white bg-primary;
+}
+// .is-pill-tab.is-active:focus {
+//   @apply text-teal-800 bg-teal-200;
+// }

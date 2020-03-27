@@ -1,0 +1,24 @@
+<template>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+    <div v-bind:class="{ 'py-4 mb-6': padding }">
+
+      <slot></slot>
+
+    </div>
+  </div>
+
+</template>
+
+<script>
+export default {
+    name: 'Container',
+    props: {
+      padding: {
+        type: Boolean,
+        required: false,
+        default: true
+      },
+    },
+};
+</script>
