@@ -81,7 +81,6 @@ export default {
               dispatch('alert/success', response.data.message, { root: true });
             },
             error => {
-              console.log("eeeeee: " + error)
               dispatch('alert/error', error, { root: true });
             }
           );

@@ -71,8 +71,6 @@ function deleteResource(id) {
       .then(response => {
           return response;
       }).catch(function (error) {
-          console.log(error)
-          console.log(error.response)
           const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
           return Promise.reject(errorMessage)
       });
