@@ -5,6 +5,7 @@ export const libraryService = {
     getByGameAndUser,
     getByUserAndStatus,
     getRecentForGame,
+    getRecent,
     post,
     patch,
     deleteResource
@@ -45,6 +46,16 @@ function getByUserAndStatus(id, playStatusId, page = 1) {
 
 function getRecentForGame(id) {
   return axios.get(rootURL + 'game/' + id + '/recent')
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function getRecent() {
+  return axios.get(rootURL + 'recent')
       .then(response => {
           return response;
       }).catch(function (error) {

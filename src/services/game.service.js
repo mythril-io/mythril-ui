@@ -3,6 +3,7 @@ import { axios } from '../utilities';
 export const gameService = {
     getByPage,
     search,
+    getTrending,
     get,
     post,
     put,
@@ -28,6 +29,16 @@ function getByPage(page=1, filters=null) {
 
 function search(query='') {
   return axios.get(rootURL + 'search?query=' + query)
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function getTrending() {
+  return axios.get(rootURL + 'trending')
       .then(response => {
           return response;
       }).catch(function (error) {
