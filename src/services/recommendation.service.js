@@ -4,6 +4,7 @@ export const recommendationService = {
     getByPage,
     getByGameAndPage,
     getByUserAndPage,
+    getRecent,
     get,
     post,
     put,
@@ -35,6 +36,16 @@ function getByGameAndPage(id, page=1) {
 
 function getByUserAndPage(id, page=1) {
   return axios.get(rootURL + 'user/' + id + '/page/' + page)
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function getRecent() {
+  return axios.get(rootURL + 'recent')
       .then(response => {
           return response;
       }).catch(function (error) {

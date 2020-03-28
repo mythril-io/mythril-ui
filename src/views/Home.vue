@@ -16,7 +16,7 @@
               <div class="flex justify-center lg:justify-start w-full mt-5 hidden lg:inline-flex">
                 <div class="w-1/2 lg:w-7/12 xl:w-1/2 h-auto xl:h-48">
                   <transition name="fade">
-                    <GameCard v-if="data" :game="data.game" />
+                    <GameCard v-if="game" :game="game" />
                   </transition>
                 </div>
               </div>
@@ -33,7 +33,7 @@
       </h3>
     </Container>
 
-    <div v-if="data" class="px-4 sm:px-6 md:px-8">
+    <div v-if="trendingGames" class="px-4 sm:px-6 md:px-8">
       <carousel-3d
         :border="0"
         :height="256"
@@ -43,7 +43,7 @@
         :autoplay="false"
         :autoplay-timeout="5000"
         :autoplayHoverPause="true">
-        <slide v-for="(game, i) in data.trending" :index="i" :key="i">
+        <slide v-for="(game, i) in trendingGames" :index="i" :key="i">
           <GameCard :game="game" />
         </slide>
       </carousel-3d>
@@ -100,8 +100,8 @@
               <rect width="784" height="404" fill="url(#ca9667ae-9f92-4be7-abcb-9e3d727f2941)" />
             </svg>
             <transition name="fade">
-              <div v-if="data" class="relative px-6 md:px-0">
-                <ReviewCard :data="data.review" />
+              <div v-if="review" class="relative px-6 md:px-0">
+                <ReviewCard :data="review" />
               </div>
             </transition>
           </div>
@@ -157,8 +157,8 @@
                 <rect width="784" height="404" fill="url(#e80155a9-dfde-425a-b5ea-1f6fadd20131)" />
               </svg>
               <transition name="fade">
-                <div v-if="data" class="relative px-6 md:px-0">
-                  <RecommendationCard :data="data.recommendation" />
+                <div v-if="recommendation" class="relative px-6 md:px-0">
+                  <RecommendationCard :data="recommendation" />
                 </div>
               </transition>
               <!-- <img class="relative mx-auto" width="490" src="" alt="" /> -->
@@ -168,7 +168,7 @@
       </div>
     </div>
 
-    <Stats v-if="data" class="my-15" :data="data.stats" />
+    <Stats v-if="stats" class="my-15" :data="stats" />
 
     <div class="overflow-hidden py-8 lg:py-12">
       <div class="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-screen-xl">
@@ -221,7 +221,7 @@
               <rect width="784" height="404" fill="url(#ca9667ae-9f92-4be7-abcb-9e3d727f2941)" />
             </svg>
             <transition name="fade">
-              <div v-if="data" class="relative px-6 md:px-0">
+              <div class="relative px-6 md:px-0">
                 <BaseCard>
                   <template #body>
                     <div class="flex">
@@ -269,7 +269,7 @@
       </h3>
     </Container>
 
-    <div v-if="data">
+    <div v-if="recentActivity">
       <carousel-3d
         :border="0"
         :height="175"
@@ -282,7 +282,7 @@
         :autoplay="true"
         :autoplay-timeout="5000"
         :autoplayHoverPause="true">
-        <slide v-for="(activity, i) in data.recent_user_activity" :index="i" :key="i">
+        <slide v-for="(activity, i) in recentActivity" :index="i" :key="i">
           <UserActivityCard :data="activity" />
         </slide>
       </carousel-3d>
@@ -303,7 +303,7 @@ import UserActivityCard from '@/components/cards/UserActivity.vue'
 import Container from '@/components/layout/Container.vue'
 import Stats from '@/components/home/Stats.vue'
 import Footer from '@/components/layout/Footer.vue'
-import { homeService } from '@/services';
+import { homeService, gameService, reviewService, recommendationService, libraryService } from '@/services';
 
 export default {
     name: 'Home',
@@ -312,24 +312,89 @@ export default {
     },
     data () {
       return {
-        data: null,
+        game: null,
+        trendingGames: null,
+        review: null,
+        recommendation: null,
+        stats: null,
+        recentActivity: null
       }
     },
     methods: {
-      getData () {
+      getGame () {
+        const { dispatch } = this.$store;
+        gameService.get(1).then(
+          response => {
+            this.game = response.data;
+          },
+          error => {
+            dispatch('alert/error', "Unable to retrieve game", { root: true });
+          }
+        );
+      },
+      getTrendingGames () {
+        const { dispatch } = this.$store;
+        gameService.getTrending().then(
+          response => {
+            this.trendingGames = response.data;
+          },
+          error => {
+            dispatch('alert/error', "Unable to retrieve trending games", { root: true });
+          }
+        );
+      },
+      getReview () {
+        const { dispatch } = this.$store;
+        reviewService.getRecent().then(
+          response => {
+            this.review = response.data;
+          },
+          error => {
+            dispatch('alert/error', "Unable to retrieve review", { root: true });
+          }
+        );
+      },
+      getRecommendation () {
+        const { dispatch } = this.$store;
+        recommendationService.getRecent().then(
+          response => {
+            this.recommendation = response.data;
+          },
+          error => {
+            dispatch('alert/error', "Unable to retrieve recommendation", { root: true });
+          }
+        );
+      },
+      getUserActivity () {
+        const { dispatch } = this.$store;
+        libraryService.getRecent().then(
+          response => {
+            this.recentActivity = response.data;
+          },
+          error => {
+            dispatch('alert/error', "Unable to retrieve recent user activity", { root: true });
+          }
+        );
+      },
+      getStats () {
         const { dispatch } = this.$store;
         homeService.get().then(
           response => {
-            this.data = response.data;
+            this.stats = response.data.stats;
           },
           error => {
-            dispatch('alert/error', "Unable to retrieve data", { root: true });
+            dispatch('alert/error', "Unable to retrieve stats", { root: true });
           }
         );
       }
     },
     created () {
-        this.getData();
+        this.getGame();
+        this.getTrendingGames();
+        this.getReview();
+        this.getRecommendation();
+        this.getStats();
+        this.getUserActivity();
     }
 };
 </script>
