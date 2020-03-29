@@ -1,5 +1,4 @@
 const ax = require('axios');
-import config from 'config';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { userService } from '@/services';
 
@@ -13,7 +12,7 @@ import store from '../store'
  */
 
 const instance = ax.create({
-  baseURL: `${config.apiUrl}`
+  baseURL: `${process.env.VUE_APP_ROOT_API}`
 });
 
 // Set default axios headers
@@ -56,7 +55,7 @@ instance.interceptors.response.use(function (response) {
  */
 
 // Function that will be called to refresh authorization
-const refreshAuthLogic = failedRequest => axios.get(`${config.apiUrl}/users/refresh`).then(response => {
+const refreshAuthLogic = failedRequest => axios.get(`${process.env.VUE_APP_ROOT_API}/users/refresh`).then(response => {
     localStorage.setItem('access_token', JSON.stringify(response.data.access_token));
     failedRequest.response.config.headers['Authorization'] = 'Bearer ' + response.data.access_token;
     return Promise.resolve();
