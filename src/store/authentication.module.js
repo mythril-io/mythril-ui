@@ -42,7 +42,7 @@ export const authentication = {
             userService.verify(token)
                 .then(
                     response => {
-                        commit('verifySuccess', response.data);
+                        commit('verifySuccess', response.data.user);
                         router.push('/');
                         dispatch('alert/success', "Your account has been verified!", { root: true });
                     },
