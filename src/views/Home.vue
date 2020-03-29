@@ -323,7 +323,7 @@ export default {
     methods: {
       getGame () {
         const { dispatch } = this.$store;
-        gameService.get(1).then(
+        gameService.get(295).then(
           response => {
             this.game = response.data;
           },
