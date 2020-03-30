@@ -17,7 +17,7 @@
           <p class="text-sm antialiased">
             {{ data.play_status.name }}: <router-link :to="{ name: 'Game', params: { id: data.game.id }}" class="text-primary hover:underline">{{ data.game.title }}</router-link>.
           </p>
-          <p><small class="mt-2 md:mt-5 tag">2 days ago</small></p>
+          <p><small class="mt-2 md:mt-5 tag">{{ data.created_at | ago }}</small></p>
         </div>
         <div
           class="h-full w-5/12 md:w-1/3 image-clip-path flex-none bg-cover bg-no-repeat bg-center text-center overflow-hidden group-hover:scale-105 transform duration-200 ease-out "
