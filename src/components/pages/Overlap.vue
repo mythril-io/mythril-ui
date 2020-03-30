@@ -2,30 +2,35 @@
   <div class="bg-gray-50">
 
     <div class="bg-primary py-10 pb-32 border-t border-gray-700" v-bind:style="coverPhoto">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Container :padding="false">
 
         <slot name="header"></slot>
 
-      </div>
+      </Container>
     </div>
 
-    <main class="-mt-20">
-      <div class="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
+    <main class="-mt-20 pb-12">
+      <Container :padding="false">
         <div class="bg-white overflow-hidden shadow rounded-lg min-h-1/2">
 
           <slot name="content"></slot>
 
         </div>
-      </div>
+      </Container>
     </main>
 
   </div>
 </template>
 
 <script>
+import Container from '@/components/layout/Container.vue'
+
 export default {
   name: 'OverlapPage',
   props: ['coverPhoto'],
+  components: {
+    Container
+  },
   // props: {
   //   coverPhoto: {
   //     type: Object,
