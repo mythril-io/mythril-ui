@@ -2,13 +2,13 @@
   <Overlap :coverPhoto="data ? getGameBannerStyle(data.banner) : ''">
     <template #header>
 
-      <div class="min-w-0 flex-1 md:flex sm:items-center sm:justify-between" v-if="data">
+      <div class="min-w-0 flex-1 lg:flex sm:items-center sm:justify-between" v-if="data">
         <div>
-          <div class="flex items-center">
+          <div class="lg:flex items-center">
             <div class="flex-shrink-0">
-              <img class="inline-block h-56 w-56 rounded-md" :src="getGameIcon(data)" :alt="data.title" />
+              <img class="inline-block h-48 w-48 lg:h-56 lg:w-56 rounded-md" :src="getGameIcon(data)" :alt="data.title" />
             </div>
-            <div class="flex-1 ml-4">
+            <div class="flex-1 mt-3 lg:mt-0 lg:ml-4">
               <h2 class="text-2xl font-bold leading-7 text-white sm:text-3xl sm:leading-9 sm:truncate">
                 {{ data.title }}
               </h2>
@@ -18,7 +18,7 @@
             </div>
           </div>
         </div>
-        <div class="mt-5 md:mt-0 md:h-56 flex items-end">
+        <div class="mt-3 lg:mt-0 lg:h-56 flex items-end">
           <div>
             <button type="button" class="leading-5 button button-primary" @click="openLibraryModal">
               Add to Library
