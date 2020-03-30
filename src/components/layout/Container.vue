@@ -1,6 +1,6 @@
 <template>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+  <div class="mx-auto px-4 sm:px-6 md:px-8" v-bind:class="maxWidth">
     <div v-bind:class="{ 'py-4 mb-6': padding }">
 
       <slot></slot>
@@ -19,6 +19,11 @@ export default {
         required: false,
         default: true
       },
+      maxWidth: {
+        type: String,
+        required: false,
+        default: 'max-w-7xl'
+      }
     },
 };
 </script>

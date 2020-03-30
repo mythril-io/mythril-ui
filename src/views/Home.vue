@@ -27,7 +27,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#FFF" fill-opacity="1" d="M0,192L48,192C96,192,192,192,288,208C384,224,480,256,576,250.7C672,245,768,203,864,181.3C960,160,1056,160,1152,170.7C1248,181,1344,203,1392,213.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
     </div>
 
-    <Container class="z-50 relative xl:-mt-20">
+    <Container class="z-50 relative xl:-mt-20" maxWidth="max-w-xl">
       <h3 class="text-4xl leading-8 font-extrabold tracking-tight text-gray-700 sm:text-5xl sm:leading-10">
         Trending
       </h3>
@@ -263,7 +263,7 @@
     </div>
 
 
-    <Container class="mt-10">
+    <Container class="mt-10" maxWidth="max-w-xl">
       <h3 class="text-4xl leading-8 font-extrabold tracking-tight text-gray-700 sm:text-5xl sm:leading-10">
         Recent User Activity
       </h3>

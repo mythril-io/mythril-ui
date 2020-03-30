@@ -5,7 +5,7 @@
       <div class="flex items-center px-2 lg:px-0">
         <div class="flex-shrink-0">
           <router-link :to="{ name: 'Home' }" class="focus:outline-none">
-            <img class="block h-8 w-auto" style="font-family: oswald_stencilbold;" src="@/assets/logo.svg" alt="Mythril.io" />
+            <img class="block h-8 w-auto" src="@/assets/logo.svg" alt="Mythril.io" />
           </router-link>
         </div>
         <div class="hidden lg:block lg:ml-5">
