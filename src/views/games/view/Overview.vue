@@ -42,7 +42,8 @@
               <div>
                 <div class="flex justify-center items-center is-primary rounded-bl rounded-br p-4 opacity-75">
                   <span class="font-bold text-3xl md:text-2xl lg:text-3xl leading-9">
-                    {{ game.score | percentageFormat }}
+                    <span v-if="game.score">{{ game.score | percentageFormat }}</span>
+                    <span v-else>-</span>
                   </span>
                 </div>
               </div>

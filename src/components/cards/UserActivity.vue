@@ -4,8 +4,8 @@
 
       <div class="group flex justify-between items-center h-full hover:opacity-100" style="height: 175px;">
         <div class="flex-none pl-5 hidden lg:inline-flex">
-          <router-link :to="{ name: 'UserProfile', params: { id: data.user.id }}">
-            <img class="inline-block h-24 w-24 rounded-full" :src="getUserAvatar(data.user)" :alt="data.user.username" />
+          <router-link :to="{ name: 'UserProfile', params: { id: data.user.id }}" class="h-24 w-24 inline-block">
+            <img class="rounded-full" :src="getUserAvatar(data.user)" :alt="data.user.username" />
           </router-link>
         </div>
         <div class="w-7/12 md:w-1/2 px-5 -mt-3 md:mt-0">
