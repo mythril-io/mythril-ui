@@ -59,11 +59,11 @@
       <div class="bg-gray-50">
         <div>
           <div class="sm:hidden">
-            <select class="form-select block w-full">
-              <router-link tag="option" :to="{ name: 'Game' }">Overview</router-link>
-              <router-link tag="option" :to="{ name: 'GameReviews' }">Reviews</router-link>
-              <router-link tag="option" :to="{ name: 'GameRecommendations' }">Recommendations</router-link>
-              <router-link tag="option" :to="{ name: 'GameReleases' }">Releases</router-link>
+            <select class="form-select block w-full" @change="changeTab($event.target.value)">
+              <option value="Game">Overview</option>
+              <option value="GameReviews">Reviews</option>
+              <option value="GameRecommendations">Recommendations</option>
+              <option value="GameReleases">Releases</option>
             </select>
           </div>
           <div class="hidden sm:block">
@@ -139,6 +139,9 @@ export default {
     },
     openFavouriteModal () {
       this.getCurrentUser() ? this.favouriteModal=true : this.$router.push({ name: 'Login' });
+    },
+    changeTab(routeName) {
+      this.$router.push({ name: routeName });
     },
     getData (id) {
       // Obtain current user's favourite

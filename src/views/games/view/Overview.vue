@@ -22,7 +22,7 @@
       </div> -->
 
       <div class="grid md:grid-cols-12 gap-6">
-        <div class="col-span-12 md:col-span-7">
+        <div class="col-span-12 lg:col-span-7">
           <Title title="Description" />
           <div class="bg-gray-50 p-4 rounded-md">
             <span v-html="compiledMarkdown"></span>
@@ -32,16 +32,16 @@
           <Title class="mt-6" title="Recent Recommendations" />
           <Message content="No recommendations found. Be the first to write one! Write a Recommendation" /> -->
         </div>
-        <div class="col-span-12 md:col-span-5">
+        <div class="col-span-12 lg:col-span-5">
 
           <div class="grid grid-cols-3 gap-4 mb-5">
             <div>
-              <div class="text-center md:text-xs lg:text-base font-medium tracking-widest is-dark p-1 rounded-tl rounded-tr">
+              <div class="text-center text-base font-medium tracking-widest is-dark p-1 rounded-tl rounded-tr">
                 Score
               </div>
               <div>
                 <div class="flex justify-center items-center is-primary rounded-bl rounded-br p-4 opacity-75">
-                  <span class="font-bold text-3xl md:text-2xl lg:text-3xl leading-9">
+                  <span class="font-bold text-3xl leading-9">
                     <span v-if="game.score">{{ game.score | percentageFormat }}</span>
                     <span v-else>-</span>
                   </span>
@@ -49,24 +49,24 @@
               </div>
             </div>
             <div>
-              <div class="text-center text-base md:text-xs lg:text-base font-medium tracking-widest is-dark p-1 rounded-tl rounded-tr">
+              <div class="text-center text-base font-medium tracking-widest is-dark p-1 rounded-tl rounded-tr">
                 Ranked
               </div>
               <div>
                 <div class="flex justify-center items-center is-primary rounded-bl rounded-br p-4 opacity-75">
-                  <span class="font-bold text-3xl md:text-2xl lg:text-3xl leading-9">
+                  <span class="font-bold text-3xl leading-9">
                     #{{ game.score_rank }}
                   </span>
                 </div>
               </div>
             </div>
             <div>
-              <div class="text-center text-base md:text-xs lg:text-base font-medium tracking-widest is-dark p-1 rounded-tl rounded-tr">
+              <div class="text-center text-base font-medium tracking-widest is-dark p-1 rounded-tl rounded-tr">
                 Popularity
               </div>
               <div>
                 <div class="flex justify-center items-center is-primary rounded-bl rounded-br p-4 opacity-75">
-                  <span class="font-bold text-3xl md:text-2xl lg:text-3xl leading-9">
+                  <span class="font-bold text-3xl leading-9">
                     #{{ game.popularity_rank }}
                   </span>
                 </div>
@@ -97,10 +97,10 @@
 
           <div v-show="true">
             <Loading v-if="loading" :simple="true" />
-            <div class="grid grid-cols-4 gap-2" v-if="userActivity.length > 0 && !loading">
+            <div class="grid grid-cols-4 lg:gap-2" v-if="userActivity.length > 0 && !loading">
               <div class="flex items-center justify-center mb-3" v-for="entry in userActivity" :key="entry.id">
                 <Tooltip :content="`${entry.user.username}: ${entry.play_status.name} (${entry.release.platform.name})`">
-                  <router-link :to="{ name: 'UserProfile', params: { id: entry.user.id }}" class="overflow-hidden inline-block h-24 w-24 rounded-md border border-gray-100">
+                  <router-link :to="{ name: 'UserProfile', params: { id: entry.user.id }}" class="overflow-hidden inline-block h-16 w-16 sm:h-32 sm:w-32 lg:h-24 lg:w-24 rounded-md border border-gray-100">
                     <img class="h-full w-full object-cover opacity-75 hover:opacity-100 cursor-pointer transition hover:scale-105 transform duration-150 ease-in-out" :src="getUserAvatar(entry.user)" :alt="entry.user.username" />
                   </router-link>
                 </Tooltip>

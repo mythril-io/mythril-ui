@@ -2,11 +2,13 @@
   <div>
       <div class="mb-7">
         <div class="sm:hidden">
-          <select class="form-select block w-full">
-            <option>My Account</option>
-            <option>Company</option>
-            <option selected>Team Members</option>
-            <option>Billing</option>
+          <select class="form-select block w-full" @change="changeTab($event.target.value)">
+            <option value="UserLibrary">All</option>
+            <option value="UserLibraryPlaying">Currently Playing</option>
+            <option value="UserLibraryCompleted">Completed</option>
+            <option value="UserLibraryPlanning">Planning</option>
+            <option value="UserLibraryOnHold">On Hold</option>
+            <option value="UserLibraryDropped">Dropped</option>
           </select>
         </div>
         <div class="hidden sm:block">
@@ -46,5 +48,10 @@
 
 export default {
   name: 'UserLibrary',
+  methods: {
+    changeTab(routeName) {
+      this.$router.push({ name: routeName });
+    }
+  }
 }
 </script>

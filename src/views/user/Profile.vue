@@ -39,13 +39,13 @@
       <div class="bg-gray-50">
         <div>
           <div class="sm:hidden">
-            <select class="form-select block w-full">
-              <router-link tag="option" :to="{ name: 'UserProfile' }">Overview</router-link>
-              <router-link tag="option" :to="{ name: 'UserLibrary' }">Library</router-link>
-              <router-link tag="option" :to="{ name: 'UserReviews' }">Reviews</router-link>
-              <router-link tag="option" :to="{ name: 'UserRecommendations' }">Recommendations</router-link>
-              <router-link tag="option" :to="{ name: 'UserFollowing' }">Followers</router-link>
-              <router-link tag="option" :to="{ name: 'UserFollowers' }">Following</router-link>
+            <select class="form-select block w-full" @change="changeTab($event.target.value)">
+              <option value="UserProfile">Overview</option>
+              <option value="UserLibrary">Library</option>
+              <option value="UserReviews">Reviews</option>
+              <option value="UserRecommendations">Recommendations</option>
+              <option value="UserFollowers">Followers</option>
+              <option value="UserFollowing">Following</option>
             </select>
           </div>
           <div class="hidden sm:block">
@@ -139,6 +139,9 @@ export default {
           dispatch('alert/error', 'Unable to unfollow user', { root: true });
         }
       );
+    },
+    changeTab(routeName) {
+      this.$router.push({ name: routeName });
     },
     getData (id) {
       // this.loading = true;
