@@ -120,10 +120,7 @@ export default {
     },
   },
   created () {
-    // var search = location.search.substring(1);
-    // var filters = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
-    // this.filters = filters;
-    this.getData();
+    this.$route.query.search ? this.getData({search: this.$route.query.search}) : this.getData()
   },
 }
 </script>
