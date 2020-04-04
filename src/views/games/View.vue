@@ -19,13 +19,16 @@
           </div>
         </div>
         <div class="mt-3 lg:mt-0 lg:h-56 flex items-end">
-          <div>
-            <button type="button" class="leading-5 button button-primary" @click="openLibraryModal">
-              Add to Library
+          <div class="flex items-center">
+            <button type="button" class="leading-5 button" v-bind:class="[userHasLibrary ? 'button-warning' : 'button-primary']" @click="openLibraryModal">
+              {{ userHasLibrary ? 'Edit Library' : 'Add to Library' }}
             </button>
             <button type="button" class="ml-2 leading-5 button button-danger" @click="openFavouriteModal">
-              <svg class="fill-current inline-block -mx-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path class="heroicon-ui" d="M12.76 3.76a6 6 0 0 1 8.48 8.48l-8.53 8.54a1 1 0 0 1-1.42 0l-8.53-8.54a6 6 0 0 1 8.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 1 0-5.66-5.66l-1.46 1.47a1 1 0 0 1-1.42 0L9.83 5.17a4 4 0 1 0-5.66 5.66L12 18.66l7.83-7.83z"/>
+              <svg v-if="userHasFavourite" fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 -mx-1">
+                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+              </svg>
+              <svg v-else fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5 -mx-1">
+                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
               </svg>
             </button>
           </div>
@@ -36,7 +39,8 @@
         <LibraryModal
           v-if="data && libraryModal"
           :open="libraryModal"
-          :data="data"
+          :game="data"
+          v-on:update="updateUserHasLibrary($event)"
           v-on:cancel="libraryModal=false"
         />
       </transition>
@@ -46,9 +50,8 @@
           v-if="data && favouriteModal"
           :open="favouriteModal"
           :game="data"
-          :favourite="favourite"
-          v-on:post="updateFavourite($event)"
-          v-on:delete="removeFavourite()"
+          v-on:post="userHasFavourite=true"
+          v-on:delete="userHasFavourite=false"
           v-on:cancel="favouriteModal=false"
         />
       </transition>
@@ -105,7 +108,7 @@ import Overlap from '@/components/pages/Overlap.vue'
 import LibraryModal from '@/components/modals/Library.vue'
 import FavouriteModal from '@/components/modals/Favourite.vue'
 import { iconsMixin, getResourceMixin, authMixin } from '@/mixins';
-import { gameService, favouriteService } from '@/services';
+import { gameService } from '@/services';
 
 export default {
   name: 'Game',
@@ -117,35 +120,35 @@ export default {
     return {
       libraryModal: false,
       favouriteModal: false,
-      favourite: null,
+      userHasFavourite: false,
+      userHasLibrary: false
     }
   },
   methods: {
-    addFavourite () {
-      this.getCurrentUser() ? this.favouriteModal=true : this.$router.push({ name: 'Login' });
-    },
-    updateFavourite(favourite) {
-      this.favourite = favourite;
-      this.favouriteModal = false;
-      this.$store.dispatch('alert/success', 'Added to favourites', { root: true });
-    },
-    removeFavourite() {
-      this.favourite = null;
-      this.favouriteModal = false;
-      this.$store.dispatch('alert/success', 'Removed from favourites', { root: true });
-    },
     openLibraryModal () {
       this.getCurrentUser() ? this.libraryModal=true : this.$router.push({ name: 'Login' });
     },
     openFavouriteModal () {
       this.getCurrentUser() ? this.favouriteModal=true : this.$router.push({ name: 'Login' });
     },
+    updateUserHasLibrary(libraryLength) {
+      libraryLength > 0 ? this.userHasLibrary = true : this.userHasLibrary = false;
+    },
     changeTab(routeName) {
       this.$router.push({ name: routeName });
     },
+    getUserStatus(id) {
+      gameService.getUserStatus(id).then(
+        response => {
+          this.userHasFavourite = (response.data.favourite == "true");
+          this.userHasLibrary = (response.data.library == "true");
+        },
+        error => { }
+      );
+    },
     getData (id) {
-      // Obtain current user's favourite
-      this.getCurrentUser() ? this.getFavourite() : this.favourite=null;
+      // Obtain current user's library and favourite
+      this.getCurrentUser() ? this.getUserStatus(id) : ''
 
       // Get game data
       const { dispatch } = this.$store;
@@ -160,12 +163,6 @@ export default {
         }
       );
     },
-    getFavourite () {
-      favouriteService.getByGameAndUser(this.$route.params.id).then(
-        response => this.favourite = response.data,
-        error => { }
-      );
-    }
   },
 }
 </script>

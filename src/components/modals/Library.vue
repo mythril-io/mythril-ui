@@ -4,7 +4,7 @@
 
       <div class="mt-3 text-center sm:mt-0 sm:text-left">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
-          Library - {{ data.title }}
+          Library - {{ game.title }}
         </h3>
         <Loading v-if="loading" :simple="true"/>
         <div v-else class="flex flex-wrap justify-between mt-2">
@@ -91,7 +91,7 @@
               <LibraryForm
                 class="mt-4"
                 :deleting="deleting"
-                :releases="data.releases"
+                :releases="game.releases"
                 :library="userLibrary"
                 :playStatuses="playStatuses"
                 :selected="selected"
@@ -127,7 +127,7 @@ export default {
         type: Boolean,
         required: true,
       },
-      data: {
+      game: {
         type: Object,
         required: true
       },
@@ -160,6 +160,7 @@ export default {
         this.editing = false;
         this.deleting = false;
         this.selected = null;
+        this.$emit('update', this.userLibrary.length)
       },
       updateLibraryEntry () {
         this.getUserLibrary(this.$route.params.id)

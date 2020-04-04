@@ -63,15 +63,12 @@ export default {
     game: {
       type: Object,
       required: true
-    },
-    favourite: {
-      required: true,
-      default: null
-    },
+    }
   },
   data () {
     return {
       loading: false,
+      favourite: null,
       release: null
     }
   },
@@ -90,7 +87,9 @@ export default {
       }
       favouriteService.post(resource).then(
         response => {
-          _this.$emit('post', response.data);
+          dispatch('alert/success', 'Added to favourites', { root: true });
+          _this.$emit('post');
+          _this.$emit('cancel');
         },
         error => {
           dispatch('alert/error', 'Unable to add favourite', { root: true });
@@ -100,19 +99,30 @@ export default {
     deleteResource () {
       const { dispatch } = this.$store;
       const _this = this;
-
       favouriteService.deleteResource(this.favourite.id).then(
         response => {
+          dispatch('alert/success', 'Removed from favourites', { root: true });
           _this.$emit('delete');
+          _this.$emit('cancel');
         },
         error => {
           dispatch('alert/error', 'Unable to remove favourite', { root: true });
         }
       );
     },
+    getFavourite () {
+      this.loading = true;
+      favouriteService.getByGameAndUser(this.$route.params.id).then(
+        response => {
+          this.favourite = response.data;
+          this.loading = false;
+        },
+        error => { this.loading = false }
+      );
+    }
   },
-  // created () {
-  //   this.favourite ? this.exists = false : '';
-  // }
+  created () {
+    this.$route.params.id ? this.getFavourite(this.$route.params.id) : ''
+  }
 }
 </script>

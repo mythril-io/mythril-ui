@@ -4,6 +4,7 @@ export const gameService = {
     getByPage,
     search,
     getTrending,
+    getUserStatus,
     get,
     post,
     put,
@@ -39,6 +40,16 @@ function search(query='') {
 
 function getTrending() {
   return axios.get(rootURL + 'trending')
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function getUserStatus(id) {
+  return axios.get(rootURL + id + '/userStatus')
       .then(response => {
           return response;
       }).catch(function (error) {

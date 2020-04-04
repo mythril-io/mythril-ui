@@ -47,19 +47,26 @@
                     </div>
                   </div>
                 </div>
-                <SelectRelease v-else id="release" :options="releases" v-model="entry.release" />
+                <div v-else>
+                  <ValidationProvider rules="required">
+                    <SelectRelease id="release" name="release" :options="releases" v-model="entry.release" />
+                  </ValidationProvider>
+                </div>
               </div>
 
               <div class="sm:col-span-3">
                 <label for="status" class="block text-sm font-medium leading-5 text-gray-700">
                   Status
                 </label>
-                <div class="mt-1 rounded-md shadow-sm">
-                  <select id="status" v-model="entry.play_status" class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    <option disabled value="">Select a Status</option>
-                    <option v-for="status in playStatuses" v-bind:value="status" :key="status.id">{{ status.name }}</option>
-                  </select>
-                </div>
+                <ValidationProvider rules="required" v-slot="{ errors }">
+                  <div class="mt-1 rounded-md shadow-sm">
+                    <select id="status" v-model="entry.play_status" class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                      <option disabled value="">Select a Status</option>
+                      <option v-for="status in playStatuses" v-bind:value="status" :key="status.id">{{ status.name }}</option>
+                    </select>
+                  </div>
+                  <span class="text-sm text-red-700">{{ errors[0] }}</span>
+                </ValidationProvider>
               </div>
 
               <div class="sm:col-span-3">
@@ -68,7 +75,7 @@
                 </label>
                 <div class="mt-1 rounded-md shadow-sm">
                   <select id="score" v-model="entry.score" class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                    <option disabled value="">Select a Score</option>
+                    <option disabled :value="null">Select a Score</option>
                     <option v-for="n in 10" v-bind:value="n" :key="n">{{n}}</option>
                   </select>
                 </div>
@@ -183,7 +190,7 @@ export default {
         own: 1,
         digital: 0,
         hours: null,
-        score: '',
+        score: null,
         notes: '',
         game: {
           id: this.$route.params.id
