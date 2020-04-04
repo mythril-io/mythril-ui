@@ -22,9 +22,9 @@ export const getResourceMixin = {
           immediate: true,
       }
   },
-  created () {
-      if (this.$route.params.id) {
-        this.getData(this.$route.params.id)
-      }
-  }
+  // created () {
+  //     if (this.$route.params.id) {
+  //       this.getData(this.$route.params.id)
+  //     }
+  // }
 }
