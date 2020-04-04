@@ -63,7 +63,7 @@
 
           <div class="mt-6">
             <span class="block w-full rounded-md shadow-sm">
-              <vue-recaptcha :sitekey="siteKey" :loadRecaptchaScript="true">
+              <vue-recaptcha :sitekey="siteKey">
                 <button type="submit" class="w-full flex justify-center button button-primary">
                   Register
                 </button>
