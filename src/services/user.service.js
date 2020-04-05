@@ -43,8 +43,8 @@ function logout() {
     localStorage.removeItem('access_token');
 }
 
-function register(email, username, password) {
-    return axios.post(rootURL + 'register', { email, username, password })
+function register(email, username, password, recaptchaToken) {
+    return axios.post(rootURL + 'register', { email, username, password, recaptchaToken })
         .then(response => {
             return response;
         }).catch(function (error) {
