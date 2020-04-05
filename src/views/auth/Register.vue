@@ -12,7 +12,7 @@
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(onSubmit)">
+        <form @submit.prevent="handleSubmit(post)">
           <div>
             <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
               Email address
@@ -61,13 +61,25 @@
             </ValidationProvider>
           </div>
 
+          <div class="mt-6 flex justify-center">
+            <ValidationProvider rules="required" name="recaptcha" v-slot="{ errors }">
+              <vue-recaptcha
+                ref="recaptcha"
+                v-model="recaptchaToken"
+                @verify="recaptchaToken=$event"
+                @expired="onCaptchaExpired"
+                :sitekey="siteKey"
+                :loadRecaptchaScript="true"
+              ></vue-recaptcha>
+              <span class="text-sm text-red-700">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </div>
+
           <div class="mt-6">
             <span class="block w-full rounded-md shadow-sm">
-              <vue-recaptcha :sitekey="siteKey">
-                <button type="submit" class="w-full flex justify-center button button-primary">
-                  Register
-                </button>
-              </vue-recaptcha>
+              <button :disabled="submitted" type="submit" class="w-full flex justify-center button button-primary">
+                Register
+              </button>
             </span>
           </div>
         </form>
@@ -77,7 +89,6 @@
             Resend Verification Email
           </router-link>
         </div>
-
 
       </div>
     </div>
@@ -92,33 +103,40 @@ import VueRecaptcha from 'vue-recaptcha';
 import Hero from '@/components/Hero.vue'
 
 export default {
+    name: 'Register',
     data () {
         return {
             email: '',
             username: '',
             password: '',
             confirmation: '',
-            siteKey: '6LenYE8UAAAAAOcNkodpMA6oWf2f4JVk_9GjYXGW',
-            submitted: false
+            submitted: false,
+            siteKey: '6LekHd8UAAAAAJLPAcxWDj_EzWrQO2smK_APWJx5',
+            recaptchaToken: ''
         }
     },
     components: { VueRecaptcha, Hero },
     methods: {
-        onSubmit () {
+        post () {
             this.submitted = true;
-            const { email, username, password } = this;
+            const _this = this;
+            const { email, username, password, recaptchaToken } = this;
             const { dispatch } = this.$store;
-            if (email && username && password) {
-              userService.register(email, username, password)
-                  .then(
-                      response => {
-                          dispatch('alert/success', response.data.message, { root: true });
-                      },
-                      error => {
-                          dispatch('alert/error', error, { root: true });
-                      }
-                  );
-            }
+            userService.register(email, username, password, recaptchaToken)
+            .then(
+                response => {
+                    dispatch('alert/success', response.data.message, { root: true });
+                },
+                error => {
+                    _this.onCaptchaExpired();
+                    _this.submitted = false;
+                    dispatch('alert/error', error, { root: true });
+                }
+            );
+        },
+        onCaptchaExpired () {
+            this.recaptchaToken = '';
+            this.$refs.recaptcha.reset();
         }
     }
 };
