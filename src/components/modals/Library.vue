@@ -80,7 +80,7 @@
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                   <button @click="$emit('cancel')" type="button" class="inline-flex justify-center w-full button button-white">
-                    Cancel
+                    Close
                   </button>
                 </span>
               </div>

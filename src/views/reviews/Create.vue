@@ -23,7 +23,7 @@
               <div v-if="review.game && review.release" class="mt-6">
                 <Message class="mt-2" background="bg-gray-100" content="Step 3: Write Your Review!" />
 
-                <ValidationProvider rules="required|min:500" v-slot="{ errors }">
+                <ValidationProvider rules="required|min:500" name="content" v-slot="{ errors }">
                   <vue-simplemde class="mt-2" id="content" name="content" v-model="review.content" :configs="editorConfig" ref="markdownEditor" />
                   <span class="text-sm text-red-700">{{ errors[0] }}</span>
                 </ValidationProvider>
