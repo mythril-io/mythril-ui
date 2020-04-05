@@ -52,7 +52,7 @@
               <div v-if="recommendation.game && recommendation.release && recommendation.recommended_game && recommendation.recommended_release" class="mt-6">
                 <Message class="mt-2" background="bg-gray-100" content="Write Your Recommendation!" />
 
-                <ValidationProvider rules="required|min:200" v-slot="{ errors }">
+                <ValidationProvider rules="required|min:200" name="content" v-slot="{ errors }">
                   <vue-simplemde class="mt-2" id="content" name="content" v-model="recommendation.content" :configs="editorConfig" ref="markdownEditor" />
                   <span class="text-sm text-red-700">{{ errors[0] }}</span>
                 </ValidationProvider>
