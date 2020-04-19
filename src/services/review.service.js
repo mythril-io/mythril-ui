@@ -5,6 +5,9 @@ export const reviewService = {
     getByGameAndPage,
     getByUserAndPage,
     getRecent,
+    upvote,
+    downvote,
+    getUserVote,
     get,
     post,
     put,
@@ -46,6 +49,36 @@ function getByUserAndPage(id, page=1) {
 
 function getRecent() {
   return axios.get(rootURL + 'recent')
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function upvote(id) {
+  return axios.post(rootURL + id + '/upvote')
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function downvote(id) {
+  return axios.post(rootURL + id + '/downvote')
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function getUserVote(id) {
+  return axios.get(rootURL + id + '/uservote')
       .then(response => {
           return response;
       }).catch(function (error) {

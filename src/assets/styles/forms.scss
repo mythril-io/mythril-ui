@@ -5,3 +5,20 @@
 .input:focus {
   @apply outline-none shadow-outline-blue border-blue-300;
 }
+
+/* Progress Bars */
+
+.progress {
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 290486px;
+  display: block;
+  height: 0.75rem;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+  @apply bg-danger;
+}
+.progress::-moz-progress-bar {
+    @apply bg-primary;
+}
