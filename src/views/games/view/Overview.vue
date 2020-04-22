@@ -180,19 +180,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-  .progress {
-    -webkit-appearance: none;
-    border: none;
-    border-radius: 290486px;
-    display: block;
-    height: 0.75rem;
-    overflow: hidden;
-    padding: 0;
-    width: 100%;
-  }
-  .progress::-moz-progress-bar {
-      background-color: #00d1b2;
-  }
-</style>

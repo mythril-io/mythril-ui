@@ -43,7 +43,7 @@
               <div class="markdown" v-html="compiledMarkdown(data.content)"></div>
 
               <div class="flex justify-center items-center mt-10">
-                <div class="flex justify-center items-center is-primary rounded-md p-7">
+                <div class="flex justify-center items-center is-primary rounded-md p-7 shadow">
                   <span class="font-bold text-5xl leading-9">
                     {{ data.score }}%
                   </span>
@@ -51,12 +51,56 @@
               </div>
 
               <div class="mx-auto w-full lg:w-4/5 -mt-5">
-                <div class="bg-gray-100 rounded-md text-center px-4 pb-6 pt-8">
-                  {{ data.summary }}
+                <div class="bg-gray-50 rounded-md text-center px-4 pt-12 pb-4">
+                  <div>
+                    {{ data.summary }}
+                  </div>
+                  <div class="flex flex-wrap md:flex-no-wrap md:items-center justify-center md:justify-between mt-5">
+                    <div class="text-center mb-2 md:mb-0 w-full md:w-auto order-2 md:order-none text-sm text-gray-600">
+                      <span v-if="totalLikes">
+                        {{ data.likes }} out of {{ totalLikes }} users liked this review
+                      </span>
+                      <span v-else>No users have liked this review</span>
+                    </div>
+                    <div class="mb-2 md:mb-0 order-1 md:order-none">
+                      <button type="button" class="leading-5 button button-sentiment fill-current" :class="userSentiment==1 ? 'text-white bg-primary' : 'text-primary'"  @click="like">
+                        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6 -mx-1">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                      <button type="button" class="ml-2 leading-5 button button-sentiment fill-current" :class="userSentiment==0 ? 'text-white bg-danger' : 'text-danger'" @click="dislike">
+                        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6 -mx-1">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-7.536 5.879a1 1 0 001.415 0 3 3 0 014.242 0 1 1 0 001.415-1.415 5 5 0 00-7.072 0 1 1 0 000 1.415z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <progress v-if="totalLikes" max="100" class="progress mt-2" :value="likePercentage">{{ likePercentage }}</progress>
                 </div>
               </div>
 
-              <div class="mt-5 text-gray-300">Last Updated: {{ data.updated_at | dateFormat }}</div>
+              <!-- <div class="mx-auto w-4/5 lg:w-3/5 p-4 -mt-5 bg-white rounded-md shadow">
+                <div class="flex flex-wrap md:flex-no-wrap md:items-center justify-center md:justify-between">
+                  <div class="text-center mb-2 md:mb-0 w-full md:w-auto">
+                    6 out of 8 users liked this review
+                  </div>
+                  <div class="mb-2 md:mb-0">
+                    <button type="button" class="leading-5 button button-primary">
+                      <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6 -mx-1">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd"></path>
+                      </svg>
+                    </button>
+                    <button type="button" class="ml-2 leading-5 button button-danger">
+                      <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6 -mx-1">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-7.536 5.879a1 1 0 001.415 0 3 3 0 014.242 0 1 1 0 001.415-1.415 5 5 0 00-7.072 0 1 1 0 000 1.415z" clip-rule="evenodd"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <progress max="100" class="progress mt-2" value="95">95</progress>
+              </div> -->
+
+              <div class="mt-5 text-sm tracking-tight text-gray-300">Last Updated: {{ data.updated_at | dateFormat }}</div>
             </div>
           </transition>
 
@@ -84,9 +128,59 @@ export default {
   components: {
     Loading, Overlap, EditForm
   },
+  data () {
+    return {
+      userSentiment: null,
+    }
+  },
+  computed: {
+    totalLikes () {
+      return this.data.likes + this.data.dislikes
+    },
+    likePercentage () {
+      if (this.totalLikes == 0) {
+        return 0
+      }
+      return Math.round((this.data.likes / (this.totalLikes))*100)
+    }
+  },
   methods: {
+    like() {
+      const { dispatch } = this.$store;
+      reviewService.like(this.$route.params.id).then(
+        response => {
+          this.data.likes = response.data.like_count;
+          this.data.dislikes = response.data.dislike_count;
+          this.userSentiment = response.data.user_sentiment;
+        },
+        error => {
+          dispatch('alert/error', 'Unable to like review', { root: true });
+        }
+      );
+    },
+    dislike() {
+      const { dispatch } = this.$store;
+      reviewService.dislike(this.$route.params.id).then(
+        response => {
+          this.data.likes = response.data.like_count;
+          this.data.dislikes = response.data.dislike_count;
+          this.userSentiment = response.data.user_sentiment;
+        },
+        error => {
+          dispatch('alert/error', 'Unable to dislike review', { root: true });
+        }
+      );
+    },
+    getUserSentiment () {
+      const { dispatch } = this.$store;
+      reviewService.getUserSentiment(this.$route.params.id).then(
+        response => this.userSentiment = response.data.user_sentiment,
+      );
+    },
     getData (id) {
       const { dispatch } = this.$store;
+      this.getCurrentUser() ? this.getUserSentiment() : ''
+
       reviewService.get(this.$route.params.id).then(
         response => {
           this.data = response.data;

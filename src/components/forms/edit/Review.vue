@@ -23,7 +23,7 @@
             <button type="submit" class="button button-primary">
               Save
             </button>
-            <button type="button" class="button button-gray ml-2" @click="$emit('cancel')">
+            <button type="button" class="button button-white ml-2" @click="$emit('cancel')">
               Cancel
             </button>
           </div>
