@@ -19,11 +19,11 @@
               </span>
               <span class="tag bg-primary text-white rounded-l-none mr-2 mb-1">{{ data.score | percentageFormat }}</span>
               <span class="tag bg-gray-100 mr-2" :aria-label="data.release.platform.name" data-balloon-pos="up">{{ data.release.platform.acronym }}</span>
-              <!-- <span class="tag bg-gray-100" aria-label="3 out of 4 users liked this review" data-balloon-pos="up">
+              <span class="tag bg-gray-100" :aria-label="userSentiment" data-balloon-pos="up">
                 <svg class="fill-current inline-block h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                   <path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                 </svg>
-              </span> -->
+              </span>
             </div>
           </div>
           <div class="w-full text-gray-700 text-sm synopsis">
@@ -61,6 +61,15 @@ export default {
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat'
         }
+      },
+      userSentiment () {
+        const total = this.data.likes + this.data.dislikes;
+        const userString = (total == 1 ? 'user' : 'users')
+
+        if (total > 0) {
+          return `${this.data.likes} out of ${total} ${userString} liked this review`
+        }
+        return '0 users liked this review'
       }
 
     },
