@@ -62,7 +62,7 @@
                       </span>
                       <span v-else>No users have liked this review</span>
                     </div>
-                    <div class="mb-2 md:mb-0 order-1 md:order-none" v-if="getCurrentUser()">
+                    <div class="mb-2 md:mb-0 order-1 md:order-none">
                       <button type="button" class="leading-5 button button-sentiment fill-current" :class="userSentiment==1 ? 'text-white bg-primary' : 'text-primary'"  @click="like">
                         <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6 -mx-1">
                           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd"></path>
@@ -125,6 +125,9 @@ export default {
   },
   methods: {
     like() {
+      if(!this.getCurrentUser()) {
+        return this.$router.push({ name: 'Login' });
+      }
       const { dispatch } = this.$store;
       reviewService.like(this.$route.params.id).then(
         response => {
@@ -138,6 +141,9 @@ export default {
       );
     },
     dislike() {
+      if(!this.getCurrentUser()) {
+        return this.$router.push({ name: 'Login' });
+      }
       const { dispatch } = this.$store;
       reviewService.dislike(this.$route.params.id).then(
         response => {
