@@ -57,27 +57,25 @@
                   </div>
                   <div class="flex flex-wrap md:flex-no-wrap md:items-center justify-center md:justify-between mt-5">
                     <div class="text-center mb-2 md:mb-0 w-full md:w-auto order-2 md:order-none text-sm text-gray-600">
-                      <span v-if="totalVotes">
-                        {{ data.upvote_count }} out of {{ totalVotes }} users liked this review
+                      <span v-if="totalLikes">
+                        {{ data.likes }} out of {{ totalLikes }} users liked this review
                       </span>
                       <span v-else>No users have liked this review</span>
                     </div>
                     <div class="mb-2 md:mb-0 order-1 md:order-none">
-                      <button type="button" class="leading-5 button button-primary" @click="upvote">
-                        <svg v-if="userVote=='UPVOTE'" fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6 -mx-1">
+                      <button type="button" class="leading-5 button button-sentiment fill-current" :class="userSentiment==1 ? 'text-white bg-primary' : 'text-primary'"  @click="like">
+                        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6 -mx-1">
                           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <span v-else>NOVOTE</span>
                       </button>
-                      <button type="button" class="ml-2 leading-5 button button-danger" @click="downvote">
-                        <svg v-if="userVote=='DOWNVOTE'" fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6 -mx-1">
+                      <button type="button" class="ml-2 leading-5 button button-sentiment fill-current" :class="userSentiment==0 ? 'text-white bg-danger' : 'text-danger'" @click="dislike">
+                        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6 -mx-1">
                           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-7.536 5.879a1 1 0 001.415 0 3 3 0 014.242 0 1 1 0 001.415-1.415 5 5 0 00-7.072 0 1 1 0 000 1.415z" clip-rule="evenodd"></path>
                         </svg>
-                        <span v-else>NOVOTE</span>
                       </button>
                     </div>
                   </div>
-                  <progress v-if="totalVotes" max="100" class="progress mt-2" :value="upvotePercentage">{{ upvotePercentage }}</progress>
+                  <progress v-if="totalLikes" max="100" class="progress mt-2" :value="likePercentage">{{ likePercentage }}</progress>
                 </div>
               </div>
 
@@ -132,56 +130,56 @@ export default {
   },
   data () {
     return {
-      userVote: null,
+      userSentiment: null,
     }
   },
   computed: {
-    totalVotes () {
-      return this.data.upvote_count + this.data.downvote_count
+    totalLikes () {
+      return this.data.likes + this.data.dislikes
     },
-    upvotePercentage () {
-      if (this.totalVotes == 0) {
+    likePercentage () {
+      if (this.totalLikes == 0) {
         return 0
       }
-      return Math.round((this.data.upvote_count / (this.totalVotes))*100)
+      return Math.round((this.data.likes / (this.totalLikes))*100)
     }
   },
   methods: {
-    upvote() {
+    like() {
       const { dispatch } = this.$store;
-      reviewService.upvote(this.$route.params.id).then(
+      reviewService.like(this.$route.params.id).then(
         response => {
-          this.data.upvote_count = response.data.upvote_count;
-          this.data.downvote_count = response.data.downvote_count;
-          this.userVote = response.data.user_vote;
+          this.data.likes = response.data.like_count;
+          this.data.dislikes = response.data.dislike_count;
+          this.userSentiment = response.data.user_sentiment;
         },
         error => {
           dispatch('alert/error', 'Unable to like review', { root: true });
         }
       );
     },
-    downvote() {
+    dislike() {
       const { dispatch } = this.$store;
-      reviewService.downvote(this.$route.params.id).then(
+      reviewService.dislike(this.$route.params.id).then(
         response => {
-          this.data.upvote_count = response.data.upvote_count;
-          this.data.downvote_count = response.data.downvote_count;
-          this.userVote = response.data.user_vote;
+          this.data.likes = response.data.like_count;
+          this.data.dislikes = response.data.dislike_count;
+          this.userSentiment = response.data.user_sentiment;
         },
         error => {
           dispatch('alert/error', 'Unable to dislike review', { root: true });
         }
       );
     },
-    getUserVote () {
+    getUserSentiment () {
       const { dispatch } = this.$store;
-      reviewService.getUserVote(this.$route.params.id).then(
-        response => this.userVote = response.data.vote,
+      reviewService.getUserSentiment(this.$route.params.id).then(
+        response => this.userSentiment = response.data.user_sentiment,
       );
     },
     getData (id) {
       const { dispatch } = this.$store;
-      this.getCurrentUser() ? this.getUserVote() : ''
+      this.getCurrentUser() ? this.getUserSentiment() : ''
 
       reviewService.get(this.$route.params.id).then(
         response => {
