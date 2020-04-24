@@ -10,7 +10,7 @@
         </div>
         <div class="w-7/12 md:w-1/2 px-5 -mt-3 md:mt-0">
           <p class="text-gray-700 font-medium text-xl ">
-            <router-link :to="{ name: 'UserProfile', params: { id: data.user.id }}">
+            <router-link :to="{ name: 'UserProfile', params: { username: data.user.username }}">
               {{ data.user.username }}
             </router-link>
           </p>
