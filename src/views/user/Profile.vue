@@ -156,6 +156,7 @@ export default {
         error => {
           this.loading = false;
           dispatch('alert/error', error, { root: true });
+          this.$router.push({ name: 'Home' });
         }
       );
     },
