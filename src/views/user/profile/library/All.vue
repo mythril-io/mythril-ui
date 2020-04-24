@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <Playing />
-    <Completed class="mt-7" />
-    <Planning class="mt-7" />
-    <OnHold class="mt-7" />
-    <Dropped class="mt-7" />
+  <div class="space-y-7">
+    <Playing :user="user" />
+    <Completed :user="user" />
+    <Planning :user="user" />
+    <OnHold :user="user" />
+    <Dropped :user="user" />
   </div>
 </template>
 
@@ -18,6 +18,7 @@ import Dropped from '@/views/user/profile/library/Dropped.vue'
 
 export default {
   name: 'UserLibraryAll',
+  props: ['user'],
   components: {
     Playing, Completed, Planning, OnHold, Dropped
   },

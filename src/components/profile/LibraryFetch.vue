@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Loading v-if="!libraries" :simple="true" />
+    <Loading v-if="!user || !libraries" :simple="true" />
     <div v-else>
       <Title :title="title" />
       <Message v-if="!libraries.items || libraries.items.length == 0" content="No entries found." />
@@ -27,7 +27,7 @@ import { libraryService } from '@/services';
 
 export default {
   name: 'LibraryFetch',
-  props: ['statusId', "title"],
+  props: ['statusId', "title", "user"],
   components: {
     Loading, Message, LibraryList, Title
   },
@@ -36,13 +36,12 @@ export default {
       loading: false,
       libraries: null,
       page: 1,
-      userId: null
     }
   },
   methods: {
     getData () {
       const { dispatch } = this.$store;
-      return libraryService.getByUserAndStatus(this.userId, this.statusId, this.page).then(
+      return libraryService.getByUserAndStatus(this.user.id, this.statusId, this.page).then(
         response => {
           this.page += 1;
           if (!this.libraries) {
@@ -69,13 +68,13 @@ export default {
       );
     }
   },
-  created () {
-      if (this.$route.params.id) {
-        this.userId = this.$route.params.id;
-        this.getData();
-      } else {
-        this.libraries = [];
-      }
+  watch: {
+    'user': {
+      handler(user) {
+          user != null ? this.getData() : '';
+      },
+      immediate: true,
+    }
   },
 }
 </script>

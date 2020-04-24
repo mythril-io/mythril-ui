@@ -3,10 +3,10 @@
     <Title title="Recommendations" />
     <Loading v-if="loading" :simple="true" />
     <div v-else>
-      <Message>
+      <Message v-if="data.items">
         {{ data.items.length }} recommendations found.
       </Message>
-      <RecommendationsList v-if="data.items.length" :data="data" :loading="loading" v-on:get-data="getData($event)"/>
+      <RecommendationsList v-if="data.items && data.items.length" :data="data" :loading="loading" v-on:get-data="getData($event)"/>
     </div>
   </div>
 </template>
@@ -20,6 +20,7 @@ import { recommendationService } from '@/services';
 
 export default {
   name: 'UserRecommendations',
+  props: ['user'],
   components: {
     Loading, Title, Message, RecommendationsList
   },
@@ -33,7 +34,7 @@ export default {
     getData (page=1) {
       const { dispatch } = this.$store;
       this.loading = true;
-      return recommendationService.getByUserAndPage(this.$route.params.id, page).then(
+      return recommendationService.getByUserAndPage(this.user.id, page).then(
         response => {
           this.data = response.data;
           this.loading = false;
@@ -45,10 +46,13 @@ export default {
       );
     },
   },
-  created () {
-      if (this.$route.params.id) {
-        this.getData()
-      }
+  watch: {
+    'user': {
+      handler(user) {
+          user != null ? this.getData() : ''
+      },
+      immediate: true,
+    }
   },
 }
 </script>

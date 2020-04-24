@@ -1,5 +1,5 @@
 <template>
-  <LibraryFetch :statusId="3" title="Completed" />
+  <LibraryFetch :statusId="3" :user="user" title="Completed" />
 </template>
 
 <script>
@@ -7,6 +7,7 @@ import LibraryFetch from '@/components/profile/LibraryFetch.vue'
 
 export default {
   name: 'UserLibraryCompleted',
+  props: ['user'],
   components: {
     LibraryFetch
   },
