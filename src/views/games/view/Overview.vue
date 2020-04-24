@@ -100,7 +100,7 @@
             <div class="grid grid-cols-4 lg:gap-2" v-if="userActivity.length > 0 && !loading">
               <div class="flex items-center justify-center mb-3" v-for="entry in userActivity" :key="entry.id">
                 <Tooltip :content="`${entry.user.username}: ${entry.play_status.name} (${entry.release.platform.name})`">
-                  <router-link :to="{ name: 'UserProfile', params: { id: entry.user.id }}" class="overflow-hidden inline-block h-16 w-16 sm:h-32 sm:w-32 lg:h-24 lg:w-24 rounded-md border border-gray-100">
+                  <router-link :to="{ name: 'UserProfile', params: { username: entry.user.username }}" class="overflow-hidden inline-block h-16 w-16 sm:h-32 sm:w-32 lg:h-24 lg:w-24 rounded-md border border-gray-100">
                     <img class="h-full w-full object-cover opacity-75 hover:opacity-100 cursor-pointer transition hover:scale-105 transform duration-150 ease-in-out" :src="getUserAvatar(entry.user)" :alt="entry.user.username" />
                   </router-link>
                 </Tooltip>

@@ -147,7 +147,7 @@ export default {
       // this.loading = true;
       const { dispatch } = this.$store;
       const _this = this;
-      userService.get(this.$route.params.id).then(
+      userService.get(this.$route.params.username).then(
         response => {
           this.data = response.data;
           this.loading = false;

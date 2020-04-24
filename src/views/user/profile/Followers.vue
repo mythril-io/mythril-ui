@@ -21,6 +21,7 @@ import { userService } from '@/services';
 
 export default {
   name: 'UserFollowers',
+  props: ['user'],
   components: {
     UserAvatar, Loading, Title, Message
   },
@@ -31,10 +32,10 @@ export default {
     }
   },
   methods: {
-    getFollowers (id) {
+    getData (id) {
       this.loading = true;
       const { dispatch } = this.$store;
-      userService.getUserFollowers(this.$route.params.id).then(
+      userService.getUserFollowers(this.user.id).then(
         response => {
           this.users = response.data;
           this.loading = false;
@@ -46,10 +47,13 @@ export default {
       );
     }
   },
-  created () {
-      if (this.$route.params.id) {
-        this.getFollowers(this.$route.params.id)
-      }
+  watch: {
+    'user': {
+      handler(user) {
+          user != null ? this.getData() : ''
+      },
+      immediate: true,
+    }
   },
 }
 </script>

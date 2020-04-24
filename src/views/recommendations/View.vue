@@ -12,7 +12,7 @@
               <span class="tag ml-2">{{ data.recommended_release.platform.name }}</span>
             </router-link>
             <span class="ml-2">
-              <router-link :to="{ name: 'UserProfile', params: { id: data.user.id }}">
+              <router-link :to="{ name: 'UserProfile', params: { username: data.user.username }}">
                 <span class="tag rounded-r-none">{{ data.user.username }}</span>
               </router-link>
               <span class="tag is-primary rounded-l-none">{{ data.created_at | dateFormat }}</span>

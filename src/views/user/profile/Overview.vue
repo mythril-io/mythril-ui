@@ -52,10 +52,10 @@ export default {
     },
   },
   methods: {
-    getFavourites (id) {
+    getFavourites () {
       this.loading = true;
       const { dispatch } = this.$store;
-      favouriteService.getByUser(this.$route.params.id).then(
+      favouriteService.getByUser(this.user.id).then(
         response => {
           this.favourites = response.data;
           this.loading = false;
@@ -67,9 +67,13 @@ export default {
       );
     }
   },
-  created () {
-      if (this.$route.params.id) {
-        this.getFavourites(this.$route.params.id)
+  watch: {
+      'user': {
+          handler(newValue) {
+              const { id } = newValue
+              this.getFavourites(id)
+          },
+          immediate: true,
       }
   },
 }

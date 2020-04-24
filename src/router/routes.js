@@ -37,7 +37,7 @@ export const routes = [
     ]
   },
   {
-    path: '/user/:id(\\d+)', component: () => import('@/views/user/Profile.vue'),
+    path: '/user/:username', component: () => import('@/views/user/Profile.vue'),
     children: [
       { path: '', name: 'UserProfile', component: () => import('@/views/user/profile/Overview.vue') },
       {
