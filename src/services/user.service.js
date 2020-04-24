@@ -94,8 +94,8 @@ function refreshToken() {
         });
 }
 
-function get(id) {
-  return axios.get(rootURL + id)
+function get(username) {
+  return axios.get(rootURL + username)
       .then(response => {
           return response;
       }).catch(function (error) {

@@ -37,7 +37,7 @@
 
       <div>
         <transition name="fade" mode="out-in">
-          <router-view :key="$route.fullPath"  />
+          <router-view :key="$route.fullPath" :user="user" />
         </transition>
       </div>
 
@@ -48,6 +48,7 @@
 
 export default {
   name: 'UserLibrary',
+  props: ['user'],
   methods: {
     changeTab(routeName) {
       this.$router.push({ name: routeName });
