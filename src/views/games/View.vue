@@ -1,25 +1,23 @@
 <template>
-  <Overlap :coverPhoto="data ? getGameBannerStyle(data.banner) : ''">
-    <template #header>
+<div>
 
-      <div class="min-w-0 flex-1 lg:flex sm:items-center sm:justify-between" v-if="data">
-        <div>
-          <div class="lg:flex items-center">
-            <div class="flex-shrink-0">
-              <img class="inline-block h-48 w-48 lg:h-56 lg:w-56 rounded-md" :src="getGameIcon(data)" :alt="data.title" />
-            </div>
-            <div class="flex-1 mt-3 lg:mt-0 lg:ml-4">
-              <h2 class="text-2xl font-bold leading-7 text-white sm:text-3xl sm:leading-9 sm:truncate">
-                {{ data.title }}
-              </h2>
-              <div class="mt-0 text-sm leading-5 truncate text-gray-400" v-if="data">
-                Developed by: {{ data.developer.name }}
-              </div>
+  <div class="bg-primary border-t border-gray-700" v-bind:style="data ? getGameBannerStyle(data.banner) : ''">
+    <Container :padding="false">
+
+      <div class="flex-1 lg:flex items-end py-8 lg:py-0 lg:lg-cover-h" v-if="data">
+        <div class="flex-shrink-0 mb-4 lg:-mb-24">
+          <img class="inline-block h-48 w-48 lg:h-64 lg:w-64 rounded-md" :src="getGameIcon(data)" :alt="data.title" />
+        </div>
+        <div class="flex-1 sm:flex flex-grow items-center justify-between lg:ml-5 lg:mb-5">
+          <div class="flex-shrink mb-2 md:mb-0">
+            <h2 class="text-2xl font-bold leading-7 text-white sm:text-3xl sm:leading-9">
+              {{ data.title }}
+            </h2>
+            <div class="mt-0 text-sm leading-5 truncate text-gray-300 font-medium">
+              Developed by: {{ data.developer.name }}
             </div>
           </div>
-        </div>
-        <div class="mt-3 lg:mt-0 lg:h-56 flex items-end">
-          <div class="flex items-center">
+          <div class="flex flex-shrink-0 items-center">
             <button type="button" class="leading-5 button" v-bind:class="[userHasLibrary ? 'button-warning' : 'button-primary']" @click="openLibraryModal">
               {{ userHasLibrary ? 'Edit Library' : 'Add to Library' }}
             </button>
@@ -56,13 +54,15 @@
         />
       </transition>
 
-    </template>
-    <template #content>
+    </Container>
+  </div>
 
-      <div class="bg-gray-50">
-        <div>
+  <main class="pb-12 bg-white min-h-1/2">
+    <div class="bg-gray-50 border-b border-gray-200">
+      <Container :padding="false">
+        <div class="lg:lg-tabs-ml">
           <div class="sm:hidden">
-            <select class="form-select block w-full" @change="changeTab($event.target.value)">
+            <select class="form-select block w-full my-2" @change="changeTab($event.target.value)">
               <option value="Game">Overview</option>
               <option value="GameReviews">Reviews</option>
               <option value="GameRecommendations">Recommendations</option>
@@ -70,7 +70,7 @@
             </select>
           </div>
           <div class="hidden sm:block">
-            <div class="border-b border-gray-200">
+            <div class="">
               <nav class="-mb-px flex ">
                 <router-link tag="a" :to="{ name: 'Game' }" exact class="is-tab">
                   Overview
@@ -88,25 +88,28 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="px-4 py-5 sm:p-6">
-        <Loading v-show="loading" :simple="true"/>
-        <div v-show="!loading">
-          <transition name="fade" mode="out-in">
-            <router-view :game="data" />
-          </transition>
-        </div>
-      </div>
+      </Container>
+    </div>
 
-    </template>
-  </Overlap>
+    <Container class="md:mt-14">
+      <Loading v-show="loading" :simple="true"/>
+      <div v-show="!loading">
+        <transition name="fade" mode="out-in">
+          <router-view :game="data" />
+        </transition>
+      </div>
+    </Container>
+
+  </main>
+
+</div>
 </template>
 
 <script>
 import Loading from '@/components/Loading.vue'
-import Overlap from '@/components/pages/Overlap.vue'
 import LibraryModal from '@/components/modals/Library.vue'
 import FavouriteModal from '@/components/modals/Favourite.vue'
+import Container from '@/components/layout/Container.vue'
 import { iconsMixin, getResourceMixin, authMixin } from '@/mixins';
 import { gameService } from '@/services';
 
@@ -114,7 +117,7 @@ export default {
   name: 'Game',
   mixins: [iconsMixin, getResourceMixin, authMixin],
   components: {
-    Loading, Overlap, LibraryModal, FavouriteModal
+    Loading, Container, LibraryModal, FavouriteModal
   },
   data () {
     return {
@@ -166,3 +169,20 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+@responsive {
+  .md-cover-h {
+    height: 250px
+  }
+  .lg-cover-h {
+    height: 325px
+  }
+  .md-tabs-ml {
+    margin-left: 192px;
+  }
+  .lg-tabs-ml {
+    margin-left: 256px;
+  }
+}
+</style>
