@@ -91,7 +91,7 @@
       </Container>
     </div>
 
-    <Container class="md:mt-14">
+    <Container class="lg:mt-14">
       <Loading v-show="loading" :simple="true"/>
       <div v-show="!loading">
         <transition name="fade" mode="out-in">
