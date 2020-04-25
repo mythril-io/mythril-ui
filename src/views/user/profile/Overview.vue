@@ -4,7 +4,7 @@
       <div class="col-span-12 lg:col-span-7">
         <Title title="About Me" />
         <div class="bg-gray-50 p-4 rounded-md">
-          <span v-if="user && user.about_me" v-html="compiledMarkdown"></span>
+          <span v-if="user && user.about_me" class="markdown" v-html="compiledMarkdown"></span>
           <span v-else>This user hasn't written anything about themselves.</span>
         </div>
       </div>
