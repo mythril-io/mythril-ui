@@ -14,7 +14,7 @@
         <div class="grid grid-cols-4 lg:gap-2" v-if="favourites.length > 0 && !loading">
           <div class="flex items-center justify-center mb-3" v-for="favourite in favourites" :key="favourite.id">
             <Tooltip :content="favourite.game.title">
-              <router-link :to="{ name: 'Game', params: { id: favourite.game.id }}" class="overflow-hidden inline-block h-16 w-16 sm:h-32 sm:w-32 lg:h-24 lg:w-24 rounded-md border border-gray-100">
+              <router-link :to="{ name: 'Game', params: { id: favourite.game.id, slug: favourite.game.slug }}" class="overflow-hidden inline-block h-16 w-16 sm:h-32 sm:w-32 lg:h-24 lg:w-24 rounded-md border border-gray-100">
                 <img class="opacity-75 hover:opacity-100 cursor-pointer transition hover:scale-105 transform duration-150 ease-in-out" :src="$store.state.cdnURL + 'games/icons/' + favourite.game.icon" :alt="favourite.game.title" />
               </router-link>
             </Tooltip>

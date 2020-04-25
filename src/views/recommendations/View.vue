@@ -5,7 +5,7 @@
       <div class="flex justify-center items-center h-40" v-if="data">
         <div>
           <h2 class="text-center text-2xl font-bold leading-7 text-white sm:text-3xl sm:leading-9 sm:truncate">
-            <router-link :to="{ name: 'Game', params: { id: data.recommended_game.id }}" class="hover:underline">{{ getRecommendedTitle(data) }}</router-link> Recommendation
+            <router-link :to="{ name: 'Game', params: { id: data.recommended_game.id, slug: data.recommended_game.slug }}" class="hover:underline">{{ getRecommendedTitle(data) }}</router-link> Recommendation
           </h2>
           <div class="mt-2 text-center text-sm leading-5 truncate text-gray-400">
             <router-link :to="{ name: 'Games', query: { platform: data.recommended_release.platform.id }}">
@@ -41,8 +41,8 @@
               </div>
 
               <div class="text-center text-lg italic text-gray-500">
-                "If you liked <router-link :to="{ name: 'Game', params: { id: data.game.id }}" class="is-link">{{ getTitle(data) }}</router-link> ({{ data.release.platform.name }}),
-                you may also like <router-link :to="{ name: 'Game', params: { id: data.recommended_game.id }}" class="is-link">{{ getRecommendedTitle(data) }}</router-link>
+                "If you liked <router-link :to="{ name: 'Game', params: { id: data.game.id, slug: data.game.slug }}" class="is-link">{{ getTitle(data) }}</router-link> ({{ data.release.platform.name }}),
+                you may also like <router-link :to="{ name: 'Game', params: { id: data.recommended_game.id, slug: data.recommended_game.slug }}" class="is-link">{{ getRecommendedTitle(data) }}</router-link>
                 ({{ data.recommended_release.platform.name }})"
               </div>
 

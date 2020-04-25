@@ -5,7 +5,7 @@
       <div class="flex justify-center items-center h-40" v-if="data">
         <div>
           <h2 class="text-center text-2xl font-bold leading-7 text-white sm:text-3xl sm:leading-9 sm:truncate">
-            <router-link :to="{ name: 'Game', params: { id: data.game.id }}" class="hover:underline">{{ getTitle(data) }}</router-link> Review
+            <router-link :to="{ name: 'Game', params: { id: data.game.id, slug: data.game.slug }}" class="hover:underline">{{ getTitle(data) }}</router-link> Review
           </h2>
           <div class="mt-2 text-center text-sm leading-5 truncate text-gray-400">
             <router-link :to="{ name: 'Games', query: { platform: data.release.platform.id }}">
