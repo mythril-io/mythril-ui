@@ -15,7 +15,7 @@
           </div>
           <div class="h-0 flex-1 overflow-y-auto pt-5 pb-4">
             <div class="flex-shrink-0 flex items-center px-4">
-              <img class="h-8 w-auto" src="https://makoframework.com/assets/img/logo100.png" alt="Mythril" />
+              <img class="h-8 w-auto mx-auto" src="@/assets/logo.svg" alt="Mythril" />
             </div>
             <nav class="mt-5 px-2">
               <a href="#" class="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-gray-900 focus:outline-none focus:bg-gray-700 transition ease-in-out duration-150">
@@ -64,21 +64,23 @@
             </nav>
           </div>
           <div class="flex-shrink-0 flex bg-gray-700 p-4">
-            <a href="#" class="flex-shrink-0 group block">
+            <div class="flex-shrink-0 group block">
               <div class="flex items-center">
                 <div>
-                  <img class="inline-block h-10 w-10 rounded-full" src="https://mythril.nyc3.cdn.digitaloceanspaces.com/users/avatars/1.png" alt="" />
+                  <img class="inline-block h-10 w-10 rounded-full" :src="getUserAvatar(user)" :alt="user.username" />
                 </div>
                 <div class="ml-3">
                   <p class="text-base leading-6 font-medium text-white">
                     {{ user.username }}
                   </p>
                   <p class="text-sm leading-5 font-medium text-gray-400 group-hover:text-gray-300 transition ease-in-out duration-150">
-                    View profile
+                    <router-link :to="{ name: 'UserProfile', params: { username: user.username } }">
+                      View profile
+                    </router-link>
                   </p>
                 </div>
               </div>
-            </a>
+            </div>
           </div>
         </div>
       </div>
@@ -88,7 +90,7 @@
         <div class="flex flex-col w-64 bg-gray-800">
           <div class="h-0 flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
             <div class="flex items-center flex-shrink-0 px-4">
-              <img class="h-8 w-auto" src="https://makoframework.com/assets/img/logo100.png" alt="Mythril" />
+              <img class="h-8 w-auto mx-auto" src="@/assets/logo.svg" alt="Mythril" />
             </div>
             <!-- Sidebar component, swap this element with another sidebar if you like -->
             <nav class="mt-5 flex-1 px-2 bg-gray-800">
@@ -144,21 +146,23 @@
             </nav>
           </div>
           <div class="flex-shrink-0 flex bg-gray-700 p-4">
-            <a href="#" class="flex-shrink-0 group block focus:outline-none">
+            <div class="flex-shrink-0 group block focus:outline-none">
               <div class="flex items-center">
                 <div>
-                  <img class="inline-block h-9 w-9 rounded-full" src="https://mythril.nyc3.cdn.digitaloceanspaces.com/users/avatars/1.png" alt="" />
+                  <img class="inline-block h-9 w-9 rounded-full" :src="getUserAvatar(user)" :alt="user.username" />
                 </div>
                 <div class="ml-3">
                   <p class="text-sm leading-5 font-medium text-white">
                     {{ user.username }}
                   </p>
                   <p class="text-xs leading-4 font-medium text-gray-400 group-hover:text-gray-300 group-focus:underline transition ease-in-out duration-150">
-                    View profile
+                    <router-link :to="{ name: 'UserProfile', params: { username: user.username } }">
+                      View profile
+                    </router-link>
                   </p>
                 </div>
               </div>
-            </a>
+            </div>
           </div>
         </div>
       </div>
@@ -187,9 +191,11 @@
 
 <script>
 import Container from '@/components/layout/Container.vue'
+import { iconsMixin } from '@/mixins';
 
 export default {
   name: 'admin',
+  mixins: [iconsMixin],
   components: {
     Container
   },

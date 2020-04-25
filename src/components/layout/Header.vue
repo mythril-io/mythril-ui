@@ -113,7 +113,7 @@
             <transition name="fade">
               <div v-show="userDropdown" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
                 <div class="py-1 rounded-md bg-white shadow-xs">
-                  <router-link tag="a" :to="{ name: 'UserProfile', params: { id: user.id } }" @click.native="closeUserDropdown" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">Your Profile</router-link>
+                  <router-link tag="a" :to="{ name: 'UserProfile', params: { username: user.username } }" @click.native="closeUserDropdown" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">Your Profile</router-link>
                   <router-link tag="a" :to="{ name: 'UserSettings' }" @click.native="closeUserDropdown" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">Settings</router-link>
                   <router-link tag="a" :to="{ name: 'Login' }" @click.native="closeUserDropdown" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">Sign out</router-link>
                 </div>
@@ -143,7 +143,7 @@
         </div>
       </div>
       <div class="mt-3 px-2" v-if="getCurrentUser()">
-        <router-link tag="a" :to="{ name: 'UserProfile', params: { id: user.id } }" @click.native="open=!open" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Your Profile</router-link>
+        <router-link tag="a" :to="{ name: 'UserProfile', params: { username: user.username } }" @click.native="open=!open" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Your Profile</router-link>
         <router-link tag="a" :to="{ name: 'UserSettings' }" @click.native="open=!open" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Settings</router-link>
         <router-link tag="a" :to="{ name: 'Login' }" @click.native="open=!open" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Sign out</router-link>
       </div>

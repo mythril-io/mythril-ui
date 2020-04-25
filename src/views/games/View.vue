@@ -159,6 +159,7 @@ export default {
         response => {
           this.data = response.data;
           this.loading = false;
+          this.$route.params.slug != response.data.slug ? this.$router.push({params: {slug: response.data.slug}}) : ''
         },
         error => {
           this.loading = false;
