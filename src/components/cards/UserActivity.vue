@@ -15,7 +15,7 @@
             </router-link>
           </p>
           <p class="text-sm antialiased">
-            {{ data.play_status.name }}: <router-link :to="{ name: 'Game', params: { id: data.game.id }}" class="text-primary hover:underline">{{ data.game.title }}</router-link>.
+            {{ data.play_status.name }}: <router-link :to="{ name: 'Game', params: { id: data.game.id, slug: data.game.slug }}" class="text-primary hover:underline">{{ data.game.title }}</router-link>.
           </p>
           <p><small class="mt-2 md:mt-5 tag">{{ data.created_at | ago }}</small></p>
         </div>

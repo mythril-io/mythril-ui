@@ -2,7 +2,7 @@
   <BaseCard :padding="false">
     <template #body>
 
-      <router-link :to="{ name: 'Game', params: { id: game.id }}" class="group lg:flex h-auto lg:h-64 hover:opacity-100">
+      <router-link :to="{ name: 'Game', params: { id: game.id, slug: game.slug }}" class="group lg:flex h-auto lg:h-64 hover:opacity-100">
         <div
           class="h-48 lg:h-auto lg:w-1/2 image-clip-path flex-none bg-cover text-center overflow-hidden group-hover:scale-105 transform duration-200 ease-out "
           v-bind:style="gameIcon" :title="game.title"

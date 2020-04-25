@@ -28,7 +28,7 @@ export const routes = [
   { path: '/reverify', name: 'SendVerifyEmail', component: SendVerifyEmail, meta: { requiresGuest: true } },
   { path: '/games', name: 'Games', component: () => import('@/views/games/Main.vue') },
   {
-    path: '/games/:id(\\d+)', component: () => import('@/views/games/View.vue'),
+    path: '/games/:id(\\d+)/:slug', component: () => import('@/views/games/View.vue'),
     children: [
       { path: '', name: 'Game', component: () => import('@/views/games/view/Overview.vue') },
       { path: 'reviews', name: 'GameReviews', component: () => import('@/views/games/view/Reviews.vue') },
