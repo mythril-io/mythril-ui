@@ -24,15 +24,15 @@
       <div class="grid md:grid-cols-12 gap-6">
         <div class="col-span-12 lg:col-span-7">
           <Title title="Description" />
-          <div class="bg-gray-50 p-4 rounded-md">
-            <span v-html="compiledMarkdown"></span>
+          <div class="bg-gray-100 p-4 rounded-md">
+            <span class="markdown" v-html="compiledMarkdown"></span>
           </div>
           <!-- <Title class="mt-6" title="Recent Reviews" />
           <Message content="No reviews found. Be the first to write one! Write a Review" />
           <Title class="mt-6" title="Recent Recommendations" />
           <Message content="No recommendations found. Be the first to write one! Write a Recommendation" /> -->
         </div>
-        <div class="col-span-12 lg:col-span-5">
+        <div class="col-span-12 lg:col-span-5 lg:-mt-8">
 
           <div class="grid grid-cols-3 gap-4 mb-5">
             <div>
