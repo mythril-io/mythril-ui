@@ -6,7 +6,9 @@
 
       <div class="flex-1 lg:flex items-end py-8 lg:py-0 lg:lg-cover-h" v-if="data">
         <div class="flex-shrink-0 mb-4 lg:-mb-24">
-          <img class="inline-block h-48 w-48 lg:h-64 lg:w-64 rounded-md" :src="getGameIcon(data)" :alt="data.title" />
+          <transition name="fade">
+            <img v-show="iconloaded" class="inline-block h-48 w-48 lg:h-64 lg:w-64 rounded-md" :src="getGameIcon(data)" @load="iconloaded=true" :alt="data.title" />
+          </transition>
         </div>
         <div class="flex-1 sm:flex flex-grow items-center justify-between lg:ml-5 lg:mb-5">
           <div class="flex-shrink mb-2 md:mb-0">
@@ -124,7 +126,8 @@ export default {
       libraryModal: false,
       favouriteModal: false,
       userHasFavourite: false,
-      userHasLibrary: false
+      userHasLibrary: false,
+      iconloaded: false
     }
   },
   methods: {
