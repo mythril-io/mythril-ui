@@ -36,6 +36,7 @@ export default {
       loading: false,
       libraries: null,
       page: 1,
+      fetching: false
     }
   },
   methods: {
@@ -71,7 +72,10 @@ export default {
   watch: {
     'user': {
       handler(user) {
-          user != null ? this.getData() : '';
+        if (user != null && !this.fetching) {
+          this.fetching = true;
+          this.getData();
+        }
       },
       immediate: true,
     }
