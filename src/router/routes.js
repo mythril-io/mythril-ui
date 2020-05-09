@@ -75,7 +75,8 @@ export const routes = [
   { path: '/recommendations/:id(\\d+)', name: 'Recommendation', component: () => import('@/views/recommendations/View.vue') },
   { path: '/recommendations/create', name: 'CreateRecommendation', component: () => import('@/views/recommendations/Create.vue'), meta: { authorize: [] } },
 
-  { path: '/forums', name: 'Forums', component: () => import('@/views/forums/Main.vue') },
+  { path: '/forums/:tag?', name: 'Forums', component: () => import('@/views/forums/Main.vue') },
+  { path: '/forums/:id(\\d+)/:slug', name: 'Discussion', component: () => import('@/views/forums/Discussion.vue') },
   {
     path: '/admin', component: () => import('@/views/admin/Main.vue'),
     meta: { authorize: ['roles.Admin'], plainLayout: true},

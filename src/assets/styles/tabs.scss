@@ -36,7 +36,8 @@
 
 /* Active Pill Tab */
 .is-pill-tab.is-active {
-  @apply text-white bg-primary;
+  // @apply text-white bg-primary;
+  @apply bg-gray-100 text-gray-700;
 }
 // .is-pill-tab.is-active:focus {
 //   @apply text-teal-800 bg-teal-200;

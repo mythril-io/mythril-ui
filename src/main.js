@@ -70,6 +70,11 @@ Vue.filter('ago', function (date, user) {
   return moment.utc(date).local().fromNow();
 })
 
+Vue.filter('truncate', function (string, value) {
+  if(string.length < value) { return string }
+  return string.substring(0, value) + '...';
+})
+
 // Create Vue instance
 new Vue({
   router,
