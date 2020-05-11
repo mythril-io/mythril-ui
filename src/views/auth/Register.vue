@@ -12,7 +12,7 @@
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(post)">
+        <form @submit.prevent="handleSubmit(submit)">
           <div>
             <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
               Email address
@@ -41,7 +41,7 @@
             <label for="password" class="block text-sm font-medium leading-5 text-gray-700">
               Password
             </label>
-              <ValidationProvider rules="required|min:6|alpha_dash|confirmed:confirmation" v-slot="{ errors }">
+              <ValidationProvider rules="required|min:6|alpha_dash|confirmed:password_confirmation" v-slot="{ errors }">
                 <div class="mt-1">
                   <input id="password" v-model="password" type="password" required class="input placeholder-gray-400 sm:text-sm sm:leading-5" />
                 </div>
@@ -50,12 +50,12 @@
           </div>
 
           <div class="mt-6">
-            <label for="confirmation" class="block text-sm font-medium leading-5 text-gray-700">
+            <label for="password_confirmation" class="block text-sm font-medium leading-5 text-gray-700">
               Confirm Password
             </label>
-            <ValidationProvider v-slot="{ errors }" vid="confirmation">
+            <ValidationProvider v-slot="{ errors }" vid="password_confirmation" name="password confirmation">
               <div class="mt-1">
-                <input id="confirmation" v-model="confirmation" type="password" required class="input placeholder-gray-400 sm:text-sm sm:leading-5" />
+                <input id="password_confirmation" v-model="password_confirmation" type="password" required class="input placeholder-gray-400 sm:text-sm sm:leading-5" />
               </div>
               <span class="text-sm text-red-700">{{ errors[0] }}</span>
             </ValidationProvider>
@@ -84,11 +84,8 @@
           </div>
         </form>
         </ValidationObserver>
-        <div class="mt-4 text-center">
-          <router-link :to="{ name: 'SendVerifyEmail' }" class="is-muted-link">
-            Resend Verification Email
-          </router-link>
-        </div>
+
+        <ErrorList v-if="errors" :errors="errors" class="mt-5" />
 
       </div>
     </div>
@@ -97,47 +94,43 @@
 </template>
 
 <script>
-import { userService } from '@/services';
 import { router } from '@/router';
 import VueRecaptcha from 'vue-recaptcha';
 import Hero from '@/components/Hero.vue'
+import ErrorList from '@/components/lists/Errors.vue'
 
 export default {
     name: 'Register',
     data () {
-        return {
-            email: '',
-            username: '',
-            password: '',
-            confirmation: '',
-            submitted: false,
-            siteKey: '6LekHd8UAAAAAJLPAcxWDj_EzWrQO2smK_APWJx5',
-            recaptchaToken: ''
-        }
+      return {
+        email: '',
+        username: '',
+        password: '',
+        password_confirmation: '',
+        submitted: false,
+        siteKey: '6LekHd8UAAAAAJLPAcxWDj_EzWrQO2smK_APWJx5',
+        recaptchaToken: '',
+        errors: null
+      }
     },
-    components: { VueRecaptcha, Hero },
+    components: { VueRecaptcha, Hero, ErrorList },
     methods: {
-        post () {
-            this.submitted = true;
-            const _this = this;
-            const { email, username, password, recaptchaToken } = this;
-            const { dispatch } = this.$store;
-            userService.register(email, username, password, recaptchaToken)
-            .then(
-                response => {
-                    dispatch('alert/success', response.data.message, { root: true });
-                },
-                error => {
-                    _this.onCaptchaExpired();
-                    _this.submitted = false;
-                    dispatch('alert/error', error, { root: true });
-                }
-            );
-        },
-        onCaptchaExpired () {
-            this.recaptchaToken = '';
-            this.$refs.recaptcha.reset();
-        }
+      submit () {
+        this.submitted = true;
+        const _this = this;
+        const { email, username, password, password_confirmation, recaptchaToken } = this;
+
+        this.$store.dispatch('authentication/register', { email, username, password, password_confirmation, recaptchaToken })
+          .catch((error) => {
+            this.errors = error.errors;
+            _this.onCaptchaExpired();
+            _this.submitted = false;
+          })
+      },
+      onCaptchaExpired () {
+        this.recaptchaToken = '';
+        this.$refs.recaptcha.reset();
+      }
     }
 };
 </script>

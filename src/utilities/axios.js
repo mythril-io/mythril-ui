@@ -17,15 +17,16 @@ const instance = ax.create({
 
 // Set default axios headers
 instance.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+instance.defaults.withCredentials = true;
 
 // Set Request interceptors
-instance.interceptors.request.use(function (config) {
-  let access_token = JSON.parse(localStorage.getItem('access_token'));
-  if (access_token != null) {
-    config.headers.Authorization = 'Bearer ' + access_token;
-  }
-  return config;
-});
+// instance.interceptors.request.use(function (config) {
+//   let access_token = JSON.parse(localStorage.getItem('access_token'));
+//   if (access_token != null) {
+//     config.headers.Authorization = 'Bearer ' + access_token;
+//   }
+//   return config;
+// });
 
 // Set Response interceptors
 instance.interceptors.response.use(function (response) {
@@ -34,12 +35,10 @@ instance.interceptors.response.use(function (response) {
   }, function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     const error_code = error.response.status;
-    const error_message = error.response.data.error;
-    let access_token = JSON.parse(localStorage.getItem('access_token'));
+    const route_name = router.currentRoute.name;
 
-    if (router.currentRoute.name != 'Login') {
-      // 401 & expired/invalid/missing access_token
-      if (error_code == 401 && (error_message == 'ExpiredRefreshError' || error_message == 'InvalidTokenHeader' || error_message == 'MissingTokenHeader')) {
+    if (route_name != 'Login') {
+      if (error_code == 401) {
         router.push({ name: 'Login' });
       }
     }
@@ -55,13 +54,13 @@ instance.interceptors.response.use(function (response) {
  */
 
 // Function that will be called to refresh authorization
-const refreshAuthLogic = failedRequest => axios.get(`${process.env.VUE_APP_ROOT_API}/users/refresh`).then(response => {
-    localStorage.setItem('access_token', JSON.stringify(response.data.access_token));
-    failedRequest.response.config.headers['Authorization'] = 'Bearer ' + response.data.access_token;
-    return Promise.resolve();
-});
+// const refreshAuthLogic = failedRequest => axios.get(`${process.env.VUE_APP_ROOT_API}/users/refresh`).then(response => {
+//     localStorage.setItem('access_token', JSON.stringify(response.data.access_token));
+//     failedRequest.response.config.headers['Authorization'] = 'Bearer ' + response.data.access_token;
+//     return Promise.resolve();
+// });
 
 // Instantiate the interceptor (you can chain it as it returns the axios instance)
-createAuthRefreshInterceptor(instance, refreshAuthLogic);
+// createAuthRefreshInterceptor(instance, refreshAuthLogic);
 
 export const axios = instance

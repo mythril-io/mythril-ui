@@ -4,9 +4,10 @@ export const userService = {
     login,
     logout,
     register,
-    verify,
     resendVerification,
-    refreshToken,
+    forgotPassword,
+    resetPassword,
+    verifyEmail,
     get,
     getUserFollowers,
     getUserFollowing,
@@ -22,76 +23,87 @@ export const userService = {
 const user = JSON.parse(localStorage.getItem('user'));
 const rootURL = '/users/';
 
-function login(username, password) {
-    return axios.post(rootURL + 'login', { username, password })
-        .then(response => {
-            if (response.data.access_token) {
-                // store user details and jwt token in local storage
-                localStorage.setItem('user', JSON.stringify(response.data.user));
-                localStorage.setItem('access_token', JSON.stringify(response.data.access_token));
-            }
-            return response;
-        }).catch(function (error) {
-            const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-            return Promise.reject(errorMessage)
-        });
+async function login(email, password) {
+    try {
+      await axios.get(`${process.env.VUE_APP_ROOT}/sanctum/csrf-cookie`)
+      await axios.post(`${process.env.VUE_APP_ROOT}/login`, { email, password })
+      let response = await axios.get(rootURL + 'session-user');
+
+      localStorage.setItem('user', JSON.stringify(response.data));
+      return response;
+    } catch(error) {
+      return Promise.reject({'message': 'Login failed'})
+    }
 }
 
-function logout() {
-    // remove user access_token from local storage
-    localStorage.removeItem('user');
-    localStorage.removeItem('access_token');
+async function logout() {
+    try {
+      await axios.get(`${process.env.VUE_APP_ROOT}/sanctum/csrf-cookie`);
+      await axios.post(`${process.env.VUE_APP_ROOT}/logout`)
+      localStorage.removeItem('user');
+    } catch(error) {
+      return Promise.reject({'message': 'Logout failed'})
+    }
 }
 
-function register(email, username, password, recaptchaToken) {
-    return axios.post(rootURL + 'register', { email, username, password, recaptchaToken })
-        .then(response => {
-            return response;
-        }).catch(function (error) {
-            const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-            return Promise.reject(errorMessage)
-        });
+async function register(email, username, password, password_confirmation, recaptchaToken) {
+    try {
+      await axios.get(`${process.env.VUE_APP_ROOT}/sanctum/csrf-cookie`);
+      await axios.post(`${process.env.VUE_APP_ROOT}/register`, { email, username, password, password_confirmation, recaptchaToken })
+      let response = await axios.get(rootURL + 'session-user');
+
+      localStorage.setItem('user', JSON.stringify(response.data));
+      return {'data': response.data, 'message': 'Successfully registered! Please check your email for a verification link'};
+    } catch(error) {
+      return Promise.reject({'message': 'Registration failed', 'errors': error.response.data.errors})
+    }
 }
 
-function verify(token) {
-  const options = {
-    headers: { 'Authorization': 'Bearer ' + token },
-  };
-  return axios.get(rootURL + 'register', options)
-      .then(response => {
-          if (response.data.access_token) {
-              localStorage.setItem('user', JSON.stringify(response.data.user));
-              localStorage.setItem('access_token', JSON.stringify(response.data.access_token));
-          }
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
+async function resendVerification() {
+    try {
+      await axios.get(`${process.env.VUE_APP_ROOT}/sanctum/csrf-cookie`);
+      let response = await axios.post(`${process.env.VUE_APP_ROOT}/email/resend`);
+      return {'message': 'Verification email has been resent!'};
+    } catch(error) {
+      return Promise.reject({'message': 'Unable to resend verification email'})
+    }
 }
 
-function resendVerification(email) {
-  return axios.post(rootURL + 'refresh', { email })
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
+async function forgotPassword(email) {
+    try {
+      await axios.get(`${process.env.VUE_APP_ROOT}/sanctum/csrf-cookie`);
+      let response = await axios.post(`${process.env.VUE_APP_ROOT}/password/email`, { email });
+      return {'message': 'We have emailed your password reset link!'};
+    } catch(error) {
+      return Promise.reject({'message': 'Unable to send password reset link'})
+    }
 }
 
-function refreshToken() {
-    return axios.get(rootURL + 'refresh')
-        .then(response => {
-            if (response.data.access_token) {
-                localStorage.setItem('access_token', JSON.stringify(response.data.access_token));
-            }
-            return response;
-        }).catch(function (error) {
-            // handle error
-            const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-            return Promise.reject(errorMessage)
-        });
+async function resetPassword(token, email, password, password_confirmation) {
+    try {
+      await axios.get(`${process.env.VUE_APP_ROOT}/sanctum/csrf-cookie`);
+      await axios.post(`${process.env.VUE_APP_ROOT}/password/reset`, { token, email, password, password_confirmation });
+      let response = await axios.get(rootURL + 'session-user');
+
+      localStorage.setItem('user', JSON.stringify(response.data));
+      return response;
+    } catch(error) {
+      return Promise.reject({'message': 'Unable to reset your password'})
+    }
+}
+
+async function verifyEmail(id, token, expires, signature) {
+    try {
+      await axios.get(`${process.env.VUE_APP_ROOT}/sanctum/csrf-cookie`);
+      await axios.get(`${process.env.VUE_APP_ROOT}/email/verify/${id}/${token}?expires=${expires}&signature=${signature}`);
+
+      let response = await axios.get(rootURL + 'session-user');
+
+      localStorage.setItem('user', JSON.stringify(response.data));
+      return response;
+    } catch(error) {
+      return Promise.reject({'message': 'Unable to verify your email'})
+    }
 }
 
 function get(username) {
