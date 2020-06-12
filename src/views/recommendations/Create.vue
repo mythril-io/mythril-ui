@@ -13,14 +13,14 @@
                 </div>
                 <Message class="mt-2 text-white" background="bg-primary">
                   <div class="mb-4">Select a Game</div>
-                  <SelectGame v-model="recommendation.game" />
+                  <SelectGame v-model="game" />
                 </Message>
 
                 <transition name="fade">
-                  <div v-if="recommendation.game" class="mt-6">
+                  <div v-if="game" class="mt-6">
                     <Message background="bg-warning">
                       <div class="mb-4">Select a Release</div>
-                      <SelectRelease :options="recommendation.game.releases" v-model="recommendation.release" />
+                      <SelectRelease :gameId="game.id" v-model="recommendation.release" />
                     </Message>
                   </div>
                 </transition>
@@ -33,14 +33,14 @@
                 </div>
                 <Message class="mt-2 text-white" background="bg-primary">
                   <div class="mb-4">Select a Game</div>
-                  <SelectGame v-model="recommendation.recommended_game" />
+                  <SelectGame v-model="recommended_game" />
                 </Message>
 
                 <transition name="fade">
-                  <div v-if="recommendation.recommended_game" class="mt-6">
+                  <div v-if="recommended_game" class="mt-6">
                     <Message background="bg-warning">
                       <div class="mb-4">Select a Release</div>
-                      <SelectRelease :options="recommendation.recommended_game.releases" v-model="recommendation.recommended_release" />
+                      <SelectRelease :gameId="recommended_game.id" v-model="recommendation.recommended_release" />
                     </Message>
                   </div>
                 </transition>
@@ -49,7 +49,7 @@
             </div>
 
             <transition name="fade">
-              <div v-if="recommendation.game && recommendation.release && recommendation.recommended_game && recommendation.recommended_release" class="mt-6">
+              <div v-if="game && recommendation.release && recommended_game && recommendation.recommended_release" class="mt-6">
                 <Message class="mt-2" background="bg-gray-100" content="Write Your Recommendation!" />
 
                 <ValidationProvider rules="required|min:200" name="content" v-slot="{ errors }">
@@ -96,10 +96,10 @@ export default {
   },
   data () {
     return {
+      game: null,
+      recommended_game: null,
       recommendation: {
-        game: null,
         release: null,
-        recommended_game: null,
         recommended_release: null,
         content: '',
       },
@@ -107,8 +107,8 @@ export default {
   },
   methods: {
     validate() {
-      if (this.recommendation.game.id == this.recommendation.recommended_game.id) {
-        this.recommendation.recommended_game = null;
+      if (this.game.id == this.recommended_game.id) {
+        this.recommended_game = null;
         this.$store.dispatch('alert/error', "Games cannot be the same", { root: true });
       } else {
         this.post();
@@ -116,12 +116,14 @@ export default {
     },
     post () {
       const { dispatch } = this.$store;
-      const game = { id: this.recommendation.game.id };
-      const recommended_game = { id: this.recommendation.recommended_game.id };
+      const release_id = this.recommendation.release.id;
+      const recommended_release_id = this.recommendation.recommended_release.id;
 
       let resource = JSON.parse(JSON.stringify(this.recommendation));
-      resource.game = game;
-      resource.recommended_game = recommended_game;
+      resource.release_id = release_id;
+      resource.second_release_id = recommended_release_id;
+      delete resource.release;
+      delete resource.recommended_release;
 
       recommendationService.post(resource).then(
         response => {

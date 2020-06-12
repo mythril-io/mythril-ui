@@ -3,9 +3,9 @@
     <Loading v-if="!user || !libraries" :simple="true" />
     <div v-else>
       <Title :title="title" />
-      <Message v-if="!libraries.items || libraries.items.length == 0" content="No entries found." />
+      <Message v-if="!libraries.data || libraries.data.length == 0" content="No entries found." />
       <div v-else>
-        <LibraryList :data="libraries.items" />
+        <LibraryList :data="libraries.data" />
         <infinite-loading @infinite="getMoreData">
           <div slot="spinner">
             <Loading :simple="true"/>
@@ -22,7 +22,7 @@
 import Title from '@/components/Title.vue'
 import Loading from '@/components/Loading.vue'
 import Message from '@/components/Message.vue'
-import LibraryList from '@/components/profile/LibraryList.vue'
+import LibraryList from '@/components/lists/Library.vue'
 import { libraryService } from '@/services';
 
 export default {
@@ -42,13 +42,13 @@ export default {
   methods: {
     getData () {
       const { dispatch } = this.$store;
-      return libraryService.getByUserAndStatus(this.user.id, this.statusId, this.page).then(
+      return libraryService.getByUserAndStatus(this.user.username, this.statusId, this.page).then(
         response => {
           this.page += 1;
           if (!this.libraries) {
             this.libraries = response.data;
-          } else if (response.data.items.length) {
-            this.libraries.items.push(...response.data.items);
+          } else if (response.data.data.length) {
+            this.libraries.data.push(...response.data.data);
           }
           return response;
         },
@@ -60,7 +60,7 @@ export default {
     getMoreData ($state) {
       this.getData().then(
         response => {
-          if (response.data.items.length) {
+          if (response.data.data.length) {
             $state.loaded();
           } else {
             $state.complete();

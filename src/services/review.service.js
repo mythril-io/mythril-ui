@@ -4,7 +4,6 @@ export const reviewService = {
     getByPage,
     getByGameAndPage,
     getByUserAndPage,
-    getRecent,
     like,
     dislike,
     getUserSentiment,
@@ -18,7 +17,7 @@ export const reviewService = {
 const rootURL = '/reviews/';
 
 function getByPage(page=1) {
-  return axios.get(rootURL + 'page/' + page)
+  return axios.get(rootURL + '?page=' + page)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -28,7 +27,7 @@ function getByPage(page=1) {
 }
 
 function getByGameAndPage(id, page=1) {
-  return axios.get(rootURL + 'game/' + id + '/page/' + page)
+  return axios.get(rootURL + 'game/' + id + '?page=' + page)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -37,18 +36,8 @@ function getByGameAndPage(id, page=1) {
       });
 }
 
-function getByUserAndPage(id, page=1) {
-  return axios.get(rootURL + 'user/' + id + '/page/' + page)
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
-}
-
-function getRecent() {
-  return axios.get(rootURL + 'recent')
+function getByUserAndPage(username, page=1) {
+  return axios.get(rootURL + 'user/' + username + '?page=' + page)
       .then(response => {
           return response;
       }).catch(function (error) {

@@ -60,7 +60,6 @@ export const routes = [
     children: [
       { path: '', name: 'UserSettings', component: () => import('@/views/user/settings/Details.vue'), meta: { authorize: [] } },
       { path: 'images', name: 'SettingsImages', component: () => import('@/views/user/settings/Images.vue'), meta: { authorize: [] } },
-      { path: 'social', name: 'SettingsSocial', component: () => import('@/views/user/settings/Social.vue'), meta: { authorize: [] } },
       { path: 'password', name: 'SettingsPassword', component: () => import('@/views/user/settings/Password.vue'), meta: { authorize: [] } },
     ]
   },
@@ -91,6 +90,10 @@ export const routes = [
       },
       {
         path: 'games/create', name: 'AdminGameCreate', component: () => import('@/views/admin/forms/Game.vue'),
+        meta: { authorize: [roles.Admin], plainLayout: true }
+      },
+      {
+        path: 'releases', name: 'AdminReleases', component: () => import('@/views/admin/Releases.vue'),
         meta: { authorize: [roles.Admin], plainLayout: true }
       },
       {

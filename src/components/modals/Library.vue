@@ -91,7 +91,7 @@
               <LibraryForm
                 class="mt-4"
                 :deleting="deleting"
-                :releases="game.releases"
+                :gameId="game.id"
                 :library="userLibrary"
                 :playStatuses="playStatuses"
                 :selected="selected"

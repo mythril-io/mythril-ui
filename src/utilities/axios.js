@@ -39,6 +39,7 @@ instance.interceptors.response.use(function (response) {
 
     if (route_name != 'Login') {
       if (error_code == 401) {
+        store.dispatch('authentication/logout');
         router.push({ name: 'Login' });
       }
     }

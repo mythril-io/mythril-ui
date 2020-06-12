@@ -9,15 +9,17 @@ export const userService = {
     resetPassword,
     verifyEmail,
     get,
-    getUserFollowers,
-    getUserFollowing,
+    getFollowers,
+    getFollowing,
     patchDetails,
     patchAvatar,
     patchBanner,
     patchPassword,
     getFollowStatus,
     follow,
-    unfollow,
+    getFavourites,
+    getGameFavourite,
+    getGameStatus,
 };
 
 const user = JSON.parse(localStorage.getItem('user'));
@@ -116,8 +118,8 @@ function get(username) {
       });
 }
 
-function getUserFollowers(id) {
-  return axios.get(rootURL + id + '/followers')
+function getFollowers(username, page = 1) {
+  return axios.get(rootURL + username + '/followers?page=' + page)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -126,8 +128,8 @@ function getUserFollowers(id) {
       });
 }
 
-function getUserFollowing(id) {
-  return axios.get(rootURL + id + '/following')
+function getFollowing(username, page = 1) {
+  return axios.get(rootURL + username + '/following?page=' + page)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -144,9 +146,9 @@ function patchDetails(about_me, location, gender, timezone, birthday) {
       timezone: timezone,
       birthday: birthday,
     }
-    return axios.patch(rootURL + user.id + '/details', data)
+    return axios.patch(rootURL + 'update', data)
         .then(response => {
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem('user', JSON.stringify(response.data));
             return response;
         }).catch(function (error) {
             const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
@@ -154,10 +156,10 @@ function patchDetails(about_me, location, gender, timezone, birthday) {
         });
 }
 
-function patchAvatar(image) {
-    return axios.patch(rootURL + 'avatar', { image })
+function patchAvatar(avatar) {
+    return axios.patch(rootURL + 'avatar', { avatar })
         .then(response => {
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem('user', JSON.stringify(response.data));
             return response;
         }).catch(function (error) {
             const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
@@ -165,10 +167,10 @@ function patchAvatar(image) {
         });
 }
 
-function patchBanner(image) {
-    return axios.patch(rootURL + 'banner', { image })
+function patchBanner(banner) {
+    return axios.patch(rootURL + 'banner', { banner })
         .then(response => {
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem('user', JSON.stringify(response.data));
             return response;
         }).catch(function (error) {
             const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
@@ -186,8 +188,8 @@ function patchPassword(password) {
         });
 }
 
-function getFollowStatus(id) {
-  return axios.get(rootURL + id + '/follow-status')
+function getFollowStatus(username) {
+  return axios.get(rootURL + username + '/follow-status')
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -196,8 +198,8 @@ function getFollowStatus(id) {
       });
 }
 
-function follow(id) {
-  return axios.post(rootURL + 'follow/' + id )
+function follow(username) {
+  return axios.post(rootURL + username + '/follow' )
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -206,8 +208,28 @@ function follow(id) {
       });
 }
 
-function unfollow(id) {
-  return axios.delete(rootURL + 'follow/' + id )
+function getFavourites(username) {
+  return axios.get(rootURL + username + '/favourites')
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function getGameFavourite(id) {
+  return axios.get(rootURL + 'game/' + id + '/favourite')
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function getGameStatus(id) {
+  return axios.get(`${rootURL}game/${id}/status`)
       .then(response => {
           return response;
       }).catch(function (error) {

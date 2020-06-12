@@ -57,7 +57,7 @@ export default {
     computed: {
       gameIcon () {
         return {
-          backgroundImage: 'url(' + this.getGameIcon(this.data.game) + ')',
+          backgroundImage: 'url(' + this.getGameIcon(this.data.release.game) + ')',
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat'
         }

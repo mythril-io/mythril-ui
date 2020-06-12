@@ -11,7 +11,7 @@ export const playStatusService = {
 const rootURL = '/playstatuses/';
 
 function getAll() {
-  return axios.get(rootURL)
+  return axios.get(rootURL + 'all')
       .then(response => {
           return response;
       }).catch(function (error) {

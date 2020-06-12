@@ -41,7 +41,7 @@
             <label for="password" class="block text-sm font-medium leading-5 text-gray-700">
               Password
             </label>
-              <ValidationProvider rules="required|min:6|alpha_dash|confirmed:password_confirmation" v-slot="{ errors }">
+              <ValidationProvider rules="required|min:8|confirmed:password_confirmation" v-slot="{ errors }">
                 <div class="mt-1">
                   <input id="password" v-model="password" type="password" required class="input placeholder-gray-400 sm:text-sm sm:leading-5" />
                 </div>

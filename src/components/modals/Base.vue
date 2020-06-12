@@ -9,9 +9,9 @@
       </transition>
 
       <transition name="modal">
-        <div v-show="open" class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full max-h-3/4 overflow-y-visible" v-bind:class="width">
+        <div v-show="open" class="rounded-lg shadow-xl transform transition-all sm:w-full" style="background-color: #fff;" v-bind:class="width">
 
-          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <slot name="body"></slot>
           </div>
 

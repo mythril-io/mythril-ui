@@ -1,28 +1,18 @@
 import { axios } from '../utilities';
 
-export const libraryService = {
-    getByUser,
-    getByGameAndUser,
-    getByUserAndStatus,
-    getRecentForGame,
+export const releaseService = {
+    getByGame,
+    get,
     post,
     patch,
-    deleteResource
+    deleteResource,
+    favourite,
+    unfavourite,
 };
 
-const rootURL = '/libraries/';
+const rootURL = '/releases/';
 
-function getByUser(username) {
-  return axios.get(rootURL + 'user/' + username)
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
-}
-
-function getByGameAndUser(id) {
+function getByGame(id) {
   return axios.get(rootURL + 'game/' + id)
       .then(response => {
           return response;
@@ -32,18 +22,8 @@ function getByGameAndUser(id) {
       });
 }
 
-function getByUserAndStatus(username, playStatusId, page = 1) {
-  return axios.get(rootURL + 'user/' + username + '/status/' + playStatusId + '?page=' + page)
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
-}
-
-function getRecentForGame(id) {
-  return axios.get(rootURL + 'game/' + id + '/recent')
+function get(id) {
+  return axios.get(rootURL + id)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -74,6 +54,26 @@ function patch(resource) {
 
 function deleteResource(id) {
   return axios.delete(rootURL + id)
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function favourite(id) {
+  return axios.post(rootURL + id + '/favourite')
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function unfavourite(id) {
+  return axios.delete(rootURL + id + '/favourite')
       .then(response => {
           return response;
       }).catch(function (error) {

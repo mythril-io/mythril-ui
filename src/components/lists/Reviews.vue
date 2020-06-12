@@ -1,14 +1,14 @@
 <template>
 
   <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
-    <div v-for="review in data.items" :key="review.id">
+    <div v-for="review in data.data" :key="review.id">
       <ReviewCard :data="review" />
     </div>
 
     <Pagination
       class="sm:col-span-2"
-      :currentPage="data.page"
-      :totalPages="data.pages"
+      :currentPage="data.current_page"
+      :totalPages="data.last_page"
       :totalItems="data.total"
       :itemsPerPage="data.per_page"
       :disabled="loading"
