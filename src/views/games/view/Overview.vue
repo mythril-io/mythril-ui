@@ -163,7 +163,7 @@ export default {
       const { dispatch } = this.$store;
       libraryService.getRecentForGame(this.$route.params.id).then(
         response => {
-          this.userActivity = response.data;
+          this.userActivity = response.data.data;
           this.loading = false;
         },
         error => {

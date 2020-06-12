@@ -11,17 +11,17 @@
           <div class="w-full xl:w-3/4 pt-8 xl:pt-0 xl:pl-8">
             <Loading v-if="loading & newRequest" :simple="true" />
             <div v-else>
-              <Message v-if="!games.items || games.items.length == 0" content="No games found." />
+              <Message v-if="!games.data || games.data.length == 0" content="No games found." />
               <div v-else>
                 <Message content="Curious on how games are organized/consolidated? Please take a look at our FAQ to get a better understanding." />
 
                 <div class="mt-8 grid grid-cols-2 gap-6" style="max-width: 85rem !important;">
-                  <div v-for="game in games.items" :key="game.id">
+                  <div v-for="game in games.data" :key="game.id">
                     <GameCard :game="game" />
                   </div>
                 </div>
 
-                <infinite-loading v-if="games.has_next" @infinite="getMoreData">
+                <infinite-loading v-if="games.next_page_url" @infinite="getMoreData">
                   <div slot="spinner">
                     <Loading :simple="true"/>
                   </div>
@@ -72,9 +72,9 @@ export default {
             this.newRequest = false;
             this.games = response.data;
           } else {
-            this.games.has_next = response.data.has_next
+            this.games.next_page_url = response.data.next_page_url
           }
-          this.page = response.data.next_num;
+          this.page = ++response.data.current_page;
           this.loading = false;
 
           return response;
@@ -87,8 +87,8 @@ export default {
     getMoreData ($state) {
       this.getData(this.filters).then(
         response => {
-          if (response.data.items.length) {
-            this.games.items.push(...response.data.items);
+          if (response.data.data.length) {
+            this.games.data.push(...response.data.data);
             $state.loaded();
           } else {
             $state.complete();

@@ -7,20 +7,20 @@
           <div>
             <Message class="mt-2 text-white" background="bg-primary">
               <div class="mb-4">Step 1: Select a Game</div>
-              <SelectGame v-model="review.game" />
+              <SelectGame v-model="game" />
             </Message>
 
             <transition name="fade">
-              <div v-if="review.game" class="mt-6">
+              <div v-if="game" class="mt-6">
                 <Message background="bg-warning">
                   <div class="mb-4">Step 2: Select a Release</div>
-                  <SelectRelease :options="review.game.releases" v-model="review.release" />
+                  <SelectRelease :gameId="game.id" v-model="review.release" />
                 </Message>
               </div>
             </transition>
 
             <transition name="fade">
-              <div v-if="review.game && review.release" class="mt-6">
+              <div v-if="game && review.release" class="mt-6">
                 <Message class="mt-2" background="bg-gray-100" content="Step 3: Write Your Review!" />
 
                 <ValidationProvider rules="required|min:500" name="content" v-slot="{ errors }">
@@ -87,8 +87,8 @@ export default {
   },
   data () {
     return {
+      game: null,
       review: {
-        game: null,
         release: null,
         summary: '',
         content: '',
@@ -99,10 +99,11 @@ export default {
   methods: {
     post () {
       const { dispatch } = this.$store;
-      const game = { id: this.review.game.id };
+      const release_id = this.review.release.id;
 
       let resource = JSON.parse(JSON.stringify(this.review));
-      resource.game = game;
+      resource.release_id = release_id;
+      delete resource.release;
 
       reviewService.post(resource).then(
         response => {

@@ -11,7 +11,7 @@
     :loading="loading"
     :max-height="400"
     :show-labels="false"
-    @search-change="getData($event)"
+    @search-change="checkQuery($event)"
     id="games"
   >
     <template slot="singleLabel" slot-scope="props">
@@ -48,6 +48,7 @@
 <script>
 import { iconsMixin } from '@/mixins';
 import { gameService } from '@/services';
+import _ from 'lodash';
 
 export default {
   name: 'SelectGame',
@@ -70,12 +71,15 @@ export default {
     }
   },
   methods: {
-    getData (query) {
+    checkQuery: _.debounce(function(query) {
+      query.length > 0 ? this.getData(query) : this.options = [];
+    }, 500),
+    getData(query) {
       const { dispatch } = this.$store;
       this.loading = true;
-      return gameService.search(query).then(
+      gameService.getByPage(1, { 'search': query }).then(
         response => {
-          this.options = response.data;
+          this.options = response.data.data;
           this.loading = false;
         },
         error => {

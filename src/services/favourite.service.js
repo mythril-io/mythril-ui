@@ -10,8 +10,18 @@ export const favouriteService = {
 
 const rootURL = '/favourites/';
 
-function getByUser(id) {
-  return axios.get(rootURL + 'user/' + id)
+function getFavourites(username) {
+  return axios.get(rootURL + username + '/favourites')
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function getByUser(username) {
+  return axios.get(rootURL + 'user/' + username)
       .then(response => {
           return response;
       }).catch(function (error) {

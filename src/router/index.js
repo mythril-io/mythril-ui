@@ -12,21 +12,16 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // redirect to login page if not logged in and trying to access a restricted page
-  // const publicPages = ['/login', '/register', '/verify', '/reverify', '/about'];
-  // const authRequired = !publicPages.includes(to.path);
-  // const currentUser = localStorage.getItem('user');
-
-  // if (authRequired && !loggedIn) {
-  //   return next('/login');
-  // }
-
   const { authorize } = to.meta;
   const { requiresGuest } = to.meta;
   const currentUser = JSON.parse(localStorage.getItem('user'));
 
   if (currentUser && requiresGuest) {
     return next({ path: '/' });
+  }
+
+  if (currentUser && !currentUser.email_verified_at && to.name != 'SendVerifyEmail' && to.name != 'VerifyEmail') {
+      return next({ name: 'SendVerifyEmail' });
   }
 
   if (authorize) {

@@ -74,8 +74,8 @@
                 <div class="flex">
                   <div class="flex-shrink-0">
                     <div class="flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
-                      <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd"></path>
+                      <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                        <path d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
                       </svg>
                     </div>
                   </div>
@@ -301,9 +301,9 @@ import ReviewCard from '@/components/cards/Review.vue'
 import RecommendationCard from '@/components/cards/Recommendation.vue'
 import UserActivityCard from '@/components/cards/UserActivity.vue'
 import Container from '@/components/layout/Container.vue'
-import Stats from '@/components/home/Stats.vue'
+import Stats from '@/components/Stats.vue'
 import Footer from '@/components/layout/Footer.vue'
-import { homeService, gameService, reviewService, recommendationService, libraryService } from '@/services';
+import { homeService } from '@/services';
 
 export default {
     name: 'Home',
@@ -323,7 +323,7 @@ export default {
     methods: {
       getGame () {
         const { dispatch } = this.$store;
-        gameService.get(295).then(
+        homeService.getFeatured().then(
           response => {
             this.game = response.data;
           },
@@ -332,9 +332,9 @@ export default {
           }
         );
       },
-      getTrendingGames () {
+      getTrending () {
         const { dispatch } = this.$store;
-        gameService.getTrending().then(
+        homeService.getTrending().then(
           response => {
             this.trendingGames = response.data;
           },
@@ -345,7 +345,7 @@ export default {
       },
       getReview () {
         const { dispatch } = this.$store;
-        reviewService.getRecent().then(
+        homeService.getUserReview().then(
           response => {
             this.review = response.data;
           },
@@ -356,7 +356,7 @@ export default {
       },
       getRecommendation () {
         const { dispatch } = this.$store;
-        recommendationService.getRecent().then(
+        homeService.getUserRecommendation().then(
           response => {
             this.recommendation = response.data;
           },
@@ -367,7 +367,7 @@ export default {
       },
       getUserActivity () {
         const { dispatch } = this.$store;
-        libraryService.getRecent().then(
+        homeService.getUserActivity().then(
           response => {
             this.recentActivity = response.data;
           },
@@ -378,9 +378,9 @@ export default {
       },
       getStats () {
         const { dispatch } = this.$store;
-        homeService.get().then(
+        homeService.getStats().then(
           response => {
-            this.stats = response.data.stats;
+            this.stats = response.data;
           },
           error => {
             dispatch('alert/error', "Unable to retrieve stats", { root: true });
@@ -390,7 +390,7 @@ export default {
     },
     created () {
         this.getGame();
-        this.getTrendingGames();
+        this.getTrending();
         this.getReview();
         this.getRecommendation();
         this.getStats();

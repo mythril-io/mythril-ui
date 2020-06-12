@@ -15,9 +15,8 @@ export const getResourceMixin = {
   },
   watch: {
       '$route.params': {
-          handler(newValue) {
-              const { id } = newValue
-              this.getData(id)
+          handler() {
+              this.getData()
           },
           immediate: true,
       }

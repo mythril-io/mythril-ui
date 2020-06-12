@@ -1,8 +1,9 @@
 <template>
-<BaseModal :open="open" width="sm:max-w-4xl min-h-1/2">
+<BaseModal :open="open" width="sm:max-w-4xl">
   <template #body>
 
-  <div>
+  <Loading :simple="true" v-if="loading" />
+  <div v-if="!loading">
     <ValidationObserver v-slot="{ handleSubmit }">
       <form @submit.prevent="handleSubmit(save)">
         <div>
@@ -12,14 +13,14 @@
           <div v-if="favourite" class="flex items-center mt-2 form-input opacity-50 cursor-not-allowed">
             <div class="flex-1">
               <h2 class="text-md text-gray-800 font-bold">
-                {{ favourite.release.platform.name }}
+                {{ favourite.platform.name }}
               </h2>
               <div class="mt-0 text-sm leading-5 truncate text-gray-700">
-                {{ favourite.release.region.name }} {{ favourite.release.alternate_title ? ' - ' + favourite.release.alternate_title: '' }}
+                {{ favourite.region.name }} {{ favourite.alternate_title ? ' - ' + favourite.alternate_title: '' }}
               </div>
             </div>
           </div>
-          <SelectRelease v-else id="release" :options="game.releases" v-model="release" />
+          <SelectRelease v-else id="release" :gameId="game.id" v-model="release" />
         </div>
 
         <div class="mt-3 py-3 sm:flex sm:flex-row-reverse">
@@ -48,12 +49,13 @@
 <script>
 import BaseModal from '@/components/modals/Base.vue'
 import SelectRelease from '@/components/forms/SelectRelease.vue'
-import { favouriteService } from '@/services';
+import Loading from '@/components/Loading.vue'
+import { releaseService, userService } from '@/services';
 
 export default {
   name: 'FavouriteModal',
   components: {
-    SelectRelease, BaseModal
+    SelectRelease, BaseModal, Loading
   },
   props: {
     open: {
@@ -67,7 +69,7 @@ export default {
   },
   data () {
     return {
-      loading: false,
+      loading: true,
       favourite: null,
       release: null
     }
@@ -79,13 +81,8 @@ export default {
     post () {
       const { dispatch } = this.$store;
       const _this = this;
-      const resource = {
-        'release': this.release,
-        'game': {
-          'id': this.game.id
-        }
-      }
-      favouriteService.post(resource).then(
+
+      releaseService.favourite(this.release.id).then(
         response => {
           dispatch('alert/success', 'Added to favourites', { root: true });
           _this.$emit('post');
@@ -99,7 +96,8 @@ export default {
     deleteResource () {
       const { dispatch } = this.$store;
       const _this = this;
-      favouriteService.deleteResource(this.favourite.id).then(
+
+      releaseService.unfavourite(this.favourite.id).then(
         response => {
           dispatch('alert/success', 'Removed from favourites', { root: true });
           _this.$emit('delete');
@@ -112,9 +110,9 @@ export default {
     },
     getFavourite () {
       this.loading = true;
-      favouriteService.getByGameAndUser(this.$route.params.id).then(
+      userService.getGameFavourite(this.$route.params.id).then(
         response => {
-          this.favourite = response.data;
+          this.favourite = response.data.favoriteable;
           this.loading = false;
         },
         error => { this.loading = false }
@@ -122,7 +120,7 @@ export default {
     }
   },
   created () {
-    this.$route.params.id ? this.getFavourite(this.$route.params.id) : ''
+    this.$route.params.id ? this.getFavourite() : this.loading = false;
   }
 }
 </script>

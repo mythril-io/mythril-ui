@@ -13,9 +13,9 @@
         <Loading v-if="loading" :simple="true" />
         <div class="grid grid-cols-4 lg:gap-2" v-if="favourites.length > 0 && !loading">
           <div class="flex items-center justify-center mb-3" v-for="favourite in favourites" :key="favourite.id">
-            <Tooltip :content="favourite.game.title">
-              <router-link :to="{ name: 'Game', params: { id: favourite.game.id, slug: favourite.game.slug }}" class="overflow-hidden inline-block h-16 w-16 sm:h-32 sm:w-32 lg:h-24 lg:w-24 rounded-md border border-gray-100">
-                <img class="opacity-75 hover:opacity-100 cursor-pointer transition hover:scale-105 transform duration-150 ease-in-out" :src="$store.state.cdnURL + 'games/icons/' + favourite.game.icon" :alt="favourite.game.title" />
+            <Tooltip :content="favourite.favoriteable.game.title">
+              <router-link :to="{ name: 'Game', params: { id: favourite.favoriteable.game.id, slug: favourite.favoriteable.game.slug }}" class="overflow-hidden inline-block h-16 w-16 sm:h-32 sm:w-32 lg:h-24 lg:w-24 rounded-md border border-gray-100">
+                <img class="opacity-75 hover:opacity-100 cursor-pointer transition hover:scale-105 transform duration-150 ease-in-out" :src="$store.state.cdnURL + 'games/icons/' + favourite.favoriteable.game.icon" :alt="favourite.favoriteable.game.title" />
               </router-link>
             </Tooltip>
           </div>
@@ -32,7 +32,7 @@ import Tooltip from '@/components/Tooltip.vue'
 import Title from '@/components/Title.vue'
 import Message from '@/components/Message.vue'
 var md = require("markdown-it")();
-import { favouriteService } from '@/services';
+import { userService } from '@/services';
 
 export default {
   name: 'UserOverview',
@@ -55,7 +55,7 @@ export default {
     getFavourites () {
       this.loading = true;
       const { dispatch } = this.$store;
-      favouriteService.getByUser(this.user.id).then(
+      userService.getFavourites(this.user.username).then(
         response => {
           this.favourites = response.data;
           this.loading = false;
@@ -69,9 +69,8 @@ export default {
   },
   watch: {
       'user': {
-          handler(newValue) {
-              const { id } = newValue
-              this.getFavourites(id)
+          handler() {
+              this.user != null ? this.getFavourites() : '';
           },
           immediate: true,
       }

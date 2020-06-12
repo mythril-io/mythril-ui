@@ -3,12 +3,6 @@ const roles = {
     Admin: 'admin'
 };
 
-// Auth Views
-import Login from '@/views/auth/Login.vue'
-import Register from '@/views/auth/Register.vue'
-import VerifyRegistration from '@/views/auth/VerifyRegistration.vue'
-import SendVerifyEmail from '@/views/auth/SendVerifyEmail.vue'
-
 export const routes = [
   {
     path: '/', name: 'Home', component: () => import('@/views/Home.vue'), meta: { plainLayout: true },
@@ -22,10 +16,13 @@ export const routes = [
     }
   },
   { path: '/dashboard', name: 'Dashboard', component: () => import('@/views/Dashboard.vue'), meta: { authorize: [] } },
-  { path: '/login', name: 'Login', component: Login },
-  { path: '/register', name: 'Register', component: Register, meta: { requiresGuest: true } },
-  { path: '/verify', name: 'VerifyRegistration', component: VerifyRegistration },
-  { path: '/reverify', name: 'SendVerifyEmail', component: SendVerifyEmail, meta: { requiresGuest: true } },
+  { path: '/login', name: 'Login', component: () => import('@/views/auth/Login.vue'), meta: { requiresGuest: true } },
+  { path: '/register', name: 'Register', component: () => import('@/views/auth/Register.vue'), meta: { requiresGuest: true } },
+  { path: '/verify', name: 'SendVerifyEmail', component: () => import('@/views/auth/SendVerifyEmail.vue'), meta: { authorize: [] } },
+  { path: '/email/verify/:id/:token', name: 'VerifyEmail', component: () => import('@/views/auth/VerifyEmail.vue') },
+
+  { path: '/forgot-password', name: 'ForgotPassword', component: () => import('@/views/auth/ForgotPassword.vue'), meta: { requiresGuest: true } },
+  { path: '/password/reset/:token', name: 'ResetPassword', component: () => import('@/views/auth/ResetPassword.vue'), meta: { requiresGuest: true } },
   { path: '/games', name: 'Games', component: () => import('@/views/games/Main.vue') },
   {
     path: '/games/:id(\\d+)/:slug', component: () => import('@/views/games/View.vue'),
@@ -63,7 +60,6 @@ export const routes = [
     children: [
       { path: '', name: 'UserSettings', component: () => import('@/views/user/settings/Details.vue'), meta: { authorize: [] } },
       { path: 'images', name: 'SettingsImages', component: () => import('@/views/user/settings/Images.vue'), meta: { authorize: [] } },
-      { path: 'social', name: 'SettingsSocial', component: () => import('@/views/user/settings/Social.vue'), meta: { authorize: [] } },
       { path: 'password', name: 'SettingsPassword', component: () => import('@/views/user/settings/Password.vue'), meta: { authorize: [] } },
     ]
   },
@@ -94,6 +90,10 @@ export const routes = [
       },
       {
         path: 'games/create', name: 'AdminGameCreate', component: () => import('@/views/admin/forms/Game.vue'),
+        meta: { authorize: [roles.Admin], plainLayout: true }
+      },
+      {
+        path: 'releases', name: 'AdminReleases', component: () => import('@/views/admin/Releases.vue'),
         meta: { authorize: [roles.Admin], plainLayout: true }
       },
       {
