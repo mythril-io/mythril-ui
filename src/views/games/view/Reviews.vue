@@ -4,9 +4,9 @@
     <Loading v-if="loading" :simple="true" />
     <div v-else>
       <Message>
-        {{ data.items.length }} reviews found.
+        {{ data.data.length }} reviews found.
       </Message>
-      <ReviewsList v-if="data.items.length" :data="data" :loading="loading" v-on:get-data="getData($event)"/>
+      <ReviewsList v-if="data.data.length" :data="data" :loading="loading" v-on:get-data="getData($event)"/>
     </div>
   </div>
 </template>

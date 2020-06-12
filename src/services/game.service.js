@@ -2,9 +2,6 @@ import { axios } from '../utilities';
 
 export const gameService = {
     getByPage,
-    search,
-    getTrending,
-    getUserStatus,
     get,
     post,
     put,
@@ -15,41 +12,9 @@ const rootURL = '/games/';
 
 function getByPage(page=1, filters=null) {
   let query = '';
-  if (filters) {
-    // query = new URLSearchParams(filters).toString();
-    query = Object.entries(filters).map(([key, val]) => `${key}=${val}`).join('&')
-  }
-  return axios.get(rootURL + 'page/' + page + '?' + query)
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
-}
+  filters ? query = Object.entries(filters).map(([key, val]) => `${key}=${val}`).join('&') : '';
 
-function search(query='') {
-  return axios.get(rootURL + 'search?query=' + query)
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
-}
-
-function getTrending() {
-  return axios.get(rootURL + 'trending')
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
-}
-
-function getUserStatus(id) {
-  return axios.get(rootURL + id + '/userStatus')
+  return axios.get(rootURL + '?page=' + page + '&' + query)
       .then(response => {
           return response;
       }).catch(function (error) {

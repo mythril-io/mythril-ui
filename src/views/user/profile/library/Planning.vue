@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import LibraryFetch from '@/components/profile/LibraryFetch.vue'
+import LibraryFetch from '@/components/LibraryFetch.vue'
 
 export default {
   name: 'UserLibraryPlanning',

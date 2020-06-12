@@ -12,3 +12,4 @@ export * from './review.service';
 export * from './recommendation.service';
 export * from './playStatus.service';
 export * from './home.service';
+export * from './release.service';

@@ -22,7 +22,7 @@
         <div class="mt-5 sm:mt-0 sm:h-32 flex items-end" v-if="!currentUserEquals(data)">
           <div>
             <transition name="fade" mode="out-in">
-              <button v-if="!followLoading" type="button" key="follow" class="leading-5 button" @click="checkFollowStatus" v-bind:class="[data.banner ? 'button-primary' : 'button-white']">
+              <button v-if="!followLoading" type="button" key="follow" class="leading-5 button" @click="follow" v-bind:class="[data.banner ? 'button-primary' : 'button-white']">
                   {{ following ? 'Unfollow' : 'Follow' }}
               </button>
               <button v-else type="button" key="loading" class="leading-5 button" v-bind:class="[data.banner ? 'button-primary' : 'button-white']">
@@ -102,56 +102,38 @@ export default {
   data () {
     return {
       following: false,
-      followLoading: false,
+      followLoading: true,
     }
   },
   methods: {
-    checkFollowStatus () {
+    follow() {
       if (!this.getCurrentUser()) {
         return this.$router.push({ name: 'Login' })
       }
-      this.following ? this.unfollow() : this.follow()
-    },
-    follow () {
       const { dispatch } = this.$store;
       this.followLoading = true;
-      userService.follow(this.$route.params.id).then(
+      userService.follow(this.$route.params.username).then(
         response => {
           this.followLoading = false;
-          this.following = true;
+          this.following = response.data;
         },
         error => {
           this.followLoading = false;
-          dispatch('alert/error', 'Unable to follow user', { root: true });
-        }
-      );
-    },
-    unfollow () {
-      const { dispatch } = this.$store;
-      this.followLoading = true;
-      userService.unfollow(this.$route.params.id).then(
-        response => {
-          this.followLoading = false;
-          this.following = false;
-        },
-        error => {
-          this.followLoading = false;
-          dispatch('alert/error', 'Unable to unfollow user', { root: true });
+          dispatch('alert/error', 'Unable to follow/unfollow user', { root: true });
         }
       );
     },
     changeTab(routeName) {
       this.$router.push({ name: routeName });
     },
-    getData (id) {
-      // this.loading = true;
+    getData() {
       const { dispatch } = this.$store;
       const _this = this;
       userService.get(this.$route.params.username).then(
         response => {
           this.data = response.data;
           this.loading = false;
-          this.getCurrentUser() ? this.getFollowStatus(this.$route.params.id) : ''
+          this.getCurrentUser() ? this.getFollowStatus() : this.followLoading = false;
         },
         error => {
           this.loading = false;
@@ -160,11 +142,14 @@ export default {
         }
       );
     },
-    getFollowStatus (id) {
+    getFollowStatus() {
       const { dispatch } = this.$store;
-      userService.getFollowStatus(this.$route.params.id).then(
-        response => this.following = response.data.status,
-        error => { }
+      userService.getFollowStatus(this.$route.params.username).then(
+        response => {
+          this.following = response.data;
+          this.followLoading = false;
+        },
+        error => { this.followLoading = false }
       );
     }
   },

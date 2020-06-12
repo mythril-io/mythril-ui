@@ -114,8 +114,8 @@ export default {
       const { dispatch } = this.$store;
       userService.patchDetails(this.details.about_me, this.details.location, this.details.gender, this.details.timezone, this.details.birthday).then(
         response => {
-          dispatch('authentication/updateUser', response.data.user );
-          dispatch('alert/success', response.data.message);
+          dispatch('authentication/updateUser', response.data );
+          dispatch('alert/success', 'Profile updated');
         },
         error => {
           dispatch('alert/error', error);

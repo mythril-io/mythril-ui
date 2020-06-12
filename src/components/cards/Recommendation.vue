@@ -4,7 +4,7 @@
 
       <router-link :to="{ name: 'Recommendation', params: { id: data.id }}" class="group lg:flex h-auto lg:h-64 hover:opacity-100 recommendation">
 
-        <div class="left-icon bg-center bg-no-repeat bg-cover lg:bg-auto" v-bind:style="gameIcon(data.game)" ></div>
+        <div class="left-icon bg-center bg-no-repeat bg-cover lg:bg-auto" v-bind:style="gameIcon(data.release.game)" ></div>
         <div class="flex items-center p-4 group-hover:opacity-75 middle">
           <div>
             <div class="text-gray-900 text-md mb-1">
@@ -14,7 +14,7 @@
             <span class="tag bg-gray-100">{{ data.created_at | dateFormat }}</span>
           </div>
         </div>
-        <div class="right-icon bg-center bg-no-repeat bg-cover lg:bg-auto h-24 lg:h-auto" v-bind:style="gameIcon(data.recommended_game)" ></div>
+        <div class="right-icon bg-center bg-no-repeat bg-cover lg:bg-auto h-24 lg:h-auto" v-bind:style="gameIcon(data.recommended_release.game)" ></div>
 
       </router-link>
 

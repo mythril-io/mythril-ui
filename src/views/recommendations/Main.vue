@@ -8,7 +8,7 @@
         <Message class="mt-2">
           Currently, there are {{ data.total }} recommendations in the database. <router-link class="is-link" :to="{ name: 'CreateRecommendation' }">Write a Recommendation</router-link>
         </Message>
-        <RecommendationsList v-if="data.items.length" :data="data" :loading="loading" v-on:get-data="getData($event)"/>
+        <RecommendationsList v-if="data.data.length" :data="data" :loading="loading" v-on:get-data="getData($event)"/>
       </div>
 
     </Container>

@@ -8,24 +8,16 @@
             Sign in to your account
           </h2>
         </div>
-        <form class="mt-8" @submit.prevent="handleSubmit">
+        <form class="mt-8" @submit.prevent="submit">
           <input type="hidden" name="remember" value="true" />
           <div class="rounded-md shadow-sm">
             <div>
-              <input aria-label="Username" name="username" v-model="username" type="username" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Username" />
+              <input aria-label="Email" name="email" v-model="email" type="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Email" />
             </div>
             <div class="-mt-px">
               <input aria-label="Password" name="password" v-model="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Password" />
             </div>
           </div>
-
-          <!-- <div class="mt-6 flex items-center justify-between">
-            <div>
-              <router-link :to="{ name: 'ForgotPassword' }" exact class="is-link">
-                Forgot your password?
-              </router-link>
-            </div>
-          </div> -->
 
           <div class="mt-6">
             <button type="submit" :disabled="loggingIn" class="group relative w-full flex justify-center button button-primary">
@@ -38,6 +30,13 @@
             </button>
           </div>
         </form>
+
+        <div class="mt-4 text-center">
+          <router-link :to="{ name: 'ForgotPassword' }" class="is-muted-link">
+            Forgot Password?
+          </router-link>
+        </div>
+
       </div>
     </div>
   </div>
@@ -48,33 +47,24 @@ import Hero from '@/components/Hero.vue'
 
 export default {
     data () {
-        return {
-            username: '',
-            password: '',
-            submitted: false
-        }
+      return {
+        email: '',
+        password: '',
+      }
     },
     components: {
       Hero
     },
     computed: {
-        loggingIn () {
-            return this.$store.state.authentication.status.loggingIn;
-        }
-    },
-    created () {
-        // reset login status
-        this.$store.dispatch('authentication/logout');
+      loggingIn () {
+        return this.$store.state.authentication.status.loggingIn;
+      }
     },
     methods: {
-        handleSubmit (e) {
-            this.submitted = true;
-            const { username, password } = this;
-            const { dispatch } = this.$store;
-            if (username && password) {
-                dispatch('authentication/login', { username, password });
-            }
-        }
+      submit () {
+        const { email, password } = this;
+        this.$store.dispatch('authentication/login', { email, password });
+      }
     }
 };
 </script>

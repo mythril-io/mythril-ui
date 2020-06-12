@@ -8,7 +8,7 @@
         <Message class="mt-2">
           Currently, there are {{ data.total }} reviews in the database. <router-link class="is-link" :to="{ name: 'CreateReview' }">Write a Review</router-link>
         </Message>
-        <ReviewsList v-if="data.items.length" :data="data" :loading="loading" v-on:get-data="getData($event)"/>
+        <ReviewsList v-if="data.data.length" :data="data" :loading="loading" v-on:get-data="getData($event)"/>
       </div>
 
     </Container>

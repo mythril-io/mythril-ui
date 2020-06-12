@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ValidationObserver v-slot="{ handleSubmit }">
+    <ValidationObserver v-slot="{ handleSubmit }" ref="observer">
       <form @submit.prevent="handleSubmit(patch)">
         <div>
           <div>
@@ -17,7 +17,7 @@
                 <label for="Password" class="block text-sm font-medium leading-5 text-gray-700">
                   Password
                 </label>
-                <ValidationProvider rules="required|min:6|alpha_dash|confirmed:confirmation" v-slot="{ errors }">
+                <ValidationProvider rules="required|min:8|confirmed:confirmation" v-slot="{ errors }">
                   <div class="mt-1 rounded-md shadow-sm">
                     <input id="Password" v-model="password" type="password" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                   </div>
@@ -67,9 +67,13 @@ export default {
   methods: {
     patch () {
       const { dispatch } = this.$store;
+      const { observer } = this.$refs.observer;
       userService.patchPassword(this.password).then(
         response => {
-          dispatch('alert/success', response.data.message);
+          dispatch('alert/success', 'Password updated');
+          this.password = '';
+          this.confirmation = '';
+          this.$refs.observer.reset();
         },
         error => {
           dispatch('alert/error', error);
