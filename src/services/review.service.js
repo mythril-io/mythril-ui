@@ -14,7 +14,7 @@ export const reviewService = {
     deleteResource
 };
 
-const rootURL = '/reviews/';
+const rootURL = '/reviews';
 
 function getByPage(page=1) {
   return axios.get(rootURL + '?page=' + page)
@@ -27,7 +27,7 @@ function getByPage(page=1) {
 }
 
 function getByGameAndPage(id, page=1) {
-  return axios.get(rootURL + 'game/' + id + '?page=' + page)
+  return axios.get(rootURL + '/' + 'game/' + id + '?page=' + page)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -37,7 +37,7 @@ function getByGameAndPage(id, page=1) {
 }
 
 function getByUserAndPage(username, page=1) {
-  return axios.get(rootURL + 'user/' + username + '?page=' + page)
+  return axios.get(rootURL + '/' + 'user/' + username + '?page=' + page)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -47,7 +47,7 @@ function getByUserAndPage(username, page=1) {
 }
 
 function like(id) {
-  return axios.post(rootURL + id + '/like')
+  return axios.post(rootURL + '/' + id + '/like')
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -57,7 +57,7 @@ function like(id) {
 }
 
 function dislike(id) {
-  return axios.post(rootURL + id + '/dislike')
+  return axios.post(rootURL + '/' + id + '/dislike')
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -67,7 +67,7 @@ function dislike(id) {
 }
 
 function getUserSentiment(id) {
-  return axios.get(rootURL + id + '/user-sentiment')
+  return axios.get(rootURL + '/' + id + '/user-sentiment')
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -77,7 +77,7 @@ function getUserSentiment(id) {
 }
 
 function get(id) {
-  return axios.get(rootURL + id)
+  return axios.get(rootURL + '/' + id)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -97,7 +97,7 @@ function post(resource) {
 }
 
 function put(resource) {
-  return axios.put(rootURL + resource.id, resource)
+  return axios.put(rootURL + '/' + resource.id, resource)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -107,7 +107,7 @@ function put(resource) {
 }
 
 function patch(resource) {
-  return axios.patch(rootURL + resource.id, resource)
+  return axios.patch(rootURL + '/' + resource.id, resource)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -117,7 +117,7 @@ function patch(resource) {
 }
 
 function deleteResource(id) {
-  return axios.delete(rootURL + id)
+  return axios.delete(rootURL + '/' + id)
       .then(response => {
           return response;
       }).catch(function (error) {

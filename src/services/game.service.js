@@ -8,7 +8,7 @@ export const gameService = {
     deleteResource
 };
 
-const rootURL = '/games/';
+const rootURL = '/games';
 
 function getByPage(page=1, filters=null) {
   let query = '';
@@ -24,7 +24,7 @@ function getByPage(page=1, filters=null) {
 }
 
 function get(id) {
-  return axios.get(rootURL + id)
+  return axios.get(rootURL + '/' + id)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -44,7 +44,7 @@ function post(resource) {
 }
 
 function put(resource) {
-  return axios.put(rootURL + resource.id, resource)
+  return axios.put(rootURL + '/' + resource.id, resource)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -54,7 +54,7 @@ function put(resource) {
 }
 
 function deleteResource(id) {
-  return axios.delete(rootURL + id)
+  return axios.delete(rootURL + '/' + id)
       .then(response => {
           return response;
       }).catch(function (error) {
