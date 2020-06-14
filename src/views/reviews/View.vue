@@ -96,7 +96,7 @@
 
 <script>
 import Loading from '@/components/Loading.vue'
-import Overlap from '@/components/pages/Overlap.vue'
+import Overlap from '@/components/layout/Overlap.vue'
 import EditForm from '@/components/forms/edit/Review.vue'
 import { reviewService } from '@/services';
 import { iconsMixin, getResourceMixin, gameTitleMixin, authMixin } from '@/mixins';
