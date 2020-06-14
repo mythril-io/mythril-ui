@@ -13,7 +13,7 @@
         </div>
         <div class="hidden sm:block">
           <nav class="flex ">
-            <router-link tag="a" :to="{ name: 'UserLibrary' }" exact class="is-pill-tab">
+            <router-link tag="a" :to="{ name: 'UserLibrary' }" exact class="-ml-1 is-pill-tab">
               All
             </router-link>
             <router-link tag="a" :to="{ name: 'UserLibraryPlaying' }" class="is-pill-tab">

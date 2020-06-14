@@ -52,7 +52,7 @@
 
 <script>
 import Loading from '@/components/Loading.vue'
-import Overlap from '@/components/pages/Overlap.vue'
+import Overlap from '@/components/layout/Overlap.vue'
 import { userService } from '@/services';
 
 export default {

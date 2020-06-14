@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow overflow-hidden sm:rounded-md -mx-4 sm:-mx-7">
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg -mx-4 sm:-mx-7">
     <ul>
       <li class="border-t border-gray-200 even:bg-gray-50" v-for="entry in data" :key="entry.id">
         <router-link :to="{ name: 'Game', params: { id: entry.release.game.id, slug: entry.release.game.slug }}" class="group block hover:bg-gray-100 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out sm:px-2">
