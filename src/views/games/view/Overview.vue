@@ -55,7 +55,7 @@
               <div>
                 <div class="flex justify-center items-center is-primary rounded-bl rounded-br p-4 opacity-75">
                   <span class="font-bold text-3xl leading-9">
-                    #{{ game.score_rank }}
+                    {{ game.score_rank ? '#' + game.score_rank : '-' }}
                   </span>
                 </div>
               </div>
@@ -67,7 +67,7 @@
               <div>
                 <div class="flex justify-center items-center is-primary rounded-bl rounded-br p-4 opacity-75">
                   <span class="font-bold text-3xl leading-9">
-                    #{{ game.popularity_rank }}
+                    {{ game.popularity_rank ? '#' + game.popularity_rank : '-' }}
                   </span>
                 </div>
               </div>
