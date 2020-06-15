@@ -3,6 +3,10 @@
   <Loading v-if="loading" :simple="false"/>
 
   <div v-if="!loading">
+    <button type="button" class="leading-5 button button-white mb-5" @click="goBack()">
+      Go Back
+    </button>
+
     <Title v-if="true" :title="title"/>
 
     <ValidationObserver v-slot="{ handleSubmit }">
@@ -149,7 +153,7 @@
       </div>
     </div>
 
-    <div class="hidden sm:block">
+    <!-- <div class="hidden sm:block">
       <div class="py-5">
         <div class="border-t border-gray-200"></div>
       </div>
@@ -243,7 +247,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="hidden sm:block">
       <div class="py-5">
@@ -268,13 +272,13 @@
 import Loading from '@/components/Loading.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
 import Title from '@/components/admin/Title.vue';
-import ReleaseForm from '@/components/admin/ReleaseForm.vue';
 import { gameService, developerService, genreService } from '@/services';
+import _ from 'lodash';
 
 export default {
   name: 'GameForm',
   components: {
-    Title, Loading, ImageUpload, ReleaseForm
+    Title, Loading, ImageUpload
   },
   data () {
     return {
@@ -289,7 +293,6 @@ export default {
         genres: null,
         icon: '',
         banner: '',
-        releases: []
       },
     }
   },
@@ -337,16 +340,36 @@ export default {
     },
     save() {
       if (this.resource.id) {
-        this.put(this.resource);
+        this.put();
       } else {
-        this.post(this.resource);
+        this.post();
       }
     },
-    cancel() {
-      this.$router.push({ name: 'AdminGames' });
+    goBack() {
+      if(confirm('Are you sure? All unsaved work will be lost.')) {
+        this.$router.push({ name: 'AdminGames' });
+      }
     },
-    post (resource) {
+    prepareResource() {
+      const developer_id = this.resource.developer.id;
+      const genre_ids = _.map(this.resource.genres, 'id');
+
+      let resource = JSON.parse(JSON.stringify(this.resource));
+      resource.developer_id = developer_id;
+      resource.genre_ids = genre_ids;
+      delete resource.developer;
+      delete resource.genres;
+
+      // Prepare icon and banner
+      resource.icon.startsWith("data:image") ? '' : resource.icon=null;
+      resource.banner.startsWith("data:image") ? '' : resource.banner=null;
+
+      return resource;
+    },
+    post () {
       const { dispatch } = this.$store;
+      let resource = this.prepareResource();
+
       gameService.post(resource).then(
         response => {
           this.$router.push({ name: 'AdminGames' });
@@ -356,8 +379,10 @@ export default {
         }
       );
     },
-    put (resource) {
+    put () {
       const { dispatch } = this.$store;
+      let resource = this.prepareResource();
+
       gameService.put(resource).then(
         response => {
           this.$router.push({ name: 'AdminGames' });

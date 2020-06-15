@@ -113,7 +113,7 @@ import LibraryModal from '@/components/modals/Library.vue'
 import FavouriteModal from '@/components/modals/Favourite.vue'
 import Container from '@/components/layout/Container.vue'
 import { iconsMixin, getResourceMixin, authMixin } from '@/mixins';
-import { gameService } from '@/services';
+import { gameService, userService } from '@/services';
 
 export default {
   name: 'Game',
@@ -144,15 +144,16 @@ export default {
       this.$router.push({ name: routeName });
     },
     getUserStatus(id) {
-      gameService.getUserStatus(id).then(
+      userService.getGameStatus(id).then(
         response => {
-          this.userHasFavourite = (response.data.favourite == "true");
-          this.userHasLibrary = (response.data.library == "true");
+          this.userHasFavourite = (response.data.favourite == true);
+          this.userHasLibrary = (response.data.library == true);
         },
         error => { }
       );
     },
-    getData (id) {
+    getData() {
+      const id = this.$route.params.id;
       // Obtain current user's library and favourite
       this.getCurrentUser() ? this.getUserStatus(id) : ''
 

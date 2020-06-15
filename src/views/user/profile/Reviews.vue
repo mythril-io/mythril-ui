@@ -3,10 +3,10 @@
     <Title title="Reviews" />
     <Loading v-if="loading" :simple="true" />
     <div v-else>
-      <Message v-if="data.items">
-        {{ data.items.length }} reviews found.
+      <Message v-if="data.data">
+        {{ data.data.length }} reviews found.
       </Message>
-      <ReviewsList v-if="data.items && data.items.length" :data="data" :loading="loading" v-on:get-data="getData($event)"/>
+      <ReviewsList v-if="data.data && data.data.length" :data="data" :loading="loading" v-on:get-data="getData($event)"/>
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
     getData (page=1) {
       const { dispatch } = this.$store;
       this.loading = true;
-      return reviewService.getByUserAndPage(this.user.id, page).then(
+      return reviewService.getByUserAndPage(this.user.username, page).then(
         response => {
           this.data = response.data;
           this.loading = false;

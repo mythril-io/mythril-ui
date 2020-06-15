@@ -4,7 +4,7 @@
     v-model="inputVal"
     :options="options"
     track-by="id"
-
+    :loading="loading"
     placeholder="Select a Release"
     open-direction="bottom"
     :max-height="300"
@@ -38,10 +38,17 @@
 </template>
 
 <script>
+import { releaseService } from '@/services';
 
 export default {
   name: 'SelectRelease',
-  props: ['value', 'options'],
+  props: ['value', 'gameId'],
+  data () {
+    return {
+      options: [],
+      loading: false,
+    }
+  },
   computed: {
     inputVal: {
       get() {
@@ -53,12 +60,29 @@ export default {
     }
   },
   watch: {
-      'options': {
+      'gameId': {
           handler(newValue) {
+            this.getData();
             this.inputVal = null;
           },
           immediate: true,
       }
+  },
+  methods: {
+    getData() {
+      const { dispatch } = this.$store;
+      this.loading = true;
+      releaseService.getByGame(this.gameId).then(
+        response => {
+          this.options = response.data;
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          dispatch('alert/error', error, { root: true });
+        }
+      );
+    },
   },
 }
 </script>

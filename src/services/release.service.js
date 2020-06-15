@@ -1,40 +1,19 @@
 import { axios } from '../utilities';
 
-export const recommendationService = {
-    getByPage,
-    getByGameAndPage,
-    getByUserAndPage,
+export const releaseService = {
+    getByGame,
     get,
     post,
-    put,
     patch,
-    deleteResource
+    deleteResource,
+    favourite,
+    unfavourite,
 };
 
-const rootURL = '/recommendations';
+const rootURL = '/releases/';
 
-function getByPage(page=1) {
-  return axios.get(rootURL + '?page=' + page)
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
-}
-
-function getByGameAndPage(id, page=1) {
-  return axios.get(rootURL + '/' + 'game/' + id + '?page=' + page)
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
-}
-
-function getByUserAndPage(username, page=1) {
-  return axios.get(rootURL + '/' + 'user/' + username + '?page=' + page)
+function getByGame(id) {
+  return axios.get(rootURL + 'game/' + id)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -44,7 +23,7 @@ function getByUserAndPage(username, page=1) {
 }
 
 function get(id) {
-  return axios.get(rootURL + '/' + id)
+  return axios.get(rootURL + id)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -63,18 +42,8 @@ function post(resource) {
       });
 }
 
-function put(resource) {
-  return axios.put(rootURL + '/' + resource.id, resource)
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
-}
-
 function patch(resource) {
-  return axios.patch(rootURL + '/' + resource.id, resource)
+  return axios.patch(rootURL + resource.id, resource)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -84,7 +53,27 @@ function patch(resource) {
 }
 
 function deleteResource(id) {
-  return axios.delete(rootURL + '/' + id)
+  return axios.delete(rootURL + id)
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function favourite(id) {
+  return axios.post(rootURL + id + '/favourite')
+      .then(response => {
+          return response;
+      }).catch(function (error) {
+          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+          return Promise.reject(errorMessage)
+      });
+}
+
+function unfavourite(id) {
+  return axios.delete(rootURL + id + '/favourite')
       .then(response => {
           return response;
       }).catch(function (error) {

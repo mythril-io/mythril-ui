@@ -1,11 +1,11 @@
 <template>
-  <Overlap :coverPhoto="data ? getGameBannerStyle(data.game.banner) : ''">
+  <Overlap :coverPhoto="data ? getGameBannerStyle(data.release.game.banner) : ''">
     <template #header>
 
       <div class="flex justify-center items-center h-40" v-if="data">
         <div>
           <h2 class="text-center text-2xl font-bold leading-7 text-white sm:text-3xl sm:leading-9 sm:truncate">
-            <router-link :to="{ name: 'Game', params: { id: data.game.id, slug: data.game.slug }}" class="hover:underline">{{ getTitle(data) }}</router-link> Review
+            <router-link :to="{ name: 'Game', params: { id: data.release.game.id, slug: data.release.game.slug }}" class="hover:underline">{{ getTitle(data) }}</router-link> Review
           </h2>
           <div class="mt-2 text-center text-sm leading-5 truncate text-gray-400">
             <router-link :to="{ name: 'Games', query: { platform: data.release.platform.id }}">
@@ -51,11 +51,11 @@
               </div>
 
               <div class="mx-auto w-full lg:w-4/5 -mt-5">
-                <div class="bg-gray-50 rounded-md text-center px-4 pt-12 pb-4">
+                <div class="bg-gray-50 rounded-md text-center px-4 pt-12 pb-8">
                   <div>
                     {{ data.summary }}
                   </div>
-                  <div class="flex flex-wrap md:flex-no-wrap md:items-center justify-center md:justify-between mt-5">
+                  <!-- <div class="flex flex-wrap md:flex-no-wrap md:items-center justify-center md:justify-between mt-5">
                     <div class="text-center mb-2 md:mb-0 w-full md:w-auto order-2 md:order-none text-sm text-gray-600">
                       <span v-if="totalLikes">
                         {{ data.likes }} out of {{ totalLikes }} users liked this review
@@ -64,18 +64,18 @@
                     </div>
                     <div class="mb-2 md:mb-0 order-1 md:order-none">
                       <button type="button" class="leading-5 button button-sentiment fill-current" :class="userSentiment==1 ? 'text-white bg-primary' : 'text-primary'"  @click="like">
-                        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6 -mx-1">
-                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd"></path>
+                        <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 -mx-1">
+                          <path d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
                         </svg>
                       </button>
                       <button type="button" class="ml-2 leading-5 button button-sentiment fill-current" :class="userSentiment==0 ? 'text-white bg-danger' : 'text-danger'" @click="dislike">
-                        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6 -mx-1">
-                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-7.536 5.879a1 1 0 001.415 0 3 3 0 014.242 0 1 1 0 001.415-1.415 5 5 0 00-7.072 0 1 1 0 000 1.415z" clip-rule="evenodd"></path>
+                        <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 -mx-1">
+                          <path d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"></path>
                         </svg>
                       </button>
                     </div>
                   </div>
-                  <progress v-if="totalLikes" max="100" class="progress mt-2" :value="likePercentage">{{ likePercentage }}</progress>
+                  <progress v-if="totalLikes" max="100" class="progress mt-2" :value="likePercentage">{{ likePercentage }}</progress> -->
                 </div>
               </div>
 
@@ -96,7 +96,7 @@
 
 <script>
 import Loading from '@/components/Loading.vue'
-import Overlap from '@/components/pages/Overlap.vue'
+import Overlap from '@/components/layout/Overlap.vue'
 import EditForm from '@/components/forms/edit/Review.vue'
 import { reviewService } from '@/services';
 import { iconsMixin, getResourceMixin, gameTitleMixin, authMixin } from '@/mixins';

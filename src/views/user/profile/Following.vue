@@ -3,10 +3,10 @@
     <Title title="Following" />
     <Loading v-if="loading" :simple="true" />
     <div class="flex flex-wrap justify-center content-center items-center" v-else>
-      <div class="flex items-center justify-center w-24" v-for="user in users" :key="user.id">
+      <div class="flex items-center justify-center w-24" v-for="user in users.data" :key="user.id">
         <UserAvatar :user="user"/>
       </div>
-      <Message v-if="users.length == 0" content="No users found." />
+      <Message v-if="users.data && users.data.length == 0" content="No users found." />
     </div>
   </div>
 </template>
@@ -35,7 +35,7 @@ export default {
     getData () {
       this.loading = true;
       const { dispatch } = this.$store;
-      userService.getUserFollowing(this.user.id).then(
+      userService.getFollowing(this.user.username).then(
         response => {
           this.users = response.data;
           this.loading = false;

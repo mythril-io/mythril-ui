@@ -5,7 +5,6 @@ export const libraryService = {
     getByGameAndUser,
     getByUserAndStatus,
     getRecentForGame,
-    getRecent,
     post,
     patch,
     deleteResource
@@ -13,8 +12,8 @@ export const libraryService = {
 
 const rootURL = '/libraries/';
 
-function getByUser(id) {
-  return axios.get(rootURL + 'user/' + id)
+function getByUser(username) {
+  return axios.get(rootURL + 'user/' + username)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -23,7 +22,6 @@ function getByUser(id) {
       });
 }
 
-// User ID is obtained from access_token
 function getByGameAndUser(id) {
   return axios.get(rootURL + 'game/' + id)
       .then(response => {
@@ -34,8 +32,8 @@ function getByGameAndUser(id) {
       });
 }
 
-function getByUserAndStatus(id, playStatusId, page = 1) {
-  return axios.get(rootURL + 'user/' + id + '/status/' + playStatusId + '/page/' + page)
+function getByUserAndStatus(username, playStatusId, page = 1) {
+  return axios.get(rootURL + 'user/' + username + '/status/' + playStatusId + '?page=' + page)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -46,16 +44,6 @@ function getByUserAndStatus(id, playStatusId, page = 1) {
 
 function getRecentForGame(id) {
   return axios.get(rootURL + 'game/' + id + '/recent')
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
-}
-
-function getRecent() {
-  return axios.get(rootURL + 'recent')
       .then(response => {
           return response;
       }).catch(function (error) {

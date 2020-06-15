@@ -56,10 +56,10 @@ export default {
         }
     },
     methods: {
-        getData (page, search) {
+        getData (page, search='') {
           this.loading = true;
           const { dispatch } = this.$store;
-          gameService.getByPage(page, search).then(
+          gameService.getByPage(page, { 'search' : search }).then(
             response => {
               this.data = response.data;
               this.loading = false;

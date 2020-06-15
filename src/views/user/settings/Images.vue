@@ -68,16 +68,16 @@ export default {
     ImageUpload
   },
   computed: {
-    user () {
+    user() {
       return this.$store.state.authentication.user;
     }
   },
   methods: {
-    updateAvatar (image) {
+    updateAvatar(image) {
       const { dispatch } = this.$store;
       userService.patchAvatar(image).then(
         response => {
-          dispatch('authentication/updateUser', response.data.user );
+          dispatch('authentication/updateUser', response.data );
           dispatch('alert/success', 'Avatar updated', { root: true });
         },
         error => {
@@ -85,11 +85,11 @@ export default {
         }
       );
     },
-    updateBanner (image) {
+    updateBanner(image) {
       const { dispatch } = this.$store;
       userService.patchBanner(image).then(
         response => {
-          dispatch('authentication/updateUser', response.data.user );
+          dispatch('authentication/updateUser', response.data );
           dispatch('alert/success', 'Cover photo updated', { root: true });
         },
         error => {

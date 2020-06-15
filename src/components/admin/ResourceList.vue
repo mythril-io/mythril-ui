@@ -42,7 +42,7 @@
         </div>
       </div>
       <ul>
-        <li class="border-t border-gray-200" v-for="item in data.items" :key="item.id">
+        <li class="border-t border-gray-200" v-for="item in data.data" :key="item.id">
           <a href="#" @click="$emit('show-form', item)" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
             <div class="px-4 py-4 flex items-center sm:px-6">
               <div class="min-w-0 flex-1 sm:flex">
@@ -64,8 +64,8 @@
     </div>
 
     <Pagination
-      :currentPage="data.page"
-      :totalPages="data.pages"
+      :currentPage="data.current_page"
+      :totalPages="data.last_page"
       :totalItems="data.total"
       :itemsPerPage="data.per_page"
       :disabled="loading"

@@ -49,7 +49,7 @@
                 </div>
                 <div v-else>
                   <ValidationProvider rules="required">
-                    <SelectRelease id="release" name="release" :options="releases" v-model="entry.release" />
+                    <SelectRelease id="release" name="release" :gameId="gameId" v-model="entry.release" />
                   </ValidationProvider>
                 </div>
               </div>
@@ -156,8 +156,8 @@ export default {
     SelectRelease, Loading
   },
   props: {
-    releases: {
-      type: Array,
+    gameId: {
+      type: Number,
       required: true
     },
     library: {
@@ -192,9 +192,6 @@ export default {
         hours: null,
         score: null,
         notes: '',
-        game: {
-          id: this.$route.params.id
-        }
       },
     }
   },
@@ -220,7 +217,16 @@ export default {
       this.setCheckboxValues();
       const { dispatch } = this.$store;
       const _this = this;
-      libraryService.post(this.entry).then(
+      const release_id = this.entry.release.id;
+      const play_status_id = this.entry.play_status.id;
+
+      let resource = JSON.parse(JSON.stringify(this.entry));
+      resource.release_id = release_id;
+      resource.play_status_id = play_status_id;
+      delete resource.release;
+      delete resource.play_status;
+
+      libraryService.post(resource).then(
         response => {
           _this.$emit('post', response.data)
         },
@@ -236,7 +242,7 @@ export default {
       const resource = {
         id: this.entry.id,
         digital: this.entry.digital,
-        play_status: this.entry.play_status,
+        play_status_id: this.entry.play_status.id,
         score: this.entry.score,
         own: this.entry.own,
         notes: this.entry.notes,

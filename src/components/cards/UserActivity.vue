@@ -15,13 +15,13 @@
             </router-link>
           </p>
           <p class="text-sm antialiased">
-            {{ data.play_status.name }}: <router-link :to="{ name: 'Game', params: { id: data.game.id, slug: data.game.slug }}" class="text-primary hover:underline">{{ data.game.title }}</router-link>.
+            {{ data.play_status.name }}: <router-link :to="{ name: 'Game', params: { id: data.release.game.id, slug: data.release.game.slug }}" class="text-primary hover:underline">{{ data.release.game.title }}</router-link>.
           </p>
           <p><small class="mt-2 md:mt-5 tag">{{ data.created_at | ago }}</small></p>
         </div>
         <div
           class="h-full w-5/12 md:w-1/3 image-clip-path flex-none bg-cover bg-no-repeat bg-center text-center overflow-hidden group-hover:scale-105 transform duration-200 ease-out "
-          v-bind:style="gameIcon" :title="data.game.title"
+          v-bind:style="gameIcon" :title="data.release.game.title"
         >
         </div>
       </div>
@@ -48,7 +48,7 @@ export default {
     computed: {
       gameIcon () {
         return {
-          backgroundImage: 'url(' + this.getGameIcon(this.data.game) + ')',
+          backgroundImage: 'url(' + this.getGameIcon(this.data.release.game) + ')',
         }
       }
     },

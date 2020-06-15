@@ -17,7 +17,6 @@
             <select class="form-select block w-full">
               <option selected>Profile</option>
               <option>Avatar and Cover Photo</option>
-              <!-- <option>Social Accounts</option> -->
               <option>Password</option>
             </select>
           </div>
@@ -30,9 +29,6 @@
                 <router-link tag="a" :to="{ name: 'SettingsImages' }" class="is-tab">
                   Avatar and Cover Photo
                 </router-link>
-                <!-- <router-link tag="a" :to="{ name: 'SettingsSocial' }" class="is-tab">
-                  Social Accounts
-                </router-link> -->
                 <router-link tag="a" :to="{ name: 'SettingsPassword' }" class="is-tab">
                   Password
                 </router-link>
@@ -56,7 +52,7 @@
 
 <script>
 import Loading from '@/components/Loading.vue'
-import Overlap from '@/components/pages/Overlap.vue'
+import Overlap from '@/components/layout/Overlap.vue'
 import { userService } from '@/services';
 
 export default {
