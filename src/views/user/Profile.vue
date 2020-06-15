@@ -39,7 +39,7 @@
   <main class="pb-12 bg-white min-h-1/2">
     <div class="bg-gray-50 border-b border-gray-200">
       <Container :padding="false">
-        <div class="lg:lg-tabs-ml">
+        <div>
           <div class="sm:hidden">
             <select class="form-select block w-full my-2" @change="changeTab($event.target.value)">
               <option value="UserProfile">Overview</option>
