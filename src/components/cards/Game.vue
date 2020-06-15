@@ -22,7 +22,7 @@
                 <span v-else>-</span>
               </span>
               <span class="tag bg-gray-100 mr-2">{{ game.developer.name }}</span>
-              <span class="tag bg-gray-100">{{ game.library_count }} Users</span>
+              <span class="tag bg-gray-100">{{ game.library_count ? game.library_count : '0' }} Users</span>
             </div>
           </div>
           <div class="w-full  text-gray-700 text-sm synopsis">
