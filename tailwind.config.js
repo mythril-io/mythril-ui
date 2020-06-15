@@ -1,6 +1,11 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
+  purge: [
+    './src/**/*.html',
+    './src/**/*.vue',
+    './src/**/*.jsx',
+  ],
   theme: {
     minHeight: {
      '0': '0',
