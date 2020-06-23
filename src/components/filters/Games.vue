@@ -37,7 +37,7 @@
               @input="setGenres"
               track-by="name"
               label="name"
-              placeholder="Select Genres"
+              placeholder="Genres"
               id="genres"
             >
             </multiselect>
@@ -49,7 +49,7 @@
               @input="setPlatforms"
               track-by="name"
               label="name"
-              placeholder="Select Platforms"
+              placeholder="Platforms"
               id="platforms"
             >
             </multiselect>
@@ -61,7 +61,7 @@
               @input="setDevelopers"
               track-by="name"
               label="name"
-              placeholder="Select Developers"
+              placeholder="Developers"
               id="developers"
             >
             </multiselect>
@@ -73,7 +73,7 @@
               @input="setPublishers"
               track-by="name"
               label="name"
-              placeholder="Select Publishers"
+              placeholder="Publishers"
               id="publishers"
             >
             </multiselect>
@@ -85,7 +85,7 @@
               :lazy="true"
               :min-range="0"
               :max-range="100"
-            />
+            />            
             <button type="button" name="clear-filters" @click="clearFilters" class="mt-6 button button-danger w-full">Clear Filters</button>
           </div>
         </div>

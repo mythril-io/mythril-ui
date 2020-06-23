@@ -1,7 +1,6 @@
 import { axios } from '../../utilities';
 
 export const tagService = {
-    getByPage,
     getAll,
     get,
     post,
@@ -9,20 +8,10 @@ export const tagService = {
     deleteResource
 };
 
-const rootURL = '/tags/';
-
-function getByPage(page=1) {
-  return axios.get(rootURL + 'page/' + page)
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
-}
+const rootURL = '/forums/tags';
 
 function getAll() {
-  return axios.get(rootURL + 'all')
+  return axios.get(rootURL + '/all')
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -32,7 +21,7 @@ function getAll() {
 }
 
 function get(id) {
-  return axios.get(rootURL + id)
+  return axios.get(rootURL + '/' + id)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -52,7 +41,7 @@ function post(resource) {
 }
 
 function put(resource) {
-  return axios.put(rootURL + resource.id, resource)
+  return axios.put(rootURL + '/' + resource.id, resource)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -62,7 +51,7 @@ function put(resource) {
 }
 
 function deleteResource(id) {
-  return axios.delete(rootURL + id)
+  return axios.delete(rootURL + '/' + id)
       .then(response => {
           return response;
       }).catch(function (error) {

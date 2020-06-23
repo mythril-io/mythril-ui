@@ -68,6 +68,9 @@
 .is-primary {
   @apply bg-primary text-white
 }
+.is-primary-alt {
+  @apply bg-teal-500 text-white
+}
 .is-warning {
   @apply bg-warning
 }

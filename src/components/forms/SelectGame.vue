@@ -6,15 +6,17 @@
     :options="options"
     track-by="id"
     label="title"
-    placeholder="Search for a Game"
+    :placeholder="placeholder"
     open-direction="bottom"
     :loading="loading"
     :max-height="400"
     :show-labels="false"
+    :multiple="multiple"
+    :max="max"
     @search-change="checkQuery($event)"
     id="games"
   >
-    <template slot="singleLabel" slot-scope="props">
+    <template slot="singleLabel" slot-scope="props" v-if="!multiple">
       <div class="flex items-center">
         <div class="flex-shrink-0">
           <img class="inline-block h-10 w-10 rounded-md" :src="getGameIcon(props.option)" :alt="props.option.title" />
@@ -53,7 +55,21 @@ import _ from 'lodash';
 export default {
   name: 'SelectGame',
   mixins: [iconsMixin],
-  props: ['value'],
+  props: {
+    value: { },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    max: {
+      type: Number,
+      default: 1
+    },
+    placeholder: {
+      type: String,
+      default: 'Search for a Game'
+    }
+  },
   data () {
     return {
       options: [],
