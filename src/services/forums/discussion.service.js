@@ -2,6 +2,7 @@ import { axios } from '../../utilities';
 
 export const discussionService = {
     getByPage,
+    getByGameAndPage,
     get,
     post,
     patch,
@@ -27,6 +28,16 @@ function getByPage(page=1, tag=null, sort='recent') {
             return Promise.reject(errorMessage)
         });
 }
+
+function getByGameAndPage(id, page=1) {
+    return axios.get(rootURL + '/discussions/' + 'game/' + id + '?page=' + page)
+        .then(response => {
+            return response;
+        }).catch(function (error) {
+            const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+            return Promise.reject(errorMessage)
+        });
+  }
 
 function get(id) {
     return axios.get(rootURL + '/discussions/' + id)

@@ -69,6 +69,7 @@
               <option value="GameReviews">Reviews</option>
               <option value="GameRecommendations">Recommendations</option>
               <option value="GameReleases">Releases</option>
+              <option value="GameDiscussions">Discussions</option>
             </select>
           </div>
           <div class="hidden sm:block">
@@ -85,6 +86,9 @@
                 </router-link>
                 <router-link tag="a" :to="{ name: 'GameReleases' }" class="is-tab">
                   Releases ({{ data ? data.releases.length : '-'}})
+                </router-link>
+                <router-link tag="a" :to="{ name: 'GameDiscussions' }" class="is-tab">
+                  Discussions
                 </router-link>
               </nav>
             </div>
