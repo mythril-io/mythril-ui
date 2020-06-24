@@ -30,6 +30,7 @@ export const routes = [
       { path: 'reviews', name: 'GameReviews', component: () => import(/* webpackChunkName: "games" */ '@/views/games/view/Reviews.vue') },
       { path: 'recommendations', name: 'GameRecommendations', component: () => import(/* webpackChunkName: "games" */ '@/views/games/view/Recommendations.vue') },
       { path: 'releases', name: 'GameReleases', component: () => import(/* webpackChunkName: "games" */ '@/views/games/view/Releases.vue') },
+      { path: 'discussions', name: 'GameDiscussions', component: () => import(/* webpackChunkName: "games" */ '@/views/games/view/Discussions.vue') },
     ]
   },
   {
