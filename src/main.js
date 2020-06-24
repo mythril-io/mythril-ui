@@ -12,6 +12,7 @@ import moment from 'moment'
 import numbro from 'numbro'
 import InfiniteLoading from 'vue-infinite-loading'
 import Carousel3d from 'vue-carousel-3d';
+import VueScrollTo from 'vue-scrollto';
 
 // Config
 Vue.config.productionTip = false
@@ -23,6 +24,7 @@ Vue.component('paginate', Paginate)
 Vue.component('multiselect', Multiselect)
 Vue.use(InfiniteLoading, { /* options */ });
 Vue.use(Carousel3d);
+Vue.use(VueScrollTo)
 
 // Filters
 // Date Filter
@@ -68,6 +70,21 @@ Vue.filter('ago', function (date, user) {
     }
   }
   return moment.utc(date).local().fromNow();
+})
+
+// 
+Vue.filter('detailed', function (date, user) {
+  if(user) {
+    if(user.timezone) {
+        return moment.utc(date).tz(user.timezone).format("MMMM Do YYYY, h:mma Z");
+    }
+  }
+  return moment.utc(date).local().format("MMMM Do YYYY, h:mma Z");
+})
+
+Vue.filter('truncate', function (string, value) {
+  if(string.length < value) { return string }
+  return string.substring(0, value) + '...';
 })
 
 // Create Vue instance
