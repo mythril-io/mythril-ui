@@ -160,7 +160,6 @@ export default {
       return md.render(data);
     },
     update(post) {
-        console.log(post.edited_at)
       this.post.body = post.body;
       this.post.edited_at = post.edited_at;
     },
