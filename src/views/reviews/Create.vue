@@ -14,7 +14,7 @@
               <div v-if="game" class="mt-6">
                 <Message background="bg-warning">
                   <div class="mb-4">Step 2: Select a Release</div>
-                  <SelectRelease :gameId="game.id" v-model="review.release" />
+                  <SelectRelease :gameId="game.id" v-model="review.release" :excludeUnreleased="true" />
                 </Message>
               </div>
             </transition>

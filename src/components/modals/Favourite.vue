@@ -7,7 +7,7 @@
     <ValidationObserver v-slot="{ handleSubmit }">
       <form @submit.prevent="handleSubmit(save)">
         <div>
-          <label for="release" class="block text-sm font-medium leading-5 text-gray-700">
+          <label for="release" class="block text-base font-medium leading-5 text-gray-700">
             Release
           </label>
           <div v-if="favourite" class="flex items-center mt-2 form-input opacity-50 cursor-not-allowed">
@@ -20,7 +20,7 @@
               </div>
             </div>
           </div>
-          <SelectRelease v-else id="release" :gameId="game.id" v-model="release" />
+          <SelectRelease v-else id="release" :gameId="game.id" v-model="release" :excludeUnreleased="true" />
         </div>
 
         <div class="mt-3 py-3 sm:flex sm:flex-row-reverse">

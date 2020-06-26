@@ -149,9 +149,11 @@
 import Loading from '@/components/Loading.vue'
 import SelectRelease from '@/components/forms/SelectRelease.vue'
 import { libraryService } from '@/services';
+import { releasesMixin } from '@/mixins';
 
 export default {
   name: 'LibraryForm',
+  mixins: [releasesMixin],
   components: {
     SelectRelease, Loading
   },
@@ -214,11 +216,18 @@ export default {
       this.entry.digital ? this.entry.digital = 1 : this.entry.digital = 0;
     },
     post () {
+      const hasReleased = this.hasReleased(this.entry.release);
+      if(!hasReleased) {
+        this.entry.own = 0;
+        this.entry.digital = 0;
+        this.entry.hours = null;
+        this.entry.score = null;
+      }
       this.setCheckboxValues();
       const { dispatch } = this.$store;
       const _this = this;
       const release_id = this.entry.release.id;
-      const play_status_id = this.entry.play_status.id;
+      const play_status_id = hasReleased ? this.entry.play_status.id : 2;
 
       let resource = JSON.parse(JSON.stringify(this.entry));
       resource.release_id = release_id;
@@ -236,13 +245,21 @@ export default {
       );
     },
     patch () {
+      const hasReleased = this.hasReleased(this.entry.release);
+      if(!hasReleased) {
+        this.entry.own = 0;
+        this.entry.digital = 0;
+        this.entry.hours = null;
+        this.entry.score = null;
+      }
+
       this.setCheckboxValues();
       const { dispatch } = this.$store;
       const _this = this;
       const resource = {
         id: this.entry.id,
         digital: this.entry.digital,
-        play_status_id: this.entry.play_status.id,
+        play_status_id: hasReleased ? this.entry.play_status.id : 2,
         score: this.entry.score,
         own: this.entry.own,
         notes: this.entry.notes,

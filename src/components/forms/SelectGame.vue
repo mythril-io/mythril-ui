@@ -1,6 +1,8 @@
 <template>
+<div>
 
   <multiselect
+    v-if="multiple"
     class="mt-2"
     v-model="inputVal"
     :options="options"
@@ -16,7 +18,40 @@
     @search-change="checkQuery($event)"
     id="games"
   >
-    <template slot="singleLabel" slot-scope="props" v-if="!multiple">
+    <template slot="option" slot-scope="props">
+      <div class="flex items-center">
+        <div class="flex-shrink-0">
+          <img class="inline-block h-10 w-10 rounded-md" :src="getGameIcon(props.option)" :alt="props.option.title" />
+        </div>
+        <div class="flex-1 ml-4">
+          <h2 class="text-md text-gray-800 font-bold">
+            {{ props.option.title }}
+          </h2>
+          <div class="mt-0 text-sm leading-5 truncate text-gray-700">
+            Developed by: {{ props.option.developer.name }}
+          </div>
+        </div>
+      </div>
+    </template>
+  </multiselect>
+
+  <multiselect
+    v-else
+    class="mt-2"
+    v-model="inputVal"
+    :options="options"
+    track-by="id"
+    label="title"
+    :placeholder="placeholder"
+    open-direction="bottom"
+    :loading="loading"
+    :max-height="400"
+    :show-labels="false"
+    :multiple="multiple"
+    @search-change="checkQuery($event)"
+    id="games"
+  >
+    <template slot="singleLabel" slot-scope="props">
       <div class="flex items-center">
         <div class="flex-shrink-0">
           <img class="inline-block h-10 w-10 rounded-md" :src="getGameIcon(props.option)" :alt="props.option.title" />
@@ -45,6 +80,7 @@
     </template>
   </multiselect>
 
+</div>
 </template>
 
 <script>
