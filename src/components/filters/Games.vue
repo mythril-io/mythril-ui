@@ -11,7 +11,7 @@
                   <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                 </svg>
               </div>
-              <input id="search" v-model="filters.search" class="form-input block w-full pl-10 sm:text-sm sm:leading-5" placeholder="Search" />
+              <input id="search" v-model="search" class="form-input block w-full pl-10 sm:text-sm sm:leading-5" placeholder="Search" />
             </div>
           </div>
           <div class="flex-initial xl:hidden ml-4">
@@ -29,7 +29,8 @@
           <h3 class="mt-5 text-lg leading-6 font-medium text-gray-900">
             Filters
           </h3>
-          <div class="mt-2 max-w text-sm leading-5 text-gray-500">
+          <Loading v-if="!genres.length && !platforms.length && !developers.length && !publishers.length" :simple="true" />
+          <div v-else class="mt-2 max-w text-sm leading-5 text-gray-500">
             <multiselect
               v-model="selectedGenres"
               :options="genres"
@@ -81,7 +82,7 @@
               Minimum Average Score
             </h3>
             <vue-slider class="mt-3"
-              v-model="filters.score"
+              v-model="score"
               :lazy="true"
               :min-range="0"
               :max-range="100"
@@ -98,6 +99,7 @@
 
 <script>
 import BaseCard from '@/components/cards/Base.vue'
+import Loading from '@/components/Loading.vue'
 import VueSlider from 'vue-slider-component'
 import { developerService, publisherService, genreService, platformService } from '@/services';
 import _ from 'lodash';
@@ -105,7 +107,7 @@ import _ from 'lodash';
 export default {
   name: 'GamesFilter',
   components: {
-    VueSlider
+    VueSlider, Loading
   },
   data () {
     return {
@@ -115,80 +117,115 @@ export default {
       platforms: [],
       developers: [],
       publishers: [],
-
-      selectedGenres: [],
-      selectedPlatforms: [],
-      selectedDevelopers: [],
-      selectedPublishers: [],
-
-      filters: {
-        genres: [],
-        platforms: [],
-        developers: [],
-        publishers: [],
-        score: 0,
-        search: ''
+    }
+  },
+  computed: {
+    search: {
+      set: _.debounce(function(search) {
+          this.$store.dispatch('games/updateSearch', { search });
+          this.applyFilters();
+        }, 500),
+      get() {
+        return this.$store.state.games.filters.search;
+      }
+    },
+    score: {
+      set(score) {
+        this.$store.dispatch('games/updateScore', { score });
+        this.applyFilters();    
+      },
+      get() {
+        return this.$store.state.games.filters.score;
+      }
+    },
+    selectedGenres: {
+      get() { 
+        let values = this.$store.state.games.filters.genres;
+        if(values) {
+          return values.map(value => this.genres.find(option => option.id === value));
+        }
+        return null;
+      },
+      set(v) {
+        let genres = v.map(value => value.id);
+        this.$store.dispatch('games/updateGenres', { genres });
+      }
+    },
+    selectedPlatforms: {
+      get() { 
+        let values = this.$store.state.games.filters.platforms;
+        if(values) {
+          return values.map(value => this.platforms.find(option => option.id === value));
+        }
+        return null;
+      },
+      set(v) {
+        let platforms = v.map(value => value.id);
+        this.$store.dispatch('games/updatePlatforms', { platforms });
+      }
+    },
+    selectedDevelopers: {
+      get() { 
+        let values = this.$store.state.games.filters.developers;
+        if(values) {
+          return values.map(value => this.developers.find(option => option.id === value));
+        }
+        return null;
+      },
+      set(v) {
+        let developers = v.map(value => value.id);
+        this.$store.dispatch('games/updateDevelopers', { developers });
+      }
+    },
+    selectedPublishers: {
+      get() { 
+        let values = this.$store.state.games.filters.publishers;
+        if(values) {
+          return values.map(value => this.publishers.find(option => option.id === value));
+        }
+        return null;
+      },
+      set(v) {
+        let publishers = v.map(value => value.id);
+        this.$store.dispatch('games/updatePublishers', { publishers });
       }
     }
   },
-  watch: {
-      filters: {
-          handler(newVal, oldVal) {
-            this.applyFilters();
-          },
-          deep: true,
-      },
-  },
   methods: {
-    applyFilters() {
-        this.$emit('update', this.filters);
-    },
-    clearFilters() {
-      let reset = {
-        genres: [],
-        platforms: [],
-        developers: [],
-        publishers: [],
-        score: 0,
-        search: ''
-      }
-      this.filters = reset;
-      this.selectedGenres = [];
-      this.selectedPlatforms = [];
-      this.selectedDevelopers = [];
-      this.selectedPublishers = [];
-    },
-    setPlatforms() {
-      if (this.selectedPlatforms) {
-        this.filters.platforms = this.selectedPlatforms.map(a => a.id);
-      } else {
-        this.filters.platforms = [];
-      }
+    setGenres() {
+      var genres = [];
+      this.selectedGenres ? genres = this.selectedGenres.map(a => a.id) : '';
+
+      this.$store.dispatch('games/updateGenres', { genres }); 
       this.applyFilters();
     },
-    setGenres() {
-      if (this.selectedGenres) {
-        this.filters.genres = this.selectedGenres.map(a => a.id);
-      } else {
-        this.filters.genres = [];
-      }
+    setPlatforms() {
+      var platforms = [];
+      this.selectedPlatforms ? platforms = this.selectedPlatforms.map(a => a.id) : '';
+
+      this.$store.dispatch('games/updatePlatforms', { platforms }); 
       this.applyFilters();
     },
     setDevelopers() {
-      if (this.selectedDevelopers) {
-        this.filters.developers = this.selectedDevelopers.map(a => a.id);
-      } else {
-        this.filters.developers = [];
-      }
+      var developers = [];
+      this.selectedDevelopers ? developers = this.selectedDevelopers.map(a => a.id) : '';
+
+      this.$store.dispatch('games/updateDevelopers', { developers }); 
       this.applyFilters();
     },
     setPublishers() {
-      if (this.selectedPublishers) {
-        this.filters.publishers = this.selectedPublishers.map(a => a.id);
-      } else {
-        this.filters.publisher = [];
-      }
+      var publishers = [];
+      this.selectedPublishers ? publishers = this.selectedPublishers.map(a => a.id) : '';
+
+      this.$store.dispatch('games/updatePublishers', { publishers }); 
       this.applyFilters();
+    },
+    applyFilters() {
+      this.$emit('update');
+    },
+    clearFilters() {
+      this.$store.dispatch('games/clearFilters');
+      this.$emit('update');
     },
     getGenres() {
       const { dispatch } = this.$store;
