@@ -2,7 +2,7 @@
   <div>
     <div class="grid md:grid-cols-12 gap-4">
       <div class="col-span-12 lg:col-span-7">
-        <Title title="About Me" />
+        <Title title="About" />
         <div class="bg-gray-50 p-4 rounded-md">
           <span v-if="user && user.about_me" class="markdown" v-html="compiledMarkdown"></span>
           <span v-else>This user hasn't written anything about themselves.</span>

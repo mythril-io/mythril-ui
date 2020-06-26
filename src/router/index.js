@@ -46,7 +46,7 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach((to, from) => {
-  from.name == 'Games' ? store.dispatch('games/clearFilters') : '';
+  from.name == 'Games' && to.name != 'Games' ? store.dispatch('games/clearFilters') : '';
 })
 
 export default router

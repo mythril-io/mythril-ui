@@ -1,11 +1,11 @@
 <template>
     
-    <div class="md:flex md:space-x-12">
-        <div class="flex-shrink-0 mb-5 md:mb-0">
+    <div class="md:flex">
+        <div class="flex-shrink-0 mb-5 md:mb-0 md:mx-8">
             <div class="w-20" :aria-label="post.user.username" data-balloon-pos="up">
-            <router-link :to="{ name: 'UserProfile', params: { username: post.user.username }}">
-                <img class="h-20 w-20 rounded-full object-cover" :src="getUserAvatar(post.user)" :alt="post.user.username" />
-            </router-link>
+                <router-link :to="{ name: 'UserProfile', params: { username: post.user.username }}">
+                    <img class="h-20 w-20 rounded-full object-cover" :src="getUserAvatar(post.user)" :alt="post.user.username" />
+                </router-link>
             </div>
         </div>
         <transition name="fade" mode="out-in">
@@ -22,7 +22,7 @@
                         <div class="text-xs text-gray-400" v-if="post.edited_at">
                             <span :aria-label="post.edited_at | ago" data-balloon-pos="up">Edited</span>
                         </div>
-                        <div class="text-xs text-gray-400 text-primary">
+                        <div class="text-xs text-gray-400">
                             #{{ post.num }}
                         </div>
                     </div>

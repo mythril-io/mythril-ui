@@ -1,4 +1,6 @@
 <template>
+<div>
+
   <multiselect
     class="mt-2"
     v-model="inputVal"
@@ -35,14 +37,22 @@
     </div>
   </template>
   </multiselect>
+  <div v-if="excludeUnreleased" class="text-sm text-gray-500 mt-2">
+    Note: Unreleased entries will not be shown
+  </div>
+
+</div>
 </template>
 
 <script>
 import { releaseService } from '@/services';
+import { releasesMixin } from '@/mixins';
+import _ from 'lodash';
 
 export default {
   name: 'SelectRelease',
-  props: ['value', 'gameId'],
+  mixins: [releasesMixin],
+  props: ['value', 'gameId', 'excludeUnreleased'],
   data () {
     return {
       options: [],
@@ -74,7 +84,8 @@ export default {
       this.loading = true;
       releaseService.getByGame(this.gameId).then(
         response => {
-          this.options = response.data;
+          let releases = this.excludeUnreleased ? _.filter( response.data, release => this.hasReleased(release) ) : response.data;
+          this.options = releases;
           this.loading = false;
         },
         error => {

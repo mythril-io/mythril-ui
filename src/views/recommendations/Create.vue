@@ -20,7 +20,7 @@
                   <div v-if="game" class="mt-6">
                     <Message background="bg-warning">
                       <div class="mb-4">Select a Release</div>
-                      <SelectRelease :gameId="game.id" v-model="recommendation.release" />
+                      <SelectRelease :gameId="game.id" v-model="recommendation.release" :excludeUnreleased="true" />
                     </Message>
                   </div>
                 </transition>
@@ -40,7 +40,7 @@
                   <div v-if="recommended_game" class="mt-6">
                     <Message background="bg-warning">
                       <div class="mb-4">Select a Release</div>
-                      <SelectRelease :gameId="recommended_game.id" v-model="recommendation.recommended_release" />
+                      <SelectRelease :gameId="recommended_game.id" v-model="recommendation.recommended_release" :excludeUnreleased="true" />
                     </Message>
                   </div>
                 </transition>
