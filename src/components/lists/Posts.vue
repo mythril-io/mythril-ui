@@ -3,7 +3,7 @@
 
     <transition name="fade">
       <div v-if="!loading && data.data && data.data.length">
-        <div class="bg-white border-t border-gray-200 first:border-t-0 md:px-5 py-8" v-for="post in data.data" :key="post.id" :id="'post-'+post.id">
+        <div class="bg-white border-t border-gray-200 first:border-t-0 py-8" v-for="post in data.data" :key="post.id" :id="'post-'+post.id">
           <Post 
             :post="post" 
             v-on:reply="$emit('reply', $event)"
