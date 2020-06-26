@@ -16,6 +16,54 @@
 //   @apply max-w-7xl mx-auto;
 // }
 
+/* Markdown */
+.markdown{
+  /* Headings */
+  h1 {
+    @apply text-2xl mb-2;
+  }
+  h2 {
+    @apply text-xl mb-2;
+  }
+  h3 {
+    @apply text-lg mb-3;
+  }
+  h4 {
+    @apply text-base mb-3;
+  }
+
+  /* Lists */
+  ol {
+    @apply list-decimal list-inside mb-3;
+  }
+  ul {
+    @apply list-disc list-inside mb-3;
+  }
+
+  /* Hyperlinks */
+  a {
+    @apply text-primary;
+  }
+  a:hover {
+    @apply text-primary underline;
+  }
+
+  p {
+    @apply my-4
+  }
+  p:last-child {
+    @apply mb-0
+  }
+
+  blockquote {
+    @apply py-5 px-6 bg-gray-100 border-l-5 border-gray-300;
+
+    p {
+      @apply m-0 p-0;
+    }
+  }
+}
+
 /* Titles */
 .title {
   @apply font-extrabold text-gray-900;
@@ -63,7 +111,6 @@
   @apply underline;
 }
 
-
 /* Simple Modifiers */
 .is-primary {
   @apply bg-primary text-white
@@ -79,13 +126,6 @@
 }
 .is-info {
   @apply bg-info text-white
-}
-
-.markdown>p {
-  @apply mb-5
-}
-.markdown>p:last-child {
-  @apply mb-0
 }
 
 .mako-shadow {

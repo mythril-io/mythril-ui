@@ -7,6 +7,15 @@ module.exports = {
     './src/**/*.jsx',
   ],
   theme: {
+    borderWidth: {
+      default: '1px',
+      '0': '0',
+      '2': '2px',
+      '3': '3px',
+      '4': '4px',
+      '5': '5px',
+      '8': '8px',
+    },
     minHeight: {
      '0': '0',
      '1/4': '25vh',
