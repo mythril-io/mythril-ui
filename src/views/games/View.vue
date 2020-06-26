@@ -20,11 +20,11 @@
             </div>
           </div>
           <div class="flex flex-shrink-0 items-center">
-            <button type="button" class="leading-5 button" v-bind:class="[userHasLibrary ? 'button-warning' : 'button-primary']" @click="openLibraryModal">
-              {{ userHasLibrary ? 'Edit Library' : 'Add to Library' }}
+            <button type="button" class="leading-5 button" v-bind:class="[userHasLibrary && getCurrentUser() ? 'button-warning' : 'button-primary']" @click="openLibraryModal">
+              {{ userHasLibrary && getCurrentUser() ? 'Edit Library' : 'Add to Library' }}
             </button>
             <button type="button" class="ml-2 leading-5 button button-danger" @click="openFavouriteModal">
-              <svg v-if="userHasFavourite" fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 -mx-1">
+              <svg v-if="userHasFavourite && getCurrentUser()" fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 -mx-1">
                 <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
               </svg>
               <svg v-else fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5 -mx-1">

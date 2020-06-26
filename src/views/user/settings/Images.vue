@@ -9,6 +9,10 @@
         </div>
         <div class="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
 
+            <div class="sm:col-span-6 text-sm text-gray-500">
+              Uploaded images may take some time for the changes to be reflected in your browser. Try resetting your browser cache. If that doesn't work, it's likely due to caching done at the server side.
+            </div>
+
             <div class="sm:col-span-6">
               <label for="photo" class="block text-sm leading-5 font-medium text-gray-700">
                 Avatar

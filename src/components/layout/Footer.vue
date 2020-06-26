@@ -47,7 +47,7 @@
 			</div>
 			<div class="mt-8">
 				<p class="text-center text-base leading-6 text-gray-400">
-					&copy; Mythril 2018-{{ currentYear }}
+					Mythril 2018-{{ currentYear }}
 				</p>
 			</div>
 		</div>

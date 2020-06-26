@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -42,6 +43,10 @@ router.beforeEach((to, from, next) => {
   }
 
   next();
+})
+
+router.afterEach((to, from) => {
+  from.name == 'Games' ? store.dispatch('games/clearFilters') : '';
 })
 
 export default router
