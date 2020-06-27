@@ -64,6 +64,7 @@
     </div>
 
     <Pagination
+    class="mx-5"
       :currentPage="data.current_page"
       :totalPages="data.last_page"
       :totalItems="data.total"

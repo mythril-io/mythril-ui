@@ -3,6 +3,10 @@
   <Loading v-if="loading" :simple="false"/>
 
   <div v-if="!loading">
+    <button type="button" class="leading-5 button button-white mb-5" @click="goBack()">
+      Go Back
+    </button>
+
     <Title v-if="true" :title="title"/>
 
     <div v-show="true">
@@ -147,6 +151,11 @@ export default {
         this.put(this.resource);
       } else {
         this.post(this.resource);
+      }
+    },
+    goBack() {
+      if(confirm('Are you sure? All unsaved work will be lost.')) {
+        this.cancel();
       }
     },
     cancel() {

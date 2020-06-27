@@ -9,20 +9,20 @@ export const platformService = {
     deleteResource
 };
 
-const rootURL = '/platforms/';
+const rootURL = '/platforms';
 
 function getByPage(page=1, search='') {
-  return axios.get(rootURL + 'page/' + page + '?search=' + search)
-      .then(response => {
-          return response;
-      }).catch(function (error) {
-          const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
-          return Promise.reject(errorMessage)
-      });
-}
+    return axios.get(`${rootURL}?page=${page}&search=${search}`)
+        .then(response => {
+            return response;
+        }).catch(function (error) {
+            const errorMessage = (error.response.data && error.response.data.message) || error.response.statusText;
+            return Promise.reject(errorMessage)
+        });
+  }
 
 function getAll() {
-  return axios.get(rootURL + 'all')
+  return axios.get(`/all-platforms`)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -32,7 +32,7 @@ function getAll() {
 }
 
 function get(id) {
-  return axios.get(rootURL + id)
+  return axios.get(`${rootURL}/${id}`)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -52,7 +52,7 @@ function post(resource) {
 }
 
 function put(resource) {
-  return axios.put(rootURL + resource.id, resource)
+  return axios.put(`${rootURL}/${resource.id}`, resource)
       .then(response => {
           return response;
       }).catch(function (error) {
@@ -62,7 +62,7 @@ function put(resource) {
 }
 
 function deleteResource(id) {
-  return axios.delete(rootURL + id)
+  return axios.delete(`${rootURL}/${id}`)
       .then(response => {
           return response;
       }).catch(function (error) {
