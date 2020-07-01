@@ -7,7 +7,8 @@ export const games = {
             developers: [],
             publishers: [],
             score: 0,
-            search: ''
+            search: '',
+            sort: 'popular'
         }
     },
     actions: {
@@ -35,6 +36,9 @@ export const games = {
         updatePublishers({ commit }, { publishers }) {
             commit('updatePublishers', publishers);
         },
+        updateSort({ commit }, { sort }) {
+            commit('updateSort', sort);
+        },
     },
     mutations: {
         updateFilters(state, filters) {
@@ -47,7 +51,8 @@ export const games = {
                 developers: [],
                 publishers: [],
                 score: 0,
-                search: ''
+                search: '',
+                sort: 'popular'
             };
         },
         updateSearch(state, search) {
@@ -67,6 +72,9 @@ export const games = {
         },
         updatePublishers(state, publishers) {
             state.filters.publishers = publishers;
+        },
+        updateSort(state, sort) {
+            state.filters.sort = sort;
         },
     }
 }
