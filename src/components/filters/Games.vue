@@ -86,7 +86,17 @@
               :lazy="true"
               :min-range="0"
               :max-range="100"
-            />            
+            />  
+            <h3 class="mt-5 text-lg leading-6 font-medium text-gray-900">
+              Sort
+            </h3>
+            <div class="mt-1 rounded-md shadow-sm">
+              <select id="sort" v-model="sort" class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                <option value="popular">Popularity</option>
+                <option value="recent">Recently Added</option>
+                <option value="rating">Average Score</option>
+              </select>
+            </div>      
             <button type="button" name="clear-filters" @click="clearFilters" class="mt-6 button button-danger w-full">Clear Filters</button>
           </div>
         </div>
@@ -136,6 +146,15 @@ export default {
       },
       get() {
         return this.$store.state.games.filters.score;
+      }
+    },
+    sort: {
+      set(sort) {
+        this.$store.dispatch('games/updateSort', { sort });
+        this.applyFilters();    
+      },
+      get() {
+        return this.$store.state.games.filters.sort;
       }
     },
     selectedGenres: {
