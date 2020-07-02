@@ -62,6 +62,11 @@ Vue.filter('numberAverage', function (number) {
   return numbro(number).format({spaceSeparated: true, average: true});
 })
 
+Vue.filter('commaSeparated', function (number) {
+  // const roundedNumber = Math.round(number);
+  return numbro(number).format({thousandSeparated: true});
+})
+
 //Date Formating (ex. 3 days ago)
 Vue.filter('ago', function (date, user) {
   if(user) {
