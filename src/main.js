@@ -59,7 +59,7 @@ Vue.filter('percentageFormat', function (number) {
 
 Vue.filter('numberAverage', function (number) {
   // const roundedNumber = Math.round(number);
-  return numbro(number).format({spaceSeparated: true, average: true});
+  return numbro(number).format({spaceSeparated: true, totalLength: 2, average: true});
 })
 
 Vue.filter('commaSeparated', function (number) {
