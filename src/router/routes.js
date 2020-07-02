@@ -115,11 +115,35 @@ export const routes = [
         meta: { authorize: [roles.Admin], plainLayout: true }
       },
       {
+        path: 'genres/:id/edit', name: 'AdminGenreEdit', component: () => import('@/views/admin/forms/Genre.vue'),
+        meta: { authorize: [roles.Admin], plainLayout: true }
+      },
+      {
+        path: 'genres/create', name: 'AdminGenreCreate', component: () => import('@/views/admin/forms/Genre.vue'),
+        meta: { authorize: [roles.Admin], plainLayout: true }
+      },
+      {
         path: 'developers', name: 'AdminDevelopers', component: () => import('@/views/admin/Developers.vue'),
         meta: { authorize: [roles.Admin], plainLayout: true }
       },
       {
+        path: 'developers/:id/edit', name: 'AdminDeveloperEdit', component: () => import('@/views/admin/forms/Developer.vue'),
+        meta: { authorize: [roles.Admin], plainLayout: true }
+      },
+      {
+        path: 'developers/create', name: 'AdminDeveloperCreate', component: () => import('@/views/admin/forms/Developer.vue'),
+        meta: { authorize: [roles.Admin], plainLayout: true }
+      },
+      {
         path: 'publishers', name: 'AdminPublishers', component: () => import('@/views/admin/Publishers.vue'),
+        meta: { authorize: [roles.Admin], plainLayout: true }
+      },
+      {
+        path: 'publishers/:id/edit', name: 'AdminPublisherEdit', component: () => import('@/views/admin/forms/Publisher.vue'),
+        meta: { authorize: [roles.Admin], plainLayout: true }
+      },
+      {
+        path: 'publishers/create', name: 'AdminPublisherCreate', component: () => import('@/views/admin/forms/Publisher.vue'),
         meta: { authorize: [roles.Admin], plainLayout: true }
       },
     ]

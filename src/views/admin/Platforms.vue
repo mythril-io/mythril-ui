@@ -1,5 +1,6 @@
 <template>
   <div>
+    
       <Loading v-if="!data" :simple="false"/>
 
       <ResourceList

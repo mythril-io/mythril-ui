@@ -16,3 +16,4 @@ export * from './forums/tag.service'
 export * from './forums/discussion.service'
 export * from './forums/post.service'
 export * from './release.service';
+export * from './admin.service';
