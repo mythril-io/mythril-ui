@@ -29,7 +29,7 @@
         </div>
         <div class="mt-10 sm:mt-0">
           <p class="text-5xl leading-none font-extrabold text-white">
-            {{ data.reviews | numberAverage }}
+            {{ data.reviews }}
           </p>
           <p class="mt-2 text-lg leading-6 font-medium text-white">
             Reviews
@@ -37,7 +37,7 @@
         </div>
         <div class="mt-10 sm:mt-0">
           <p class="text-5xl leading-none font-extrabold text-white">
-            {{ data.recommendations | numberAverage }}
+            {{ data.recommendations }}
           </p>
           <p class="mt-2 text-lg leading-6 font-medium text-white">
             Recommendations

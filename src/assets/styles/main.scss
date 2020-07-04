@@ -19,17 +19,21 @@
 /* Markdown */
 .markdown{
   /* Headings */
+
+  // display: block;
+  // font-size: 2em;
+
   h1 {
-    @apply text-2xl mb-2;
+    @apply text-2xl my-2 font-bold block;
   }
   h2 {
-    @apply text-xl mb-2;
+    @apply text-xl my-2 font-bold block;
   }
   h3 {
-    @apply text-lg mb-3;
+    @apply text-lg my-3 font-bold block;
   }
   h4 {
-    @apply text-base mb-3;
+    @apply text-base my-3 font-bold block;
   }
 
   /* Lists */
@@ -59,11 +63,11 @@
   }
 
   blockquote {
-    @apply py-5 px-6 bg-gray-100 border-l-5 border-gray-300;
+    @apply my-4 py-5 px-6 bg-gray-100 border-l-5 border-gray-300;
+  }
 
-    p {
-      @apply m-0 p-0;
-    }
+  img {
+    @apply shadow;
   }
 }
 
