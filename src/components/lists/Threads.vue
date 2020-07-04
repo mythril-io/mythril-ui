@@ -23,6 +23,9 @@
                         <router-link :to="{ name: 'UserProfile', params: { username: discussion.last_post.user.username }}" class="hover:underline">{{ discussion.last_post.user.username }}</router-link>
                         replied {{ discussion.last_post.created_at | ago }}
                       </div>
+                      <div v-else class="text-xs leading-5 truncate text-gray-400">
+                        Started {{ discussion.created_at | ago }}
+                      </div>
                       <div class="mt-2 md:flex items-center">
                         <router-link :to="{name: 'Forums', params: { tag: tag.slug }}" :class="'tag first:ml-0 ml-2 whitespace-no-wrap ' + tag.colour" v-for="tag in discussion.tags" :key="tag.id">
                           {{ tag.name }}
