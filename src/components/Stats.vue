@@ -5,7 +5,7 @@
       <div class="mt-10 text-center sm:max-w-7xl sm:mx-auto sm:grid sm:grid-cols-5 sm:gap-8">
         <div>
           <p class="text-5xl leading-none font-extrabold text-white">
-            {{ data.games | numberAverage }}
+            <router-link :to="{ name: 'Games' }">{{ data.games | numberAverage }}</router-link>
           </p>
           <p class="mt-2 text-lg leading-6 font-medium text-white">
             Games
@@ -13,7 +13,7 @@
         </div>
         <div class="mt-10 sm:mt-0">
           <p class="text-5xl leading-none font-extrabold text-white">
-            {{ data.releases | numberAverage }}
+            <router-link :to="{ name: 'Games' }">{{ data.releases | numberAverage }}</router-link>
           </p>
           <p class="mt-2 text-lg leading-6 font-medium text-white">
             Releases
@@ -29,7 +29,7 @@
         </div>
         <div class="mt-10 sm:mt-0">
           <p class="text-5xl leading-none font-extrabold text-white">
-            {{ data.reviews }}
+            <router-link :to="{ name: 'Reviews' }">{{ data.reviews }}</router-link>
           </p>
           <p class="mt-2 text-lg leading-6 font-medium text-white">
             Reviews
@@ -37,7 +37,7 @@
         </div>
         <div class="mt-10 sm:mt-0">
           <p class="text-5xl leading-none font-extrabold text-white">
-            {{ data.recommendations }}
+            <router-link :to="{ name: 'Recommendations' }">{{ data.recommendations }}</router-link>
           </p>
           <p class="mt-2 text-lg leading-6 font-medium text-white">
             Recommendations

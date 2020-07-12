@@ -1,5 +1,5 @@
 <template>
-  <BaseCard :padding="false">
+  <BaseCard :padding="false" class="review-card">
     <template #body>
 
       <router-link :to="{ name: 'Review', params: { id: data.id }}" class="group lg:flex h-auto lg:h-64 hover:opacity-100">
@@ -8,7 +8,7 @@
           v-bind:style="gameIcon" :title="getTitle(data)"
         >
         </div>
-        <div class="flex flex-col p-4 leading-normal group-hover:opacity-75">
+        <div class="flex flex-col p-4 leading-normal group-hover:opacity-75 transition duration-150 ease-in-out">
           <div class="w-full mb-4">
             <div class="text-gray-900 font-bold text-xl mb-1">{{ getTitle(data) }}</div>
             <div>
