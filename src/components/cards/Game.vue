@@ -1,14 +1,14 @@
 <template>
-  <BaseCard :padding="false">
+  <BaseCard :padding="false" class="game-card">
     <template #body>
 
       <router-link :to="{ name: 'Game', params: { id: game.id, slug: game.slug }}" class="group lg:flex h-auto lg:h-64 hover:opacity-100">
         <div
-          class="h-48 lg:h-auto lg:w-1/2 image-clip-path flex-none bg-cover text-center overflow-hidden group-hover:scale-105 transform duration-200 ease-out "
+          class="h-48 lg:h-auto lg:w-1/2 image-clip-path flex-none bg-cover text-center overflow-hidden group-hover:scale-105 transform duration-200 ease-out"
           v-bind:style="gameIcon" :title="game.title"
         >
         </div>
-        <div class="flex flex-col p-4 leading-normal group-hover:opacity-75">
+        <div class="flex flex-col p-4 leading-normal group-hover:opacity-75 transition duration-150 ease-in-out">
           <div class="w-full">
             <div class="text-gray-900 font-bold text-xl mb-1">{{ game.title }}</div>
             <div class="mb-6">

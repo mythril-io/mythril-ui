@@ -118,6 +118,12 @@
   @apply underline;
 }
 
+.game-card, .review-card, .recommendation-card {
+  .tag:hover {
+    @apply no-underline;
+  }
+}
+
 /* Simple Modifiers */
 .is-primary {
   @apply bg-primary text-white

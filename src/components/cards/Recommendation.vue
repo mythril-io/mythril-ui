@@ -1,5 +1,5 @@
 <template>
-  <BaseCard :padding="false">
+  <BaseCard :padding="false" class="recommendation-card">
     <template #body>
 
       <router-link :to="{ name: 'Recommendation', params: { id: data.id }}" class="group lg:flex h-auto lg:h-64 hover:opacity-100 recommendation">

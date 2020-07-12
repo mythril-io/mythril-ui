@@ -63,7 +63,7 @@
         <div class="relative lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
           <div class="relative">
             <h3 class="text-4xl leading-8 font-extrabold tracking-tight text-gray-700 sm:text-5xl sm:leading-10">
-              Reviews
+              <router-link :to="{ name: 'Reviews' }" class="hover:text-primary transition duration-150 ease-in-out">Reviews</router-link>
             </h3>
             <p class="mt-4 text-lg leading-7 text-gray-500">
               Share your thoughts and opinions for games you really enjoyed playing or for ones you thought were mediocre! Read up on what other people have to say for games that interest you.
@@ -120,7 +120,7 @@
           <div class="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-8 lg:items-center">
             <div class="lg:ml-5 lg:col-start-2">
               <h3 class="text-4xl leading-8 font-extrabold tracking-tight text-gray-700 sm:text-5xl sm:leading-10">
-                Recommendations
+                <router-link :to="{ name: 'Recommendations' }" class="hover:text-primary transition duration-150 ease-in-out">Recommendations</router-link>
               </h3>
               <p class="mt-4 text-lg leading-7 text-gray-500">
                 Looking for games that are similar to what you've played? Or have a suggestion? Then, check out or write a recommendation!
@@ -184,7 +184,7 @@
         <div class="relative lg:grid lg:grid-cols-3 lg:gap-8 lg:items-center">
           <div class="relative col-span-1">
             <h3 class="text-4xl leading-8 font-extrabold tracking-tight text-gray-700 sm:text-5xl sm:leading-10">
-              Forums
+              <router-link :to="{ name: 'Forums' }" class="hover:text-primary transition duration-150 ease-in-out">Forums</router-link>
             </h3>
             <p class="mt-4 text-lg leading-7 text-gray-500">
               Discuss games, news, events, hardware, strategies or anything else with the community!
@@ -222,9 +222,10 @@
             </svg>
             <transition name="fade">
               <div class="relative px-6 md:px-0">
-                <BaseCard>
+                <router-link :to="{ name: 'Forums' }">
+                <BaseCard class="group">
                   <template #body>
-                    <div class="flex">
+                    <div class="flex group-hover:opacity-75 transition duration-150 ease-in-out">
                         <div class="flex-none">
                           <img class="inline-block h-24 w-24 rounded-full" src="@/assets/sample_avatar.jpg" alt="sample_avatar" />
                         </div>
@@ -245,6 +246,7 @@
                     </div>
                   </template>
                 </BaseCard>
+                </router-link>
               </div>
             </transition>
           </div>
