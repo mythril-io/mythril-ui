@@ -403,7 +403,7 @@ export default {
 
 <style lang="scss">
 .wave-container {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("https://mythril.nyc3.cdn.digitaloceanspaces.com/games/banners/295.jpeg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url("../assets/wave-container.jpeg");
   background-size: cover; background-position: center;
   position: relative;
   color: #FFF;
