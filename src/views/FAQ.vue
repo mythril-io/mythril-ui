@@ -12,17 +12,7 @@
 								</dt>
 								<dd class="mt-2 md:mt-0 md:col-span-7">
 									<p class="text-base leading-6 text-gray-500">
-										Mythril is a platform that allows users to track, discover, review, recommend and discuss video games. More features for the website are planned but at the moment because everything is being maintained by one person, it may take some time.
-									</p>
-								</dd>
-							</div>
-							<div class="mt-8 border-t border-gray-200 pt-6 md:grid md:grid-cols-12 md:gap-8">
-								<dt class="text-base leading-6 font-medium text-gray-900 md:col-span-5">
-									Why was Mythril created?
-								</dt>
-								<dd class="mt-2 md:mt-0 md:col-span-7">
-									<p class="text-base leading-6 text-gray-500">
-										In addition to having an interest in web development and video games, people in other communities have expressed an interest in a website such as this.
+										Mythril is a platform that allows users to track, discover, review, recommend and discuss video games.
 									</p>
 								</dd>
 							</div>
@@ -77,7 +67,7 @@
 									</p>
 								</dd>
 							</div>
-							<div class="mt-8 border-t border-gray-200 pt-6 md:grid md:grid-cols-12 md:gap-8">
+<!-- 							<div class="mt-8 border-t border-gray-200 pt-6 md:grid md:grid-cols-12 md:gap-8">
 								<dt class="text-base leading-6 font-medium text-gray-900 md:col-span-5">
 									I found a bug/factual error with the site, what should I do?
 								</dt>
@@ -86,8 +76,8 @@
 										The best way would be to join our Discord server and inform us of any issues, bugs, factual errors or feature requests. Alternatively, you could also create a post on our forums with the appropriate category tag.
 									</p>
 								</dd>
-							</div>
-							<div class="mt-8 border-t border-gray-200 pt-6 md:grid md:grid-cols-12 md:gap-8">
+							</div> -->
+<!-- 							<div class="mt-8 border-t border-gray-200 pt-6 md:grid md:grid-cols-12 md:gap-8">
 								<dt class="text-base leading-6 font-medium text-gray-900 md:col-span-5">
 									How can I support Mythril?
 								</dt>
@@ -96,7 +86,7 @@
 										Let us know what aspects of the site could be improved upon or what features you'd like to see. We're working for a way for users to help support our server costs if they choose to do so.
 									</p>
 								</dd>
-							</div>
+							</div> -->
 						</dl>
 					</div>
 
