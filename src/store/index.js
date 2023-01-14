@@ -8,7 +8,7 @@ import { games } from './games.module';
 
 Vue.use(Vuex)
 
-const cdnURL = 'https://mythril.nyc3.cdn.digitaloceanspaces.com/';
+const cdnURL = process.env.VUE_APP_STORAGE;
 
 // export const store = new Vuex.Store
 export default new Vuex.Store({
